@@ -7,6 +7,10 @@
 
 import CoreData
 
+/**
+ * From what I can tell, this basically acts as a database interface / model similar in intent to django models. Probably really wrong though.
+**/
+
 struct PersistenceController {
     static let shared = PersistenceController()
 
