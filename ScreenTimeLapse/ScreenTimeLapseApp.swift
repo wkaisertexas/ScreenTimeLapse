@@ -16,17 +16,13 @@ import SwiftUI
 @main
 struct ScreenTimeLapseApp: App {
     let persistenceController = PersistenceController.shared
+    let recorderViewModel = RecorderViewModel()
      
-    var body: some Scene { // TODO: Figure out what in the fuck this should be
-//        MenuBarExtra{
-//            ContentView()
-//        } label: {
-//            Text("🎥")
-//        }
-        
-        WindowGroup("🎥"){
-            ContentView()
+    var body: some Scene {
+        MenuBarExtra{
+            ContentView().environmentObject(recorderViewModel)
+        } label: {
+            Text(verbatim: recorderViewModel.getState())
         }
     }
-
 }
