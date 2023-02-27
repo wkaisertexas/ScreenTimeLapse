@@ -1,7 +1,7 @@
 import Foundation
 
 
-enum state : CustomStringConvertible{
+enum State : CustomStringConvertible{
     var description: String {
         switch self{
         case.stopped:

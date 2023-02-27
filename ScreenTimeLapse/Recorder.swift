@@ -14,21 +14,21 @@ struct OutputInfo{
 /// Represents an object interactable with a `RecorderViewModel`
 protocol Recordable{
     var metaData: OutputInfo {get set}
-    var state: state {get set}
+    var state: State {get set}
     var enabled: Bool {get set}
-    
     
     var writer: AVAssetWriter? {get set}
     var input: AVAssetWriterInput? {get set}
     var lastSavedFrame: CMTime? {get set}
     
     // MARK: -Intents
-    mutating func setup(path: String) throws 
-    
     mutating func startRecording()
     mutating func stopRecording()
+    mutating func resumeRecording()
     mutating func pauseRecording()
     mutating func saveRecording()
+    
+    func getFilename() -> String
 }
 
 extension Recordable{
@@ -39,6 +39,10 @@ extension Recordable{
     mutating func stopRecording() {
         self.state = .stopped
         saveRecording()
+    }
+    
+    mutating func resumeRecording(){
+        self.state = .recording
     }
     
     mutating func pauseRecording() {
@@ -87,7 +91,7 @@ extension Recordable{
 }
 
 class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable{
-    var state: state = .stopped
+    var state: State = .stopped
     var metaData: OutputInfo = OutputInfo()
     var enabled: Bool = false
     var writer: AVAssetWriter?
@@ -97,11 +101,11 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     // Audio Video Capture-Specific Functionality
     var inputDevice: AVCaptureDevice
     
-    init(path: String, camera: AVCaptureDevice){
+    init(camera: AVCaptureDevice){
         self.inputDevice = camera
     }
     
-    func setup() throws {
+    func setup(path: String) throws {
         
     }
     
@@ -111,13 +115,17 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         handleVideo(buffer: sampleBuffer)
     }
+    
+    func getFilename() -> String {
+        "nothing.mp4"
+    }
 }
 
 class Screen: NSObject, SCStreamOutput, Recordable{
-    var state: state = .stopped
+    var state: State = .stopped
     var lastSavedFrame: CMTime?
-    var metaData: OutputInfo
-    var enabled: Bool
+    var metaData: OutputInfo = OutputInfo()
+    var enabled: Bool = false
     var writer: AVAssetWriter?
     var input: AVAssetWriterInput?
     
@@ -126,15 +134,14 @@ class Screen: NSObject, SCStreamOutput, Recordable{
     var stream: SCStream?
     var showCursor: Bool
     
-    init(path: String, screenModel: RecorderViewModel, screen: SCDisplay, showCursor: Bool) throws {
-        super.init()
+    init(screen: SCDisplay, showCursor: Bool) {
         self.screen = screen
-        
+        self.showCursor = showCursor
     }
     
-    func setup(path: String) throws {
+    func setup(path: String, excluding: [SCRunningApplication]) throws {
         (self.writer, self.input) = try setupWriter(screen: screen, path:path)
-        try setupStream(screen: screen, showCursor: showCursor)
+        try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
     }
        
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
@@ -153,8 +160,8 @@ class Screen: NSObject, SCStreamOutput, Recordable{
         return (writer, input)
     }
     
-    func setupStream(screen: SCDisplay, showCursor: Bool) throws {
-        let contentFilter = SCContentFilter(display: screen, excludingApplications: screenModel.getExcludedApps(), exceptingWindows: [])
+    func setupStream(screen: SCDisplay, showCursor: Bool, excluding: [SCRunningApplication]) throws {
+        let contentFilter = SCContentFilter(display: screen, excludingApplications: excluding, exceptingWindows: [])
         
         let config = SCStreamConfiguration()
         config.width = screen.width
@@ -176,6 +183,10 @@ class Screen: NSObject, SCStreamOutput, Recordable{
             default:
                 print("Unknown future case")
         }
+    }
+    
+    func getFilename() -> String {
+        "nothing.mp4"
     }
 }
 
