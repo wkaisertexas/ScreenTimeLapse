@@ -1,15 +1,15 @@
 import Foundation
 
 
-enum State : CustomStringConvertible{
+enum RecordingState : CustomStringConvertible{
     var description: String {
         switch self{
-        case.stopped:
-            return "🎥"
-        case.paused:
-            return "▶️"
-        case.recording:
-            return "⏸️"
+            case.stopped:
+                return "🎥"
+            case.paused:
+                return "▶️"
+            case.recording:
+                return "⏸️"
         }
     }
     

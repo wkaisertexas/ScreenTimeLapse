@@ -5,12 +5,11 @@ import AVFoundation
 /// Represents a syncronized session of `Recordable` objects
 class RecorderViewModel: ObservableObject{
     @Published var apps: [SCRunningApplication : Bool] = [:]
-    @Published var content: SCShareableContent? = nil
-    
+
     @Published var cameras: [Camera] = []
     @Published var screens: [Screen] = []
     
-    @Published var state: State = .stopped
+    @Published var state: RecordingState = .stopped
     @Published var showCursor: Bool = false
     
     @MainActor
@@ -20,8 +19,6 @@ class RecorderViewModel: ObservableObject{
             
             self.apps = convertApps(apps: content.applications)
             self.screens = convertDisplays(displays: content.displays)
-            
-            self.content = content
         }catch{
             print(error.localizedDescription)
         }
@@ -41,7 +38,7 @@ class RecorderViewModel: ObservableObject{
         }.map{elem in elem.key}
     }
     
-    // MARK: - Recording
+    // MARK: -Recording
     func startRecording(){
         self.cameras.indices
             .forEach{ index in
@@ -100,18 +97,6 @@ class RecorderViewModel: ObservableObject{
             .forEach{ index in
                 screens[index].saveRecording()
             }
-    }
-    
-    // Mark: - Intents
-    func getState() -> String{
-        switch state{
-        case .stopped:
-            return "🎥"
-        case .paused:
-            return "▶️"
-        case .recording:
-            return "⏸️"
-        }
     }
     
     /// Gets apps from content and converts this into a dictioanry

@@ -14,7 +14,7 @@ struct OutputInfo{
 /// Represents an object interactable with a `RecorderViewModel`
 protocol Recordable{
     var metaData: OutputInfo {get set}
-    var state: State {get set}
+    var state: RecordingState {get set}
     var enabled: Bool {get set}
     
     var writer: AVAssetWriter? {get set}
@@ -91,7 +91,7 @@ extension Recordable{
 }
 
 class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable{
-    var state: State = .stopped
+    var state: RecordingState = .stopped
     var metaData: OutputInfo = OutputInfo()
     var enabled: Bool = false
     var writer: AVAssetWriter?
@@ -122,7 +122,7 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
 }
 
 class Screen: NSObject, SCStreamOutput, Recordable{
-    var state: State = .stopped
+    var state: RecordingState = .stopped
     var lastSavedFrame: CMTime?
     var metaData: OutputInfo = OutputInfo()
     var enabled: Bool = false

@@ -43,16 +43,22 @@ struct ActionButton: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
     
     var body: some View{
-        switch viewModel.state{
-            case .stopped:
-                startButton()
-            case .recording:
-                pauseButton()
-                exitButton()
-            case .paused:
-                resumeButton()
-                exitButton()
+        Picker("Testing", selection: $viewModel.state){
+            startButton().tag(RecordingState.stopped)
+            pauseButton().tag(RecordingState.recording)
+            resumeButton().tag(RecordingState.paused)
+            exitButton().tag(RecordingState.recording).tag(RecordingState.paused)
         }
+//        switch $viewModel.state{
+//            case RecordingState.stopped:
+//                startButton()
+//            case .recording:
+//                pauseButton()
+//                exitButton()
+//            case .paused:
+//                resumeButton()
+//                exitButton()
+//        }
     }
     
     // MARK: -Button View Builders
@@ -91,32 +97,32 @@ struct InputDevices: View{
 
     var body: some View{
         Menu("Input Devices"){
-                ForEach(viewModel.apps, id: \.self){app in
-                    Button(action: {
-                        viewModel.en_apps[app]?.toggle()
-                    }){
-                        HStack{
-                            if viewModel.en_apps[app]!{
-                                Image(systemName: "checkmark")
-                            }
-                            
-                            Text(app.applicationName)
-                        }
-                    }
-                }
-            
-            viewModel.displays.isEmpty ? nil : Divider()
-                
-            ForEach(viewModel.displays, id: \.self){display in
-                    HStack{
-                        if viewModel.en_displays[display]! {
-                            Image(systemName: "checkmark")
-                        }
-                        Button("(\(display.width) x \(display.height)) Display # \(display.displayID)"){
-                            viewModel.en_displays[display]?.toggle()
-                        }
-                    }
-                }
+//                ForEach(viewModel.apps, id: \.self){app in
+//                    Button(action: {
+//                        viewModel.en_apps[app]?.toggle()
+//                    }){
+//                        HStack{
+//                            if viewModel.en_apps[app]!{
+//                                Image(systemName: "checkmark")
+//                            }
+//
+//                            Text(app.applicationName)
+//                        }
+//                    }
+//                }
+//
+//            viewModel.displays.isEmpty ? nil : Divider()
+//
+//            ForEach(viewModel.displays, id: \.self){display in
+//                    HStack{
+//                        if viewModel.en_displays[display]! {
+//                            Image(systemName: "checkmark")
+//                        }
+//                        Button("(\(display.width) x \(display.height)) Display # \(display.displayID)"){
+//                            viewModel.en_displays[display]?.toggle()
+//                        }
+//                    }
+//                }
             
             
             Divider()
@@ -138,11 +144,10 @@ struct InputDevices: View{
     }
 }
 
-/// Property Modifiers
+/// Recording property modifying alerts
+/// Determines the viewmodel's `frameRate` and `timeDivisor`
 struct PropertyModifiers: View{
-    @State private var frame_rate = 25.0 // output is at 25 frames per second
-    @State private var speed_up = 60.0 // output is 60x faster than real life
-    @State private var showCursor = false
+    @EnvironmentObject private var viewModel: RecorderViewModel
     
     @State private var fr_alert = false
     @State private var su_alert = false
@@ -154,22 +159,22 @@ struct PropertyModifiers: View{
     
     @ViewBuilder
     func frameRateAdjust() -> some View {
-        Button(String(format: "( %.1f ) Adjust frame rate", frame_rate)){
-            fr_alert = true
-        }.alert("Change frame rate", isPresented: $fr_alert, actions: {
-            TextField("Frame rate", value: $frame_rate, format: .number)
-        }, message: {
-            TextField("Frame rate", value: $frame_rate, format: .number)
-        })
+//        Button(String(format: "( %.1f ) Adjust frame rate", frame_rate)){
+//            fr_alert = true
+//        }.alert("Change frame rate", isPresented: $fr_alert, actions: {
+//            TextField("Frame rate", value: $frame_rate, format: .number)
+//        }, message: {
+//            TextField("Frame rate", value: $frame_rate, format: .number)
+//        })
     }
     
     @ViewBuilder
     func speedMultipleAdjust() -> some View {
-        Button(String(format: "( %.1fx ) Adjust speed multiple", speed_up)){
-            su_alert.toggle()
-        }.sheet(isPresented: $su_alert){
-            TextField("This is where you input the number", value: $frame_rate, format: .number)
-        }
+//        Button(String(format: "( %.1fx ) Adjust speed multiple", speed_up)){
+//            su_alert.toggle()
+//        }.sheet(isPresented: $su_alert){
+//            TextField("This is where you input the number", value: $frame_rate, format: .number)
+//        }
     }
     
     let speed_formatter: NumberFormatter = {
