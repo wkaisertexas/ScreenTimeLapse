@@ -1,28 +1,19 @@
-//
-//  ScreenTimeLapseApp.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 1/1/23.
-//
-
-/**
-Notes for the project:
- 
- - Learn about persistence controllers
-*/
-
 import SwiftUI
 
 @main
 struct ScreenTimeLapseApp: App {
-    let persistenceController = PersistenceController.shared
-    let recorderViewModel = RecorderViewModel()
-     
+    @ObservedObject var recorderViewModel = RecorderViewModel()
+    //    let persistenceController = PersistenceController.shared
+
     var body: some Scene {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
             Text(verbatim: recorderViewModel.state.description)
+        }.onChange(of: recorderViewModel.state){ _ in
+            Task{
+                await recorderViewModel.getDisplayInfo()
+            }
         }
     }
 }

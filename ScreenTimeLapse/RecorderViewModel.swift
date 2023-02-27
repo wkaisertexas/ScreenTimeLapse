@@ -5,7 +5,7 @@ import AVFoundation
 /// Represents a syncronized session of `Recordable` objects
 class RecorderViewModel: ObservableObject{
     @Published var apps: [SCRunningApplication : Bool] = [:]
-
+    
     @Published var cameras: [Camera] = []
     @Published var screens: [Screen] = []
     
@@ -22,12 +22,16 @@ class RecorderViewModel: ObservableObject{
         }catch{
             print(error.localizedDescription)
         }
+        
+        getCameras()
     }
     
     func getCameras(){
         let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
         
         self.cameras = convertCameras(camera: discovery.devices)
+        print(self.cameras)
+        print(discovery.devices)
     }
     
     /// This functions inverts the `self.apps` list
@@ -40,6 +44,8 @@ class RecorderViewModel: ObservableObject{
     
     // MARK: -Recording
     func startRecording(){
+        self.state = .recording
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].startRecording()
@@ -52,6 +58,8 @@ class RecorderViewModel: ObservableObject{
     }
     
     func pauseRecording(){
+        self.state = .paused
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].pauseRecording()
@@ -64,6 +72,8 @@ class RecorderViewModel: ObservableObject{
     }
     
     func resumeRecording(){
+        self.state = .recording
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].resumeRecording()
@@ -76,6 +86,8 @@ class RecorderViewModel: ObservableObject{
     }
     
     func stopRecording(){
+        self.state = .stopped
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].stopRecording()
@@ -99,11 +111,17 @@ class RecorderViewModel: ObservableObject{
             }
     }
     
+    /// Checks to make sure at least one `Screen` or `Camera` is enabled
+    func recordersDisabled() -> Bool{
+        !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
+    }
+    
     /// Gets apps from content and converts this into a dictioanry
     private func convertApps(apps input: [SCRunningApplication]) -> [SCRunningApplication : Bool]{
         let returnApps = input
             .filter{app in
                 Bundle.main.bundleIdentifier != app.bundleIdentifier
+                && !app.applicationName.isEmpty
             }
             .map{ app in
                 (app, self.apps[app] ?? true)
@@ -116,8 +134,8 @@ class RecorderViewModel: ObservableObject{
     private func convertDisplays(displays input: [SCDisplay]) -> [Screen]{
         var newScreens = input
             .filter{ display in
-                self.screens.contains{recorder in
-                    recorder.screen != display
+                !self.screens.contains{recorder in
+                    recorder.screen == display
             }}
             .map(getScreenRecorder)
         
@@ -141,8 +159,8 @@ class RecorderViewModel: ObservableObject{
     private func convertCameras(camera input: [AVCaptureDevice]) -> [Camera]{
         var newCameras = input
             .filter{ camera in
-                self.cameras.contains{ recorder in
-                    recorder.inputDevice != camera
+                !self.cameras.contains{ recorder in
+                    recorder.inputDevice == camera
                 }
             }.map(getCameraRecorder)
         
@@ -156,13 +174,6 @@ class RecorderViewModel: ObservableObject{
             }
         
         return newCameras
-    }
-    
-    
-    /// All cameras connected to the computer
-    private func getCameras() -> [AVCaptureDevice]{
-        let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
-        return discovery.devices
     }
     
     // MARK: -Recorder Creation

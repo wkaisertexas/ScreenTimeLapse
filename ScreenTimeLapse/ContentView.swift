@@ -1,24 +1,12 @@
-//
-//  ContentView.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 1/1/23.
-//
-
 import SwiftUI
 import CoreData
 import AVFoundation
 import ScreenCaptureKit
 import Foundation
 
-// Properties
-let HELP = "https://apple.com"
-let ABOUT = "https://apple.com"
-
-
 struct ContentView: View {
     @EnvironmentObject private var viewModel: RecorderViewModel
-    
+        
     var body: some View {
         ActionButton()
         Divider()
@@ -43,22 +31,16 @@ struct ActionButton: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
     
     var body: some View{
-        Picker("Testing", selection: $viewModel.state){
-            startButton().tag(RecordingState.stopped)
-            pauseButton().tag(RecordingState.recording)
-            resumeButton().tag(RecordingState.paused)
-            exitButton().tag(RecordingState.recording).tag(RecordingState.paused)
+        switch viewModel.state{
+            case .stopped:
+                startButton()
+            case .recording:
+                pauseButton()
+                exitButton()
+            case .paused:
+                resumeButton()
+                exitButton()
         }
-//        switch $viewModel.state{
-//            case RecordingState.stopped:
-//                startButton()
-//            case .recording:
-//                pauseButton()
-//                exitButton()
-//            case .paused:
-//                resumeButton()
-//                exitButton()
-//        }
     }
     
     // MARK: -Button View Builders
@@ -67,7 +49,7 @@ struct ActionButton: View{
     func startButton() -> some View{
         Button("Start Recording"){
             viewModel.startRecording()
-        }.keyboardShortcut("R")
+        }.keyboardShortcut("R").disabled(viewModel.recordersDisabled())
     }
     
     @ViewBuilder
@@ -96,51 +78,60 @@ struct InputDevices: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
 
     var body: some View{
+        appsMenu()
         Menu("Input Devices"){
-//                ForEach(viewModel.apps, id: \.self){app in
-//                    Button(action: {
-//                        viewModel.en_apps[app]?.toggle()
-//                    }){
-//                        HStack{
-//                            if viewModel.en_apps[app]!{
-//                                Image(systemName: "checkmark")
-//                            }
-//
-//                            Text(app.applicationName)
-//                        }
-//                    }
-//                }
-//
-//            viewModel.displays.isEmpty ? nil : Divider()
-//
-//            ForEach(viewModel.displays, id: \.self){display in
-//                    HStack{
-//                        if viewModel.en_displays[display]! {
-//                            Image(systemName: "checkmark")
-//                        }
-//                        Button("(\(display.width) x \(display.height)) Display # \(display.displayID)"){
-//                            viewModel.en_displays[display]?.toggle()
-//                        }
-//                    }
-//                }
-            
-            
+            screensMenu()
             Divider()
-            
-//            ForEach($viewModel.cameras.keys){camera in
-//                HStack{
-//                    if viewModel.cameras[camera]!{
-//                        Image(systemName: "checkmark")
-//                    }
-//                    
-//                    Button(camera.localizedName){
-//                        viewModel.cameras[camera]?.toggle()
-//                    }
-//                }
-//            }
-            
+            camerasMenu()
         }
+    }
+    
+    @ViewBuilder
+    func appsMenu() -> some View {
+        Menu("Apps"){
+            ForEach(viewModel.apps.keys.sorted(by: <), id: \.self){ app in
+                Button(action: {
+                    viewModel.apps[app]?.toggle()
+                }){
+                    HStack{
+                        if viewModel.apps[app]!{
+                            Image(systemName: "checkmark")
+                        }
+                        
+                        Text(app.applicationName)
+                    }
+                }
 
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func screensMenu() -> some View {
+        ForEach(viewModel.screens, id: \.self)
+            { screen in
+                HStack{
+                    screen.enabled ? Image(systemName: "checkmark") : nil
+                    
+                    Button(screen.description){
+                        screen.enabled.toggle()
+                    }
+                }
+            }
+    }
+    
+    @ViewBuilder
+    func camerasMenu() -> some View{
+        ForEach(viewModel.cameras, id: \.self)
+            { camera in
+                HStack{
+                    camera.enabled ? Image(systemName: "checkmark") : nil
+                    
+                    Button(camera.description){
+                        camera.enabled.toggle()
+                    }
+                }
+            }
     }
 }
 
@@ -187,6 +178,9 @@ struct PropertyModifiers: View{
 /// Random info about the project
 struct Info: View{
     @Environment(\.openURL) var openURL
+    
+    var HELP: String = "https://google.com"
+    var ABOUT: String = "https://apple.com"
 
     var body: some View{
         Button("Help"){
