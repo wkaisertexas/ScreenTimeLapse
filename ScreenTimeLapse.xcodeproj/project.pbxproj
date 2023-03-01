@@ -45,6 +45,7 @@
 		3E2EB6A429AD5A4C006F4F2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E4D87C629AD741800D3EC7B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		3E4D87C829AD744C00D3EC7B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTimeLapse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +93,7 @@
 		3EE5FE00296232C700768BF7 = {
 			isa = PBXGroup;
 			children = (
+				3E571FDF29AF248500AD153D /* README.md */,
 				3EE5FE0B296232C700768BF7 /* ScreenTimeLapse */,
 				3EE5FE22296232C800768BF7 /* ScreenTimeLapseTests */,
 				3EE5FE2C296232C800768BF7 /* ScreenTimeLapseUITests */,
