@@ -12,6 +12,7 @@ class RecorderViewModel: ObservableObject{
     @Published var state: RecordingState = .stopped
     @Published var showCursor: Bool = false
     
+    /// Makes an asyncronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
     @MainActor
     func getDisplayInfo() async {
         do{
@@ -22,16 +23,20 @@ class RecorderViewModel: ObservableObject{
         }catch{
             print(error.localizedDescription)
         }
-        
-        getCameras()
     }
     
+    init() {
+        getCameras()
+        Task(priority: .userInitiated){
+            await getDisplayInfo()
+        }
+    }
+    
+    /// Gets all cameras attached to the computer and creates recorders for them
     func getCameras(){
         let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
         
         self.cameras = convertCameras(camera: discovery.devices)
-        print(self.cameras)
-        print(discovery.devices)
     }
     
     /// This functions inverts the `self.apps` list
@@ -111,6 +116,25 @@ class RecorderViewModel: ObservableObject{
             }
     }
     
+    // MARK: -Toggles
+    
+    func toggleScreen(screen: Screen){
+        screen.enabled.toggle()
+        objectWillChange.send()
+    }
+    
+    func toggleApp(app: SCRunningApplication){
+        if let row = apps.first(where: {$0.key.processID == app.processID}){
+            apps[row.key] = !row.value
+        }
+        objectWillChange.send()
+    }
+    
+    func toggleCameras(camera: Camera){
+        camera.enabled.toggle()
+        objectWillChange.send()
+    }
+    
     /// Checks to make sure at least one `Screen` or `Camera` is enabled
     func recordersDisabled() -> Bool{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
@@ -136,7 +160,7 @@ class RecorderViewModel: ObservableObject{
             .filter{ display in
                 !self.screens.contains{recorder in
                     recorder.screen == display
-            }}
+                }}
             .map(getScreenRecorder)
         
         for screen in self.screens{

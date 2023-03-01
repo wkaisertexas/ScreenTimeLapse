@@ -26,7 +26,7 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
         self.inputDevice = camera
     }
     
-    func setup(path: String) throws {
+    func setup(path: String) {
         
     }
     

@@ -1,6 +1,7 @@
 import Foundation
 import ScreenCaptureKit
 import AVFoundation
+import SwiftUI
 
 
 /// Records the output of a screen in a stream-like format
@@ -16,7 +17,7 @@ class Screen: NSObject, SCStreamOutput, Recordable{
     var screen: SCDisplay
     var stream: SCStream?
     var showCursor: Bool
-    
+        
     override var description: String {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
     }
@@ -24,6 +25,24 @@ class Screen: NSObject, SCStreamOutput, Recordable{
     init(screen: SCDisplay, showCursor: Bool) {
         self.screen = screen
         self.showCursor = showCursor
+    }
+    
+    // MARK: -User Interaction
+    
+    func startRecording() {
+        
+    }
+    
+    func pauseRecording() {
+        
+    }
+    
+    func resumeRecording() {
+        
+    }
+    
+    func saveRecording() {
+        
     }
     
     func setup(path: String, excluding: [SCRunningApplication]) throws {

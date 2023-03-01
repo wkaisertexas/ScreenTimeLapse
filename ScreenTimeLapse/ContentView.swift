@@ -3,6 +3,7 @@ import CoreData
 import AVFoundation
 import ScreenCaptureKit
 import Foundation
+import Cocoa
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel: RecorderViewModel
@@ -11,18 +12,20 @@ struct ContentView: View {
         ActionButton()
         Divider()
         InputDevices()
-        HStack{
-            if viewModel.showCursor{
-                Image(systemName: "checkmark")
-            }
-            
-            Button(viewModel.showCursor ? "Hide Cursor": "Show Cursor"){
-                viewModel.showCursor.toggle()
-            }
-        }
-        
+        cursorStatus()
         Divider()
         Info()
+    }
+    
+    @ViewBuilder
+    func cursorStatus() -> some View{
+        Button(action: {
+            viewModel.showCursor.toggle()
+            viewModel.objectWillChange.send()
+        }){
+            Image(systemName: viewModel.showCursor ? "cursorarrow.rays" : "cursorarrow")
+            Text(viewModel.showCursor ? "Hide Cursor": "Show Cursor")
+        }
     }
 }
 
@@ -49,28 +52,35 @@ struct ActionButton: View{
     func startButton() -> some View{
         Button("Start Recording"){
             viewModel.startRecording()
-        }.keyboardShortcut("R").disabled(viewModel.recordersDisabled())
+        }
+        .keyboardShortcut("R")
+        .disabled(viewModel.recordersDisabled())
     }
     
     @ViewBuilder
     func pauseButton() -> some View{
         Button("Pause Recording"){
             viewModel.pauseRecording()
-        }.keyboardShortcut("P")
+        }
+        .keyboardShortcut("P")
+        .disabled(viewModel.recordersDisabled())
     }
     
     @ViewBuilder
     func resumeButton() -> some View{
         Button("Resume Recording"){
             viewModel.resumeRecording()
-        }.keyboardShortcut("R")
+        }
+        .keyboardShortcut("R")
+        .disabled(viewModel.recordersDisabled())
     }
     
     @ViewBuilder
     func exitButton() -> some View{
         Button("Exit Recording"){
             viewModel.stopRecording()
-        }.keyboardShortcut("S")
+        }
+        .keyboardShortcut("S")
     }
 }
 /// Input devices of the project
@@ -78,60 +88,85 @@ struct InputDevices: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
 
     var body: some View{
-        appsMenu()
-        Menu("Input Devices"){
-            screensMenu()
-            Divider()
-            camerasMenu()
-        }
+        appsMenu().pickerStyle(.menu)
+        Divider()
+        
+        screensMenu()
+        camerasMenu()
     }
     
+    // MARK: -Sections
+    
+    /// Renders all the `SCRunningApplications` which can either be enabled or disabled
     @ViewBuilder
     func appsMenu() -> some View {
         Menu("Apps"){
-            ForEach(viewModel.apps.keys.sorted(by: <), id: \.self){ app in
-                Button(action: {
-                    viewModel.apps[app]?.toggle()
-                }){
-                    HStack{
-                        if viewModel.apps[app]!{
-                            Image(systemName: "checkmark")
-                        }
-                        
-                        Text(app.applicationName)
-                    }
-                }
-
+            Section("Disabled"){
+                ForEach(viewModel.apps.keys.filter{!viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
+            }
+            Section("Enabled"){
+                ForEach(viewModel.apps.keys.filter{viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
             }
         }
     }
     
+    /// Renders all available `Screen` objects as an interactable list
     @ViewBuilder
     func screensMenu() -> some View {
-        ForEach(viewModel.screens, id: \.self)
-            { screen in
-                HStack{
-                    screen.enabled ? Image(systemName: "checkmark") : nil
-                    
-                    Button(screen.description){
-                        screen.enabled.toggle()
-                    }
-                }
-            }
+        viewModel.screens.isEmpty ? nil :
+        Section("Screens"){
+            ForEach(viewModel.screens, id: \.self, content: screen)
+        }
     }
     
+    /// Renders all avaible `Camera` objects as an interactable list
     @ViewBuilder
     func camerasMenu() -> some View{
-        ForEach(viewModel.cameras, id: \.self)
-            { camera in
-                HStack{
-                    camera.enabled ? Image(systemName: "checkmark") : nil
-                    
-                    Button(camera.description){
-                        camera.enabled.toggle()
-                    }
-                }
+        viewModel.cameras.isEmpty ? nil :
+        Section("Cameras"){
+            ForEach(viewModel.cameras, id: \.self, content: camera)
+        }
+    }
+    
+    // MARK: -Components
+    /// Renders a single `Screen` as a button with either an enabled or disabled checkmark
+    @ViewBuilder
+    func screen(_ screen: Screen) -> some View{
+        Button(action: {viewModel.toggleScreen(screen: screen)}){
+            HStack{
+                screen.enabled ? Image(systemName: "checkmark") : nil
+                
+                Text(screen.description)
             }
+        }
+    }
+    
+    /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
+    @ViewBuilder
+    func camera(_ camera: Camera) -> some View{
+        Button(action: {
+            viewModel.toggleCameras(camera: camera)
+        }){
+            HStack{
+                camera.enabled ? Image(systemName: "checkmark") : nil
+                
+                Text(camera.description)
+            }
+        }
+    }
+    
+    /// Renders  single `SCRunningApplication` as either enabled or disabled
+    @ViewBuilder
+    func app(_ app: SCRunningApplication) -> some View{
+        Button(action: {
+            viewModel.toggleApp(app: app)
+        }){
+            HStack{
+                Image(nsImage: NSRunningApplication(processIdentifier: app.processID)!.icon!)
+                
+                Text(app.applicationName)
+            }
+        }
     }
 }
 
