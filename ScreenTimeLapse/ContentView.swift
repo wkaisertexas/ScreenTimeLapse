@@ -83,6 +83,7 @@ struct ActionButton: View{
         .keyboardShortcut("S")
     }
 }
+
 /// Input devices of the project
 struct InputDevices: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
@@ -227,5 +228,29 @@ struct Info: View{
         Button("Quit"){
             NSApplication.shared.terminate(nil)
         }.keyboardShortcut("q")
+    }
+}
+
+struct Prefrences: View{
+    // TODO: Replace these with actual values later
+    @State var showCursor: Bool = false
+    @State var frameRate: Double = 25.0
+    @State var timeMultiple: Double = 3.0
+    var body: some View{
+        Form{
+            Section(header: Text("View Info")){
+                Toggle("Show Cursor", isOn: $showCursor)
+                
+                Slider(value: $frameRate, in: 0...100, step: 1.0)
+                Slider(value: $frameRate, in: 0...100, step: 1.0)
+                Slider(value: $frameRate, in: 0...100, step: 1.0)
+            }
+        }
+    }
+}
+
+struct SettingsPreview: PreviewProvider {
+    static var previews: some View{
+        Prefrences()
     }
 }
