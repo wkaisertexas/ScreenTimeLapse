@@ -12,20 +12,8 @@ struct ContentView: View {
         ActionButton()
         Divider()
         InputDevices()
-        cursorStatus()
         Divider()
         Info()
-    }
-    
-    @ViewBuilder
-    func cursorStatus() -> some View{
-        Button(action: {
-            viewModel.showCursor.toggle()
-            viewModel.objectWillChange.send()
-        }){
-            Image(systemName: viewModel.showCursor ? "cursorarrow.rays" : "cursorarrow")
-            Text(viewModel.showCursor ? "Hide Cursor": "Show Cursor")
-        }
     }
 }
 
@@ -102,12 +90,52 @@ struct InputDevices: View{
     @ViewBuilder
     func appsMenu() -> some View {
         Menu("Apps"){
+            Section("Actions"){
+                actionsMenu()
+            }
+            
             Section("Disabled"){
                 ForEach(viewModel.apps.keys.filter{!viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
             }
             Section("Enabled"){
                 ForEach(viewModel.apps.keys.filter{viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
             }
+        }
+    }
+    
+    /// Renders the `reset`, `invert` and `toggle` buttons
+    @ViewBuilder
+    func actionsMenu() -> some View{
+        Button(action: {
+            self.viewModel.refreshApps()
+        }){
+            Image(systemName: "arrow.clockwise")
+            
+            Text("Refresh")
+        }
+        
+        Button(action:{
+            self.viewModel.invertApplications()
+        }){
+            Image(systemName: "rectangle.2.swap")
+            
+            Text("Invert")
+        }
+        
+        Button(action: {
+            self.viewModel.resetApps()
+        }){
+            Image(systemName: "clear")
+            
+            Text("Reset")
+        }
+        
+        Button(action: {
+            viewModel.showCursor.toggle()
+            viewModel.objectWillChange.send()
+        }){
+            Image(systemName: viewModel.showCursor ? "cursorarrow.rays" : "cursorarrow")
+            Text(viewModel.showCursor ? "Hide Cursor": "Show Cursor")
         }
     }
     
@@ -134,11 +162,9 @@ struct InputDevices: View{
     @ViewBuilder
     func screen(_ screen: Screen) -> some View{
         Button(action: {viewModel.toggleScreen(screen: screen)}){
-            HStack{
-                screen.enabled ? Image(systemName: "checkmark") : nil
+            screen.enabled ? Image(systemName: "checkmark") : nil
                 
-                Text(screen.description)
-            }
+            Text(screen.description)
         }
     }
     
@@ -148,11 +174,9 @@ struct InputDevices: View{
         Button(action: {
             viewModel.toggleCameras(camera: camera)
         }){
-            HStack{
-                camera.enabled ? Image(systemName: "checkmark") : nil
+            camera.enabled ? Image(systemName: "checkmark") : nil
                 
-                Text(camera.description)
-            }
+            Text(camera.description)
         }
     }
     
@@ -162,11 +186,9 @@ struct InputDevices: View{
         Button(action: {
             viewModel.toggleApp(app: app)
         }){
-            HStack{
-                Image(nsImage: NSRunningApplication(processIdentifier: app.processID)!.icon!)
+            Image(nsImage: NSRunningApplication(processIdentifier: app.processID)!.icon!)
                 
-                Text(app.applicationName)
-            }
+            Text(app.applicationName)
         }
     }
 }

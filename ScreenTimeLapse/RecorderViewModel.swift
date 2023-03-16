@@ -140,6 +140,32 @@ class RecorderViewModel: ObservableObject{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
     }
     
+    
+    // MARK: -Applications Menu
+    
+    /// Flips the enabled and disabled `applications` in `apps`
+    func invertApplications() {
+        for appName in self.apps.keys{
+            self.apps[appName]!.toggle()
+        }
+    }
+    
+    /// Resets `apps` by setting each `value` to `true`
+    func resetApps() {
+        for appName in self.apps.keys{
+            self.apps[appName]! = true // enabled by default
+        }
+        
+        refreshApps()
+    }
+    
+    /// Refreshes `apps`
+    func refreshApps() {
+        Task(priority: .userInitiated){
+            await getDisplayInfo()
+        }
+    }
+    
     /// Gets apps from content and converts this into a dictioanry
     private func convertApps(apps input: [SCRunningApplication]) -> [SCRunningApplication : Bool]{
         let returnApps = input
