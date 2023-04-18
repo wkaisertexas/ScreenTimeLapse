@@ -4,7 +4,7 @@
 
 ## Todos
 
-- [ ] Get screen recording dne
+- [ ] Get screen recording done
 
 ## References
 

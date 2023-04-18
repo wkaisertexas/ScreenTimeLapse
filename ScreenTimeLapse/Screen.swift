@@ -5,7 +5,7 @@ import SwiftUI
 
 
 /// Records the output of a screen in a stream-like format
-class Screen: NSObject, SCStreamOutput, Recordable{
+class Screen: NSObject, SCStreamOutput, Recordable {
     var state: RecordingState = .stopped
     var lastSavedFrame: CMTime?
     var metaData: OutputInfo = OutputInfo()
@@ -30,27 +30,39 @@ class Screen: NSObject, SCStreamOutput, Recordable{
     // MARK: -User Interaction
     
     func startRecording() {
+        if(self.state == .recording){return;}
         
+        self.state = .recording
+        setup(path: getFilename(), excluding: []) // TODO: implement logic which actually gets the excluding
+        
+        print("\(self.writer)")
+        print("\(self.input)")
     }
     
     func pauseRecording() {
-        
+        self.state = .paused
     }
     
     func resumeRecording() {
-        
+        self.state = .recording
     }
     
     func saveRecording() {
+        self.state = .stopped
         
+        // TODO: save the file
     }
     
-    func setup(path: String, excluding: [SCRunningApplication]) throws {
-        (self.writer, self.input) = try setupWriter(screen: screen, path:path)
-        try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
+    func setup(path: String, excluding: [SCRunningApplication]) {
+        do{
+            (self.writer, self.input) = try setupWriter(screen: screen, path:path)
+            try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
+        } catch{
+            print("Failed")
+        }
     }
        
-    func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
+    func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) { // TODO: convert this to a task
         // Creates the video input
         let outputSettings: [String : Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
@@ -58,11 +70,16 @@ class Screen: NSObject, SCStreamOutput, Recordable{
             AVVideoHeightKey: screen.height
         ]
         
-        let url = URL(fileURLWithPath: path, isDirectory: false)
+        let url = URL(string: path, relativeTo: URL.desktopDirectory)!
+
+        print("URL: \(url)")
         let writer = try AVAssetWriter(url: url, fileType: .mov)
         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: outputSettings)
         
+        print(writer.canAdd(input))
+        writer.add(input) // TODO: Check if connecting these makes this work
+    
         return (writer, input)
     }
     
@@ -74,13 +91,16 @@ class Screen: NSObject, SCStreamOutput, Recordable{
         config.height = screen.height
         config.showsCursor = showCursor
         
-        let stream = SCStream(filter: contentFilter, configuration: config, delegate: StreamDelegate())
-        try stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: .global(qos: .background))
-        
-        stream.startCapture(completionHandler: handleStreamStartFailure)
+        stream = SCStream(filter: contentFilter, configuration: config, delegate: StreamDelegate())
+        try stream!.addStreamOutput(self, type: .screen, sampleHandlerQueue: .global(qos: .background))
+        stream!.startCapture(completionHandler: handleStreamStartFailure)
     }
     
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
+        if self.state != .recording{
+            return 
+        }
+        
         switch of{
             case .screen:
                 handleVideo(buffer: didOutputSampleBuffer)
@@ -92,7 +112,8 @@ class Screen: NSObject, SCStreamOutput, Recordable{
     }
     
     func getFilename() -> String {
-        "\(screen.displayID)-\(CMTime().seconds).mp4"
+        // TODO: change this back to CMTime().seconds
+        "\(screen.displayID)-\(1000).mov"
     }
 }
 

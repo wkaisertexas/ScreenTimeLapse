@@ -24,22 +24,29 @@ protocol Recordable : CustomStringConvertible{
 
 extension Recordable{
     mutating func startRecording() {
+        if self.state == .recording{
+            return;
+        }
+        // setup recording
+
+
+
         self.state = .recording
     }
-    
+
     mutating func stopRecording() {
         self.state = .stopped
         saveRecording()
     }
-    
+
     mutating func resumeRecording(){
         self.state = .recording
     }
-    
+
     mutating func pauseRecording() {
         self.state = .paused
     }
-    
+
     mutating func saveRecording() {
         print("Saving recorder")
     }
@@ -63,18 +70,36 @@ extension Recordable{
     
     /// Provides a default way to deal with streams which do not work
     func handleStreamStartFailure(err: Error?){
-        print("\(String(describing: err))")
+        if let error = err{
+            print("Stream start failure")
+            print("\(String(describing: error))")
+        } else{
+            print("Stream started sucessfully")
+        }
     }
     
+    /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
     func handleVideo(buffer: CMSampleBuffer){
+        print("Handling video")
+        if let inputter = self.input{
+            print("the input is there")
+        }
         do{
-            let buffers = try buffer.singleSampleBuffers()
-            
-            // TODO: Make this work properly by writing tests in case the orders are wrong
-            
-            for singleBuffer in buffers{
-                self.input?.append(singleBuffer)
-            }
+            try buffer
+                .singleSampleBuffers()
+                .filter{ _ in // todo: fix this
+                    true
+                }
+                .forEach{ buffer in
+                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
+                        sleep(1)
+                        print("Sleeping")
+                        print(self.input?.isReadyForMoreMediaData ?? nil)
+                    }
+                    self.input?.append(buffer)
+                    
+//                    AVAssetWriterInputPixelBufferAdaptor.append(input).(buffer, withPresentationTime: T##CMTime)
+                }
         } catch {
             print("Invalid framebuffer")
         }
