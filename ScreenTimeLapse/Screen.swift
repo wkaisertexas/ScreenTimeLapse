@@ -49,37 +49,65 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     func saveRecording() {
         self.state = .stopped
-        
+        self.state = .stopped
+       
+        writer!.finishWriting { [self] in
+            if self.writer!.status == .completed {
+                // Asset writing completed successfully
+            } else if writer!.status == .failed {
+                // Asset writing failed with an error
+                if let error = writer!.error {
+                    print("Asset writing failed with error: \(error.localizedDescription)")
+                }
+            }
+        }
         // TODO: save the file
     }
     
     func setup(path: String, excluding: [SCRunningApplication]) {
-        do{
-            (self.writer, self.input) = try setupWriter(screen: screen, path:path)
-            try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
-        } catch{
-            print("Failed")
+        Task(priority: .userInitiated){
+            do{
+                (self.writer, self.input) = try setupWriter(screen: screen, path: path)
+                
+                self.writer?.startWriting() // TODO: Might have to remove this
+                
+                try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
+            } catch{
+                print("Failed")
+            }
         }
     }
        
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) { // TODO: convert this to a task
         // Creates the video input
-        let outputSettings: [String : Any] = [
+        let videoOutputSettings: [String : Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: screen.width,
             AVVideoHeightKey: screen.height
         ]
         
-        let url = URL(string: path, relativeTo: URL.desktopDirectory)!
+        let audioOutputSettings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey: 44100,
+            AVEncoderBitRateKey: 128000
+        ]
+        
+        // TODO: Look at why the desktop directory creates a file path of /Users/wkaiser/Librqry/smartservices/.ScreenTimePlace/Data/Desktop
+//        let url = URL(string: path, relativeTo: URL.desktopDirectory)!
+        
+        let url = URL(string: path, relativeTo: .downloadsDirectory)!
 
         print("URL: \(url)")
+        print("Path: \(path)")
         let writer = try AVAssetWriter(url: url, fileType: .mov)
+                        
+        let input = AVAssetWriterInput(mediaType: .video, outputSettings: videoOutputSettings)
+        let audio = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOutputSettings)
         
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: outputSettings)
-        
-        print(writer.canAdd(input))
         writer.add(input) // TODO: Check if connecting these makes this work
-    
+        writer.add(audio) // TODO: Check if this makes this work
+        
         return (writer, input)
     }
     
@@ -97,9 +125,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     }
     
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
-        if self.state != .recording{
-            return 
-        }
+        guard self.state != .recording else {return}
         
         switch of{
             case .screen:

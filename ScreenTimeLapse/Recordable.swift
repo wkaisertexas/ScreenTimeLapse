@@ -2,6 +2,8 @@ import Foundation
 import AVFoundation
 import ScreenCaptureKit
 
+import AppKit // TODO: remove this
+
 /// Represents an object interactable with a `RecorderViewModel`
 protocol Recordable : CustomStringConvertible{
     var metaData: OutputInfo {get set}
@@ -28,25 +30,25 @@ extension Recordable{
             return;
         }
         // setup recording
-
-
-
+        
+        
+        
         self.state = .recording
     }
-
+    
     mutating func stopRecording() {
         self.state = .stopped
         saveRecording()
     }
-
+    
     mutating func resumeRecording(){
         self.state = .recording
     }
-
+    
     mutating func pauseRecording() {
         self.state = .paused
     }
-
+    
     mutating func saveRecording() {
         print("Saving recorder")
     }
@@ -80,11 +82,12 @@ extension Recordable{
     
     /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
     func handleVideo(buffer: CMSampleBuffer){
-        print("Handling video")
-        if let inputter = self.input{
-            print("the input is there")
+        guard self.input != nil else {
+            print("Unable to find data input")
+            return
         }
-        do{
+        
+        do{            
             try buffer
                 .singleSampleBuffers()
                 .filter{ _ in // todo: fix this
@@ -92,13 +95,12 @@ extension Recordable{
                 }
                 .forEach{ buffer in
                     while(!(self.input?.isReadyForMoreMediaData ?? true)){
-                        sleep(1)
+                        sleep(10)
                         print("Sleeping")
-                        print(self.input?.isReadyForMoreMediaData ?? nil)
                     }
                     self.input?.append(buffer)
                     
-//                    AVAssetWriterInputPixelBufferAdaptor.append(input).(buffer, withPresentationTime: T##CMTime)
+                    //                    AVAssetWriterInputPixelBufferAdaptor.append(input).(buffer, withPresentationTime: T##CMTime)
                 }
         } catch {
             print("Invalid framebuffer")
