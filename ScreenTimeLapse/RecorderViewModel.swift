@@ -51,6 +51,8 @@ class RecorderViewModel: ObservableObject{
     func startRecording(){
         self.state = .recording
         
+        logger.log("Started recording at RecorderViewModel")
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].startRecording()
@@ -140,7 +142,6 @@ class RecorderViewModel: ObservableObject{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
     }
     
-    
     // MARK: -Applications Menu
     
     /// Flips the enabled and disabled `applications` in `apps`
@@ -180,7 +181,7 @@ class RecorderViewModel: ObservableObject{
         return Dictionary(uniqueKeysWithValues: returnApps)
     }
     
-    /// Turns an array of SCDisplays into new screens
+    /// Turns an array of `SCDisplays` into new screens
     private func convertDisplays(displays input: [SCDisplay]) -> [Screen]{
         var newScreens = input
             .filter{ display in
@@ -205,7 +206,7 @@ class RecorderViewModel: ObservableObject{
         return newScreens
     }
     
-    /// Converts an array of cameras from a Discovery session into cameras
+    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom `Camera` object
     private func convertCameras(camera input: [AVCaptureDevice]) -> [Camera]{
         var newCameras = input
             .filter{ camera in

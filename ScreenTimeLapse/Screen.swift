@@ -3,7 +3,6 @@ import ScreenCaptureKit
 import AVFoundation
 import SwiftUI
 
-
 /// Records the output of a screen in a stream-like format
 class Screen: NSObject, SCStreamOutput, Recordable {
     var state: RecordingState = .stopped
@@ -28,15 +27,12 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     }
     
     // MARK: -User Interaction
-    
     func startRecording() {
-        if(self.state == .recording){return;}
+        guard self.enabled else { return }
+        guard self.state != .recording else { return }
         
         self.state = .recording
         setup(path: getFilename(), excluding: []) // TODO: implement logic which actually gets the excluding
-        
-        print("\(self.writer)")
-        print("\(self.input)")
     }
     
     func pauseRecording() {
@@ -48,16 +44,36 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     }
     
     func saveRecording() {
+        guard self.enabled else { return }
+        
         self.state = .stopped
-        self.state = .stopped
+        
+        logger.log("Screen -- saved recording")
+        
+        // given this is a UI task, the main thread is running this application
+        // screen recording is happening on another thread, a screen recorder might
+        // be in the middle of appending data or handling data when this is happening
        
+        // the stream of data needs to be stopped as per my notes on this
+        // a pseudo-blocking data structure needs to exist to wait until the status is non-zero
+        
+        if let stream = stream {
+            stream.stopCapture()
+        }
+        
+        while(!(input?.isReadyForMoreMediaData ?? false)){
+            logger.log("Not able to mark the stream as finished")
+            sleep(1) // sleeping for a second
+        }
+        
+        input?.markAsFinished()
         writer!.finishWriting { [self] in
             if self.writer!.status == .completed {
                 // Asset writing completed successfully
             } else if writer!.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer!.error {
-                    print("Asset writing failed with error: \(error.localizedDescription)")
+                    logger.error("Asset writing failed with error: \(error.localizedDescription)")
                 }
             }
         }
@@ -69,63 +85,85 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             do{
                 (self.writer, self.input) = try setupWriter(screen: screen, path: path)
                 
-                self.writer?.startWriting() // TODO: Might have to remove this
+                logger.log("Setup Asset Writer \(self.writer)")
+                logger.log("Setup Asset Input \(self.input)")
                 
                 try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
+                
+                logger.debug("Setup stream")
             } catch{
-                print("Failed")
+                logger.error("Failed to setup stream")
             }
         }
     }
        
-    func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) { // TODO: convert this to a task
+    func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
         // Creates the video input
         let videoOutputSettings: [String : Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: screen.width,
-            AVVideoHeightKey: screen.height
+            AVVideoHeightKey: screen.height,
         ]
         
         let audioOutputSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatMPEG4AAC,
             AVNumberOfChannelsKey: 2,
-            AVSampleRateKey: 44100,
-            AVEncoderBitRateKey: 128000
+            AVSampleRateKey: 44_100,
+            AVEncoderBitRateKey: 128_000,
         ]
         
-        // TODO: Look at why the desktop directory creates a file path of /Users/wkaiser/Librqry/smartservices/.ScreenTimePlace/Data/Desktop
-//        let url = URL(string: path, relativeTo: URL.desktopDirectory)!
-        
-        let url = URL(string: path, relativeTo: .downloadsDirectory)!
+        let url = URL(string: path, relativeTo: .temporaryDirectory)!
 
-        print("URL: \(url)")
-        print("Path: \(path)")
+        logger.log("URL: \(url)")
+        logger.log("Path: \(path)")
         let writer = try AVAssetWriter(url: url, fileType: .mov)
                         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: videoOutputSettings)
-        let audio = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOutputSettings)
+        
+        logger.log("Can I add the AssetWriterInput? \(writer.canAdd(input))")
         
         writer.add(input) // TODO: Check if connecting these makes this work
-        writer.add(audio) // TODO: Check if this makes this work
+        
+        debugPrintStatus(writer.status)
         
         return (writer, input)
     }
     
     func setupStream(screen: SCDisplay, showCursor: Bool, excluding: [SCRunningApplication]) throws {
-        let contentFilter = SCContentFilter(display: screen, excludingApplications: excluding, exceptingWindows: [])
+        let contentFilter = SCContentFilter(
+            display: screen,
+            excludingApplications: excluding,
+            exceptingWindows: []
+        )
         
         let config = SCStreamConfiguration()
         config.width = screen.width
         config.height = screen.height
         config.showsCursor = showCursor
         
-        stream = SCStream(filter: contentFilter, configuration: config, delegate: StreamDelegate())
-        try stream!.addStreamOutput(self, type: .screen, sampleHandlerQueue: .global(qos: .background))
+        stream = SCStream(
+            filter: contentFilter,
+            configuration: config,
+            delegate: StreamDelegate()
+        )
+        
+        try stream!.addStreamOutput(
+            self,
+            type: .screen,
+            sampleHandlerQueue: .global(qos: .userInitiated)
+        )
+        
         stream!.startCapture(completionHandler: handleStreamStartFailure)
     }
     
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
-        guard self.state != .recording else {return}
+        guard self.state == .recording else { return }
+        
+        logger.debug("Output of the sample buffer")
+        guard didOutputSampleBuffer.isValid else {
+            logger.error("The sample buffer IS NOT valid")
+            return
+        }
         
         switch of{
             case .screen:
@@ -138,8 +176,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     }
     
     func getFilename() -> String {
-        // TODO: change this back to CMTime().seconds
-        "\(screen.displayID)-\(1000).mov"
+        let randomValue = Int(arc4random_uniform(100_000)) + 1
+        return "\(screen.displayID)-\(randomValue).mov"
     }
 }
 

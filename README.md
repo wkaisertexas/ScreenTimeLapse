@@ -1,10 +1,16 @@
 # Screen Time Lapse
 
-> Create Time-Lapsed Videos with the Exhuberant file sizes
+> Create Time-Lapsed Videos without the Exhuberant file sizes
 
 ## Todos
 
 - [ ] Get screen recording done
+
+## notes
+
+6/5/23 - I am getting some problems with AVFoundation and the ability of it to manage output settings efficiently.
+
+I tried to record directly, but end up running into some weird `undefined errors`
 
 ## References
 

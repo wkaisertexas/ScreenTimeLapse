@@ -4,6 +4,8 @@ import ScreenCaptureKit
 
 import AppKit // TODO: remove this
 
+import SwiftUI // for CI images
+
 /// Represents an object interactable with a `RecorderViewModel`
 protocol Recordable : CustomStringConvertible{
     var metaData: OutputInfo {get set}
@@ -26,17 +28,17 @@ protocol Recordable : CustomStringConvertible{
 
 extension Recordable{
     mutating func startRecording() {
-        if self.state == .recording{
-            return;
-        }
-        // setup recording
+        guard self.enabled else { return }
+        guard self.state != .recording else { return }
         
-        
+        logger.log("This should not run")
         
         self.state = .recording
     }
     
     mutating func stopRecording() {
+        guard self.enabled else { return }
+        
         self.state = .stopped
         saveRecording()
     }
@@ -50,7 +52,7 @@ extension Recordable{
     }
     
     mutating func saveRecording() {
-        print("Saving recorder")
+        logger.log("Saving recorder")
     }
     
     /// Uses the frame rate and duration to determine if the frame should be saved
@@ -73,17 +75,16 @@ extension Recordable{
     /// Provides a default way to deal with streams which do not work
     func handleStreamStartFailure(err: Error?){
         if let error = err{
-            print("Stream start failure")
-            print("\(String(describing: error))")
+            logger.log("Stream start failure \(String(describing: error))")
         } else{
-            print("Stream started sucessfully")
+            logger.log("Stream started sucessfully")
         }
     }
     
     /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
     func handleVideo(buffer: CMSampleBuffer){
         guard self.input != nil else {
-            print("Unable to find data input")
+            logger.error("No AVAssetWriter with the name `input` is present")
             return
         }
         
@@ -94,16 +95,24 @@ extension Recordable{
                     true
                 }
                 .forEach{ buffer in
-                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
-                        sleep(10)
-                        print("Sleeping")
+                    if self.writer?.status == .unknown {
+                        self.writer?.startWriting()
+                        self.writer?.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(buffer))
+                        logger.log("Started recording session because the writer's status was not known")
+                    } else {
+                        debugPrintStatus(self.writer!.status)
                     }
-                    self.input?.append(buffer)
                     
-                    //                    AVAssetWriterInputPixelBufferAdaptor.append(input).(buffer, withPresentationTime: T##CMTime)
+                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
+                        sleep(1)
+                        logger.log("Sleeping")
+                    }
+                    
+                    self.input?.append(buffer)
+                    logger.log("Appended framebuffer")
                 }
         } catch {
-            print("Invalid framebuffer")
+            logger.error("Invalid framebuffer")
         }
     }
 }

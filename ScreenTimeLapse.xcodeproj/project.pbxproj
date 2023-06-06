@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C629AD741800D3EC7B /* Screen.swift */; };
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
+		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
+		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
+		3E9894D32A2ED55600C25059 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D22A2ED55600C25059 /* Testing.swift */; };
 		3EE5FE0D296232C700768BF7 /* ScreenTimeLapseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
 		3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */; };
 		3EE5FE16296232C800768BF7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE15296232C800768BF7 /* Persistence.swift */; };
-		3EE5FE19296232C800768BF7 /* ScreenTimeLapse.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE17296232C800768BF7 /* ScreenTimeLapse.xcdatamodeld */; };
 		3EE5FE24296232C800768BF7 /* ScreenTimeLapseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */; };
 		3EE5FE2E296232C800768BF7 /* ScreenTimeLapseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE2D296232C800768BF7 /* ScreenTimeLapseUITests.swift */; };
 		3EE5FE30296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE2F296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift */; };
@@ -46,15 +48,17 @@
 		3E4D87C629AD741800D3EC7B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		3E4D87C829AD744C00D3EC7B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
+		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		3E9894D22A2ED55600C25059 /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTimeLapse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EE5FE10296232C800768BF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3EE5FE15296232C800768BF7 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		3EE5FE18296232C800768BF7 /* ScreenTimeLapse.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScreenTimeLapse.xcdatamodel; sourceTree = "<group>"; };
 		3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScreenTimeLapse.entitlements; sourceTree = "<group>"; };
 		3EE5FE1F296232C800768BF7 /* ScreenTimeLapseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeLapseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseTests.swift; sourceTree = "<group>"; };
@@ -120,13 +124,15 @@
 				3EE5FE10296232C800768BF7 /* Assets.xcassets */,
 				3EE5FE15296232C800768BF7 /* Persistence.swift */,
 				3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */,
-				3EE5FE17296232C800768BF7 /* ScreenTimeLapse.xcdatamodeld */,
 				3EE5FE12296232C800768BF7 /* Preview Content */,
 				3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */,
 				3E87A933299EBE0D00714AFC /* Recordable.swift */,
 				3EEFFBB829A9B662002D0040 /* Utils.swift */,
 				3E4D87C629AD741800D3EC7B /* Screen.swift */,
 				3E4D87C829AD744C00D3EC7B /* Camera.swift */,
+				3E61935A2A2EC12200333918 /* VideoConfiguration.swift */,
+				3E9894D02A2ED44600C25059 /* Logger.swift */,
+				3E9894D22A2ED55600C25059 /* Testing.swift */,
 			);
 			path = ScreenTimeLapse;
 			sourceTree = "<group>";
@@ -221,7 +227,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					3EE5FE08296232C700768BF7 = {
 						CreatedOnToolsVersion = 14.2;
@@ -287,12 +293,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EE5FE19296232C800768BF7 /* ScreenTimeLapse.xcdatamodeld in Sources */,
 				3EE5FE16296232C800768BF7 /* Persistence.swift in Sources */,
+				3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */,
 				3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */,
 				3EEFFBB929A9B662002D0040 /* Utils.swift in Sources */,
 				3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */,
+				3E9894D12A2ED44600C25059 /* Logger.swift in Sources */,
 				3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */,
+				3E9894D32A2ED55600C25059 /* Testing.swift in Sources */,
 				3EE5FE0D296232C700768BF7 /* ScreenTimeLapseApp.swift in Sources */,
 				3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */,
 				3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */,
@@ -367,6 +375,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -429,6 +438,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -459,6 +469,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ScreenTimeLapse/Preview Content\"";
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -488,6 +499,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ScreenTimeLapse/Preview Content\"";
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -515,6 +527,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -534,6 +547,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -552,6 +566,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -569,6 +584,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PPA4LZZXUN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -620,19 +636,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		3EE5FE17296232C800768BF7 /* ScreenTimeLapse.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				3EE5FE18296232C800768BF7 /* ScreenTimeLapse.xcdatamodel */,
-			);
-			currentVersion = 3EE5FE18296232C800768BF7 /* ScreenTimeLapse.xcdatamodel */;
-			path = ScreenTimeLapse.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 3EE5FE01296232C700768BF7 /* Project object */;
 }

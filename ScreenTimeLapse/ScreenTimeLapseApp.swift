@@ -3,7 +3,6 @@ import SwiftUI
 @main
 struct ScreenTimeLapseApp: App {
     @ObservedObject var recorderViewModel = RecorderViewModel()
-    //    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         MenuBarExtra{
