@@ -3,7 +3,9 @@ import ScreenCaptureKit
 import AVFoundation
 import SwiftUI
 
-/// Records the output of a screen in a stream-like format
+/// Records the output of a `SCDisplay` in a stream-like format using `SCStreamOutput`
+///
+/// Saves `CMSampleBuffers` into ``input`` and outputs then to ``writer``
 class Screen: NSObject, SCStreamOutput, Recordable {
     var state: RecordingState = .stopped
     var lastSavedFrame: CMTime?
@@ -77,16 +79,19 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 }
             }
         }
-        // TODO: save the file
     }
     
+    /// Sets up both *writing* and *saving*
+    ///
+    /// Creates ``writer`` and ``input`` to write assets
+    /// Sets up the stream to use ``self`` as `SCStreamOutput`
     func setup(path: String, excluding: [SCRunningApplication]) {
         Task(priority: .userInitiated){
             do{
                 (self.writer, self.input) = try setupWriter(screen: screen, path: path)
                 
                 logger.log("Setup Asset Writer \(self.writer)")
-                logger.log("Setup Asset Input \(self.input)")
+                logger.log("Setup Asset Writer Input \(self.input)")
                 
                 try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
                 
@@ -96,13 +101,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             }
         }
     }
-       
+    
+    /// Sets up the `AVAssetWriter` and `AVAssetWriterInput`
+    ///
+    /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
-        // Creates the video input
         let videoOutputSettings: [String : Any] = [
-            AVVideoCodecKey: AVVideoCodecType.h264,
+            AVVideoCodecKey: AVVideoCodecType.hevc,
             AVVideoWidthKey: screen.width,
             AVVideoHeightKey: screen.height,
+            AVVideoCompressionPropertiesKey: [
+                AVVideoAverageBitRateKey: 10_000_000, // Good for HEVC
+            ]
         ]
         
         let audioOutputSettings: [String: Any] = [
@@ -114,21 +124,23 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
 
-        logger.log("URL: \(url)")
-        logger.log("Path: \(path)")
-        let writer = try AVAssetWriter(url: url, fileType: .mov)
+        logger.debug("URL: \(url)")
+        logger.debug("Path: \(path)")
+        let writer = try AVAssetWriter(url: url, fileType: .mp4)
                         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: videoOutputSettings)
+        input.expectsMediaDataInRealTime = true
         
-        logger.log("Can I add the AssetWriterInput? \(writer.canAdd(input))")
+        logger.debug("Can I add the AssetWriterInput? \(writer.canAdd(input))")
         
-        writer.add(input) // TODO: Check if connecting these makes this work
+        writer.add(input)
         
         debugPrintStatus(writer.status)
         
         return (writer, input)
     }
     
+    /// Creates an `SCStream` with correct `filter` and `configuration`. ``self`` is set to recieve this data
     func setupStream(screen: SCDisplay, showCursor: Bool, excluding: [SCRunningApplication]) throws {
         let contentFilter = SCContentFilter(
             display: screen,
@@ -156,10 +168,16 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         stream!.startCapture(completionHandler: handleStreamStartFailure)
     }
     
+    /// Generates a filename specific to `SCDisplay` and `CMTime`
+    func getFilename() -> String {
+        let randomValue = Int(arc4random_uniform(100_000)) + 1
+        return "\(screen.displayID)-\(randomValue).mp4"
+    }
+    
+    /// Saves each `CMSampleBuffer` from the screen
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
         guard self.state == .recording else { return }
         
-        logger.debug("Output of the sample buffer")
         guard didOutputSampleBuffer.isValid else {
             logger.error("The sample buffer IS NOT valid")
             return
@@ -174,15 +192,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 print("Unknown future case")
         }
     }
-    
-    func getFilename() -> String {
-        let randomValue = Int(arc4random_uniform(100_000)) + 1
-        return "\(screen.displayID)-\(randomValue).mov"
-    }
 }
 
-class StreamDelegate : NSObject, SCStreamDelegate{
+/// Defines behavior when the state of the `SCStream` changes.
+///
+/// Technically required, but less used in this instance
+class StreamDelegate : NSObject, SCStreamDelegate {
     func stream(_ stream: SCStream, didStopWithError error: Error) {
-        print("The stream stopped")
+        logger.error("The stream stopped with \(error.localizedDescription)")
     }
 }

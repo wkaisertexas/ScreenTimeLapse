@@ -2,8 +2,8 @@ import Foundation
 import ScreenCaptureKit
 import AVFoundation
 
-/// Represents a syncronized session of `Recordable` objects
-class RecorderViewModel: ObservableObject{
+/// Represents a syncronized session of ``Recordable`` objects
+class RecorderViewModel: ObservableObject {
     @Published var apps: [SCRunningApplication : Bool] = [:]
     
     @Published var cameras: [Camera] = []
@@ -32,14 +32,14 @@ class RecorderViewModel: ObservableObject{
         }
     }
     
-    /// Gets all cameras attached to the computer and creates recorders for them
+    /// Gets all cameras attached to the computer and creates ``Camera``s for them
     func getCameras(){
         let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
         
         self.cameras = convertCameras(camera: discovery.devices)
     }
     
-    /// This functions inverts the `self.apps` list
+    /// This functions inverts the ``self.apps`` list from include to exclude
     /// - Returns: The list of apps which should be disabled
     func getExcludedApps() -> [SCRunningApplication]{
         return self.apps.filter{elem in
@@ -48,6 +48,8 @@ class RecorderViewModel: ObservableObject{
     }
     
     // MARK: -Recording
+    
+    /// Starts recording ``cameras`` and ``screens``
     func startRecording(){
         self.state = .recording
         
@@ -64,6 +66,7 @@ class RecorderViewModel: ObservableObject{
             }
     }
     
+    /// Pauses recording ``screens`` and ``cameras``
     func pauseRecording(){
         self.state = .paused
         
@@ -78,6 +81,7 @@ class RecorderViewModel: ObservableObject{
             }
     }
     
+    /// Resumes recoriding ``screens`` and ``cameras``
     func resumeRecording(){
         self.state = .recording
         
@@ -106,6 +110,7 @@ class RecorderViewModel: ObservableObject{
             }
     }
     
+    /// Saves the ``cameras`` and ``screens``
     func saveRecordings(){
         self.cameras.indices
             .forEach{ index in
@@ -125,6 +130,7 @@ class RecorderViewModel: ObservableObject{
         objectWillChange.send()
     }
     
+    /// Turns a `SCRunningApplication` on or off in the ``apps`` dictionary
     func toggleApp(app: SCRunningApplication){
         if let row = apps.first(where: {$0.key.processID == app.processID}){
             apps[row.key] = !row.value
@@ -132,26 +138,29 @@ class RecorderViewModel: ObservableObject{
         objectWillChange.send()
     }
     
+    /// Toggles a ``Camera``
+    ///
+    /// Rather than a dictionary like ``apps`` this was encapsulated in a custom struct
     func toggleCameras(camera: Camera){
         camera.enabled.toggle()
         objectWillChange.send()
     }
     
-    /// Checks to make sure at least one `Screen` or `Camera` is enabled
+    /// Checks to make sure at least one ``Screen`` or ``Camera`` is enabled
     func recordersDisabled() -> Bool{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
     }
     
     // MARK: -Applications Menu
     
-    /// Flips the enabled and disabled `applications` in `apps`
+    /// Flips the enabled and disabled app in ``apps``
     func invertApplications() {
         for appName in self.apps.keys{
             self.apps[appName]!.toggle()
         }
     }
     
-    /// Resets `apps` by setting each `value` to `true`
+    /// Resets ``apps`` by setting each `value` to `true`
     func resetApps() {
         for appName in self.apps.keys{
             self.apps[appName]! = true // enabled by default
@@ -160,14 +169,16 @@ class RecorderViewModel: ObservableObject{
         refreshApps()
     }
     
-    /// Refreshes `apps`
+    /// Refreshes ``apps`` to get new infromation
+    ///
+    /// Ideally, finding new apps would be done in a periodic manner
     func refreshApps() {
         Task(priority: .userInitiated){
             await getDisplayInfo()
         }
     }
     
-    /// Gets apps from content and converts this into a dictioanry
+    /// Generates an dictionary with `SCRunningApplication` keys and `Bool` value
     private func convertApps(apps input: [SCRunningApplication]) -> [SCRunningApplication : Bool]{
         let returnApps = input
             .filter{app in
@@ -181,7 +192,7 @@ class RecorderViewModel: ObservableObject{
         return Dictionary(uniqueKeysWithValues: returnApps)
     }
     
-    /// Turns an array of `SCDisplays` into new screens
+    /// Turns an array of `SCDisplays` into new ``Screen``s
     private func convertDisplays(displays input: [SCDisplay]) -> [Screen]{
         var newScreens = input
             .filter{ display in
@@ -206,7 +217,7 @@ class RecorderViewModel: ObservableObject{
         return newScreens
     }
     
-    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom `Camera` object
+    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom ``Camera`` object
     private func convertCameras(camera input: [AVCaptureDevice]) -> [Camera]{
         var newCameras = input
             .filter{ camera in
@@ -229,12 +240,12 @@ class RecorderViewModel: ObservableObject{
     
     // MARK: -Recorder Creation
     
-    /// Generates the default settings for a screen recorder
+    /// Converts a `SCDisplay` into a ``Screen``
     private func getScreenRecorder(_ screen: SCDisplay) -> Screen{
         Screen(screen: screen, showCursor: showCursor)
     }
     
-    /// Generates the deafault settings for a camera reocrder
+    /// Converts a `AVCaptureDevice` into a ``Camera``
     private func getCameraRecorder(_ camera: AVCaptureDevice) -> Camera{
         Camera(camera: camera)
     }

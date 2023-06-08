@@ -6,7 +6,10 @@ import AppKit // TODO: remove this
 
 import SwiftUI // for CI images
 
-/// Represents an object interactable with a `RecorderViewModel`
+// TODO: remove for testing purposes
+let frameCount = 0
+
+/// Represents an object interactable with a ``RecorderViewModel``
 protocol Recordable : CustomStringConvertible{
     var metaData: OutputInfo {get set}
     var state: RecordingState {get set}
@@ -27,6 +30,7 @@ protocol Recordable : CustomStringConvertible{
 }
 
 extension Recordable{
+    /// Starts recording if ``enabled``
     mutating func startRecording() {
         guard self.enabled else { return }
         guard self.state != .recording else { return }
@@ -36,6 +40,7 @@ extension Recordable{
         self.state = .recording
     }
     
+    /// Stops recording if ``enabled``
     mutating func stopRecording() {
         guard self.enabled else { return }
         
@@ -88,29 +93,67 @@ extension Recordable{
             return
         }
         
-        do{            
-            try buffer
-                .singleSampleBuffers()
-                .filter{ _ in // todo: fix this
-                    true
-                }
-                .forEach{ buffer in
-                    if self.writer?.status == .unknown {
-                        self.writer?.startWriting()
-                        self.writer?.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(buffer))
-                        logger.log("Started recording session because the writer's status was not known")
-                    } else {
-                        debugPrintStatus(self.writer!.status)
-                    }
-                    
-                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
-                        sleep(1)
-                        logger.log("Sleeping")
-                    }
-                    
-                    self.input?.append(buffer)
-                    logger.log("Appended framebuffer")
-                }
+        do{
+            // Fuck it we ball, directly append the framebuffers
+            if self.writer?.status == .unknown {
+                let bufferTime = CMSampleBufferGetPresentationTimeStamp(buffer)
+                self.writer?.startWriting()
+//                self.writer?.startSession(atSourceTime: bufferTime)
+                
+                self.writer?.startSession(atSourceTime: CMTime(value: 1, timescale: 24))
+                
+                logger.debug("Buffer Time: \(buffer.presentationTimeStamp.epoch.description)")
+                return
+            }
+            
+            if self.writer?.status == .failed {
+                logger.log("WE failed")
+            }
+            
+            guard let attachmentsArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
+                  createIfNecessary: false) as? [[SCStreamFrameInfo: Any]],
+                  let attachments = attachmentsArray.first else {
+                logger.error("Attachments Array does not work")
+                return
+            }
+            
+            // the status needs to be not `.complete`
+            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
+                logger.error("INCOMPLETE FRAMEBUFFER")
+                return
+            }
+            
+            logger.log("Tried to append buffer")
+            
+            
+            let maker = CMTime(value: 1, timescale: 23)
+            let multiplication = CMTimeMultiply(maker, multiplier: Int32(frameCount))
+            
+            try buffer.setOutputPresentationTimeStamp(multiplication)
+            self.input?.append(buffer)
+            logger.log("Appended buffer")
+           
+//            try buffer
+//                .singleSampleBuffers()
+//                .filter{ _ in // todo: fix this
+//                    true
+//                }
+//                .forEach{ buffer in
+//                    if self.writer?.status == .unknown {
+//                        self.writer?.startWriting()
+//                        self.writer?.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(buffer))
+//                        logger.log("Started recording session because the writer's status was not known")
+//                    } else {
+//                        debugPrintStatus(self.writer!.status)
+//                    }
+//
+//                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
+//                        sleep(1)
+//                        logger.log("Sleeping")
+//                    }
+//
+//                    self.input?.append(buffer)
+//                    logger.log("Appended framebuffer")
         } catch {
             logger.error("Invalid framebuffer")
         }
