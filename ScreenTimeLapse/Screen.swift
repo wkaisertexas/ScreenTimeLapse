@@ -1,6 +1,7 @@
 import Foundation
 import ScreenCaptureKit
 import AVFoundation
+import VideoToolbox
 import SwiftUI
 
 /// Records the output of a `SCDisplay` in a stream-like format using `SCStreamOutput`
@@ -106,14 +107,31 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
+        var settings = settingsAssistant!.videoSettings!
+        
+        logger.debug("\(settings.values.debugDescription)") // shows the user some of the base settings
+        
+        settings[AVVideoWidthKey] = screen.width
+        settings[AVVideoHeightKey] = screen.height
+        
         let videoOutputSettings: [String : Any] = [
             AVVideoCodecKey: AVVideoCodecType.hevc,
             AVVideoWidthKey: screen.width,
             AVVideoHeightKey: screen.height,
+
+           
             AVVideoCompressionPropertiesKey: [
-                AVVideoAverageBitRateKey: 10_000_000, // Good for HEVC
+                AVVideoAverageBitRateKey: 20_000_000, // Good for HEVC
+                
+                AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_2020,
+                AVVideoTransferFunctionKey: kCMFormatDescriptionTransferFunction_ITU_R_2100_HLG,
+                AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_2020,
+                AVVideoProfileLevelKey: kVTProfileLevel_HEVC_Main10_AutoLevel,
             ]
         ]
+        
+        logger.debug("\(videoOutputSettings.values.debugDescription)") // shows the user some of the base settings
         
         let audioOutputSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatMPEG4AAC,
@@ -135,7 +153,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         writer.add(input)
         
-        debugPrintStatus(writer.status)
+//        debugPrintStatus(writer.status)
         
         return (writer, input)
     }
@@ -152,6 +170,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         config.width = screen.width
         config.height = screen.height
         config.showsCursor = showCursor
+        config.queueDepth = 10
         
         stream = SCStream(
             filter: contentFilter,

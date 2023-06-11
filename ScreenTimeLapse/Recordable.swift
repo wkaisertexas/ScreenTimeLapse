@@ -103,6 +103,8 @@ extension Recordable{
                 self.writer?.startSession(atSourceTime: CMTime(value: 1, timescale: 24))
                 
                 logger.debug("Buffer Time: \(buffer.presentationTimeStamp.epoch.description)")
+                
+                printSampleBufferSize(sampleBuffer: buffer)
                 return
             }
             
@@ -118,13 +120,7 @@ extension Recordable{
             }
             
             // the status needs to be not `.complete`
-            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
-                logger.error("INCOMPLETE FRAMEBUFFER")
-                return
-            }
-            
-            logger.log("Tried to append buffer")
-            
+            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else { return }
             
             let maker = CMTime(value: 1, timescale: 23)
             let multiplication = CMTimeMultiply(maker, multiplier: Int32(frameCount))
@@ -132,30 +128,24 @@ extension Recordable{
             try buffer.setOutputPresentationTimeStamp(multiplication)
             self.input?.append(buffer)
             logger.log("Appended buffer")
-           
-//            try buffer
-//                .singleSampleBuffers()
-//                .filter{ _ in // todo: fix this
-//                    true
-//                }
-//                .forEach{ buffer in
-//                    if self.writer?.status == .unknown {
-//                        self.writer?.startWriting()
-//                        self.writer?.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(buffer))
-//                        logger.log("Started recording session because the writer's status was not known")
-//                    } else {
-//                        debugPrintStatus(self.writer!.status)
-//                    }
-//
-//                    while(!(self.input?.isReadyForMoreMediaData ?? true)){
-//                        sleep(1)
-//                        logger.log("Sleeping")
-//                    }
-//
-//                    self.input?.append(buffer)
-//                    logger.log("Appended framebuffer")
+
         } catch {
             logger.error("Invalid framebuffer")
         }
     }
+}
+
+
+
+func printSampleBufferSize(sampleBuffer: CMSampleBuffer) {
+    guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
+        print("Failed to get format description")
+        return
+    }
+    
+    let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
+    let width = Int(dimensions.width)
+    let height = Int(dimensions.height)
+    
+    print("Width: \(width), Height: \(height)")
 }
