@@ -1,16 +1,18 @@
 import Foundation
 import AVFoundation
 import ScreenCaptureKit
+import Combine
 
 import AppKit // TODO: remove this
 
 import SwiftUI // for CI images
 
 // TODO: remove for testing purposes
-let frameCount = 0
+var frameCount = 0
+var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
 
 /// Represents an object interactable with a ``RecorderViewModel``
-protocol Recordable : CustomStringConvertible{
+protocol Recordable : CustomStringConvertible {
     var metaData: OutputInfo {get set}
     var state: RecordingState {get set}
     var enabled: Bool {get set}
@@ -88,47 +90,48 @@ extension Recordable{
     
     /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
     func handleVideo(buffer: CMSampleBuffer){
-        guard self.input != nil else {
+        
+                print("Handle video called")
+        guard self.input != nil else { // both
             logger.error("No AVAssetWriter with the name `input` is present")
             return
         }
         
         do{
-            // Fuck it we ball, directly append the framebuffers
-            if self.writer?.status == .unknown {
-                let bufferTime = CMSampleBufferGetPresentationTimeStamp(buffer)
-                self.writer?.startWriting()
-//                self.writer?.startSession(atSourceTime: bufferTime)
-                
-                self.writer?.startSession(atSourceTime: CMTime(value: 1, timescale: 24))
-                
-                logger.debug("Buffer Time: \(buffer.presentationTimeStamp.epoch.description)")
-                
-                printSampleBufferSize(sampleBuffer: buffer)
-                return
-            }
-            
-            if self.writer?.status == .failed {
-                logger.log("WE failed")
-            }
-            
-            guard let attachmentsArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
-                  createIfNecessary: false) as? [[SCStreamFrameInfo: Any]],
-                  let attachments = attachmentsArray.first else {
+            guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
+                                                                                          createIfNecessary: false),
+            var attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
+            else {
                 logger.error("Attachments Array does not work")
                 return
             }
-            
+                                                                                                
             // the status needs to be not `.complete`
-            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else { return }
+            print(attachments)
+            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
+                print("Incomplete framebuffer")
+                return }
             
-            let maker = CMTime(value: 1, timescale: 23)
-            let multiplication = CMTimeMultiply(maker, multiplier: Int32(frameCount))
+            if self.writer?.status == .unknown { 
+                self.writer?.startWriting()
+                let latency = attachments.value(forKey: "SCStreamMetricCaptureLatencyTime") as! Double
+                print(latency)
+                
+                self.writer?.startSession(atSourceTime: .zero)
+                
+                offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+                return
+            }
             
-            try buffer.setOutputPresentationTimeStamp(multiplication)
-            self.input?.append(buffer)
+            guard self.writer?.status != .failed else {
+                logger.log("WE failed")
+                return
+            }
+            
+            canAddSampleBuffer(buffer: buffer, assetWriterInput: self.input!)
+            
+            self.input?.append(try buffer.offsettingTiming(by: offset))
             logger.log("Appended buffer")
-
         } catch {
             logger.error("Invalid framebuffer")
         }
@@ -148,4 +151,25 @@ func printSampleBufferSize(sampleBuffer: CMSampleBuffer) {
     let height = Int(dimensions.height)
     
     print("Width: \(width), Height: \(height)")
+}
+
+
+extension CMSampleBuffer {
+    func offsettingTiming(by offset: CMTime) throws -> CMSampleBuffer {
+        let newSampleTimingInfos: [CMSampleTimingInfo]
+        
+        do {
+            newSampleTimingInfos = try sampleTimingInfos().map {
+                var newSampleTiming = $0
+                newSampleTiming.presentationTimeStamp = CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: 0.2)
+                print(newSampleTiming)
+
+                return newSampleTiming
+            }
+        } catch {
+            newSampleTimingInfos = []
+        }
+        let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
+        return newSampleBuffer
+    }
 }

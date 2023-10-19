@@ -186,9 +186,10 @@ struct InputDevices: View{
         Button(action: {
             viewModel.toggleApp(app: app)
         }){
-            Image(nsImage: NSRunningApplication(processIdentifier: app.processID)!.icon!)
-                
-            Text(app.applicationName)
+            if let runningApp = NSRunningApplication(processIdentifier: app.processID), let appIcon = runningApp.icon {
+                Image(nsImage: appIcon)
+                Text(app.applicationName)
+            }
         }
     }
 }

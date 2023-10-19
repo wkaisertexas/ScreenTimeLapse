@@ -13,6 +13,68 @@ import AVFoundation
 
 // Because things are not working, a testing class is just used to handle all of the code to run sanity checks
 
+import Foundation
+import CoreMedia
+
+func logVideoProperties(of sampleBuffer: CMSampleBuffer) {
+    guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
+        logger.log("Invalid sample buffer format description")
+        return
+    }
+    
+    let mediaType = CMFormatDescriptionGetMediaType(formatDescription)
+    if mediaType != kCMMediaType_Video {
+        logger.log("Sample buffer is not of video media type")
+        return
+    }
+
+    // get information about the sample buffer
+    logger.log("\(CMSampleBufferGetNumSamples(sampleBuffer))")
+    logger.log("\(CMSampleBufferGetDuration(sampleBuffer).seconds)")
+    logger.log("\(CMSampleBufferGetOutputDuration(sampleBuffer).seconds)")
+    logger.log("\(CMSampleBufferGetDecodeTimeStamp(sampleBuffer).seconds)")
+        
+//    var itemIndex: CMItemIndex = CMTime.zero
+//    let pointer = UnsafeMutablePointer<CMItemIndex>.allocate(capacity: 1)
+//    pointer.initialize(to: itemIndex)
+
+    
+//    let timeRange = CMTimeRangeMake(start: CMTime.zero, duration: CMTimeMake(value: 10, timescale: 1))
+//    let pointer = UnsafeMutablePointer<CMTimeRange>.allocate(capacity: 1)
+//    pointer.initialize(to: timeRange)
+//    
+//    let sampleInfo = CMSampleBufferGetSampleTimingInfo(sampleBuffer, at: CMTime.zero, timingInfoOut: pointer);
+//    
+//    print("\(pointer.pointee.duration)")
+//    
+//    pointer.deallocate();
+//    
+//    let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
+//    logger.log("Video Dimensions: \(dimensions.width) x \(dimensions.height)")
+//    
+//        logger.log("Presentation Timestamp: \(sampleBuffer.presentationTimeStamp)")
+//        logger.log("Decode Timestamp: \(sampleBuffer.decodeTimeStamp)")
+//        logger.log("Duration: \(sampleBuffer.duration)")
+//        
+//    // Additional properties can be extracted and logged if needed
+//
+//    // Example: Frame rate
+//    if let attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, createIfNecessary: false),
+//        let attachment = CFArrayGetValueAtIndex(attachments, 0) as? CFDictionary,
+//        let frameRate = CFDictionaryGetValue(attachment, Unmanaged.passUnretained(kCMSampleAttachmentKey_DisplayImmediately).toOpaque()) {
+//        logger.log("Frame Rate: \(frameRate)")
+//    }
+//
+//    // Example: Pixel format
+//    let pixelFormat = CMFormatDescriptionGetMediaSubType(formatDescription)
+//    logger.log("Pixel Format: \(pixelFormat)")
+    
+    // Add more properties as needed
+    
+    // Note: Make sure to import the relevant frameworks and define the Logger class or use an appropriate logging mechanism
+}
+
+
 // note: there could be a mismatch between the cmsampletimes which is causing issues. this is definitely something to look into
 
 // turning cmsamplebuffers into images

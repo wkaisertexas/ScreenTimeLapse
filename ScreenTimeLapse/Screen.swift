@@ -3,6 +3,12 @@ import ScreenCaptureKit
 import AVFoundation
 import VideoToolbox
 import SwiftUI
+import CoreVideo
+import Cocoa
+
+
+let workspace = NSWorkspace.shared
+
 
 /// Records the output of a `SCDisplay` in a stream-like format using `SCStreamOutput`
 ///
@@ -73,6 +79,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         writer!.finishWriting { [self] in
             if self.writer!.status == .completed {
                 // Asset writing completed successfully
+                print(self.writer!.outputURL)
+                workspace.open(self.writer!.outputURL)
             } else if writer!.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer!.error {
@@ -107,54 +115,61 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc3840x2160WithAlpha)
         var settings = settingsAssistant!.videoSettings!
         
-        logger.debug("\(settings.values.debugDescription)") // shows the user some of the base settings
+        logger.debug("\(settings.keys.debugDescription)") // shows the user some of the base settings
+        if let jsonString = try? JSONSerialization.data(withJSONObject: settings, options: .prettyPrinted),
+           let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
+            print(prettyPrintedString)
+        }
         
+        let colorPropertySettings = [
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_2020,
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+        ]
+
         settings[AVVideoWidthKey] = screen.width
         settings[AVVideoHeightKey] = screen.height
+        settings[AVVideoColorPropertiesKey] = colorPropertySettings
         
+        print(settings)
         let videoOutputSettings: [String : Any] = [
-            AVVideoCodecKey: AVVideoCodecType.hevc,
+            AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: screen.width,
             AVVideoHeightKey: screen.height,
-
-           
-            AVVideoCompressionPropertiesKey: [
-                AVVideoAverageBitRateKey: 20_000_000, // Good for HEVC
-                
-                AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_2020,
-                AVVideoTransferFunctionKey: kCMFormatDescriptionTransferFunction_ITU_R_2100_HLG,
-                AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_2020,
-                AVVideoProfileLevelKey: kVTProfileLevel_HEVC_Main10_AutoLevel,
-            ]
-        ]
-        
-        logger.debug("\(videoOutputSettings.values.debugDescription)") // shows the user some of the base settings
-        
-        let audioOutputSettings: [String: Any] = [
-            AVFormatIDKey: kAudioFormatMPEG4AAC,
-            AVNumberOfChannelsKey: 2,
-            AVSampleRateKey: 44_100,
-            AVEncoderBitRateKey: 128_000,
+            AVVideoColorPropertiesKey: colorPropertySettings,
+//            AVVideoColorPropertiesKey: [
+//                AVVideoColorPrimariesKey: AVVideoColorPrimaries_SMPTE_C,
+//                AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+//                AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_601_4,
+//            ],
+//            AVVideoCompressionPropertiesKey: [
+//                AVVideoAverageBitRateKey: 8_000_000, // Good for HEVC
+//                kVTCompressionPropertyKey_ProfileLevel: kVTProfileLevel_H264_High_4_2
+//            ],
+//            kCVPixel as String: AVCaptureColorSpace.sRGB,
+//            kCVPixel as String: AVCaptureColorSpace.P3_D65,
+//            AVVideoColorPropertiesKey: AVVideoColorPrimaries_P3_D65,
+//            kCVPixelBufferPixelFormatTypeKey: kCVPixelFormatType_32BGRA,
         ]
         
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
 
         logger.debug("URL: \(url)")
         logger.debug("Path: \(path)")
-        let writer = try AVAssetWriter(url: url, fileType: .mp4)
+        
+        let writer = try AVAssetWriter(url: url, fileType: .mov)
                         
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: videoOutputSettings)
+        let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+//        input.transform = CGAffineTransform()
+//        input.transform = CGAffineTransform(scaleX: 2, y: 2)
         input.expectsMediaDataInRealTime = true
         
-        logger.debug("Can I add the AssetWriterInput? \(writer.canAdd(input))")
         
         writer.add(input)
-        
-//        debugPrintStatus(writer.status)
-        
+                
         return (writer, input)
     }
     
@@ -171,6 +186,20 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         config.height = screen.height
         config.showsCursor = showCursor
         config.queueDepth = 10
+        config.colorSpaceName = CGColorSpace.extendedSRGB
+//        config.colorMatrix = kCVPixelBufferProResRAWKey_ColorMatrix
+        config.colorMatrix = kCVImageBufferYCbCrMatrix_ITU_R_2020;
+//        config.colorMatrix = kCVImageBufferYCbCrMatrix_ITU_R_709_2;
+        print(kCVImageBufferYCbCrMatrix_ITU_R_709_2)
+        print(kCVImageBufferYCbCrMatrix_ITU_R_2020)
+//        config.colorMatrix = kVTProfileLevel_HEVC_Main_AutoLevel;
+        
+//        config.colorMatrix = String(AVVideoYCbCrMatrix_ITU_R_601_4.utf16)
+//        config.colorSpaceName = CGColorSpace.itur_2100_PQ; // TODO: look at color spaces
+        config.backgroundColor = .white
+//        config.pixelFormat = kCMPixelFormat_422YpCbCr8
+//        config.pixelFormat = kCMPixelFormat_444YpCbCr10
+        print(config)
         
         stream = SCStream(
             filter: contentFilter,
@@ -184,13 +213,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             sampleHandlerQueue: .global(qos: .userInitiated)
         )
         
-        stream!.startCapture(completionHandler: handleStreamStartFailure)
+        stream?.startCapture(completionHandler: handleStreamStartFailure)
     }
     
     /// Generates a filename specific to `SCDisplay` and `CMTime`
     func getFilename() -> String {
         let randomValue = Int(arc4random_uniform(100_000)) + 1
-        return "\(screen.displayID)-\(randomValue).mp4"
+        return "\(screen.displayID)-\(randomValue).mov"
     }
     
     /// Saves each `CMSampleBuffer` from the screen
