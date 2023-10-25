@@ -51,25 +51,29 @@ func canAddSampleBuffer(buffer: CMSampleBuffer, assetWriterInput: AVAssetWriterI
     }
     
     // timing info
-    guard buffer.presentationTimeStamp.timescale == assetWriterInput.mediaTimeScale else {
-        print("The timescales are off")
-        print("Timescale buffer \(buffer.presentationTimeStamp.timescale)")
-        print("Timescale input \(assetWriterInput.mediaTimeScale)")
-        return false
-    }
+//    guard buffer.presentationTimeStamp.timescale == assetWriterInput.mediaTimeScale else {
+//        print("The timescales are off")
+//        print("Timescale buffer \(buffer.presentationTimeStamp.timescale)")
+//        print("Timescale input \(assetWriterInput.mediaTimeScale)")
+//        return false
+//    }
     
     // we work with single samples
-    guard buffer.totalSampleSize == 1 else {
-        print("Samples \(buffer.totalSampleSize)")
+    guard buffer.numSamples == 1 else {
+        print("Samples \(buffer.numSamples)")
         return false
     }
     
     // dimensions should match
-    guard let bufferDescription = buffer.formatDescription, let hint = assetWriterInput.sourceFormatHint, bufferDescription.dimensions.width == hint.dimensions.width, bufferDescription.dimensions.height == hint.dimensions.height else {
-        print("Dimensions are not matching")
-        return false
-    }
-    
+//    guard let bufferDescription = buffer.formatDescription, let hint = assetWriterInput.sourceFormatHint, bufferDescription.dimensions.width == hint.dimensions.width, bufferDescription.dimensions.height == hint.dimensions.height else {
+//        print("Dimensions are not matching")
+////        assetWriterInput.sourceFormatHint?.dimensions
+//
+////        print("Buffer Dimensions \(buffer.formatDescription!.dimensions)")
+//        print("Hint Dimensions \(assetWriterInput.sourceFormatHint!.dimensions)")
+////        return false
+//    }
+    let bufferDescription = buffer.formatDescription!
     print("Buffer Media Type \(bufferDescription.mediaType)")
     
     print("Buffer \(buffer)")

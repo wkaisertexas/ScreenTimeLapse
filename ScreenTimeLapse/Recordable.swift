@@ -109,28 +109,30 @@ extension Recordable{
             // the status needs to be not `.complete`
             print(attachments)
             guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
-                print("Incomplete framebuffer")
                 return }
             
-            if self.writer?.status == .unknown { 
-                self.writer?.startWriting()
+            guard let writer = self.writer, let input = self.input else {return}
+            
+            if writer.status == .unknown {
+               writer.startWriting()
+                    
                 let latency = attachments.value(forKey: "SCStreamMetricCaptureLatencyTime") as! Double
                 print(latency)
                 
-                self.writer?.startSession(atSourceTime: .zero)
+                writer.startSession(atSourceTime: .zero)
                 
                 offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
                 return
             }
             
-            guard self.writer?.status != .failed else {
+            guard writer.status != .failed else {
                 logger.log("WE failed")
                 return
             }
             
-            canAddSampleBuffer(buffer: buffer, assetWriterInput: self.input!)
+            canAddSampleBuffer(buffer: buffer, assetWriterInput: input)
             
-            self.input?.append(try buffer.offsettingTiming(by: offset))
+            input.append(try buffer.offsettingTiming(by: offset))
             logger.log("Appended buffer")
         } catch {
             logger.error("Invalid framebuffer")
