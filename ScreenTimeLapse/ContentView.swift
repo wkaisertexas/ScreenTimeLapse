@@ -2,8 +2,6 @@ import SwiftUI
 import CoreData
 import AVFoundation
 import ScreenCaptureKit
-import Foundation
-import Cocoa
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel: RecorderViewModel

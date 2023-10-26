@@ -1,4 +1,3 @@
-import Foundation
 import ScreenCaptureKit
 import AVFoundation
 
@@ -30,53 +29,8 @@ enum RecordingState : CustomStringConvertible{
     case paused
 }
 
-extension SCRunningApplication : Comparable{
+extension SCRunningApplication : Comparable {
     public static func < (lhs: SCRunningApplication, rhs: SCRunningApplication) -> Bool {
         lhs.bundleIdentifier < rhs.bundleIdentifier
     }
-}
-
-// can add sample buffer
-func canAddSampleBuffer(buffer: CMSampleBuffer, assetWriterInput: AVAssetWriterInput) -> Bool {
-    // buffer should be valid
-    guard buffer.isValid else {
-        print("Buffer is not valid")
-        return false
-    }
-    
-    // writer input should have room for more media data
-    guard assetWriterInput.isReadyForMoreMediaData else {
-        print("The input is not ready for more media data ")
-        return false
-    }
-    
-    // timing info
-//    guard buffer.presentationTimeStamp.timescale == assetWriterInput.mediaTimeScale else {
-//        print("The timescales are off")
-//        print("Timescale buffer \(buffer.presentationTimeStamp.timescale)")
-//        print("Timescale input \(assetWriterInput.mediaTimeScale)")
-//        return false
-//    }
-    
-    // we work with single samples
-    guard buffer.numSamples == 1 else {
-        print("Samples \(buffer.numSamples)")
-        return false
-    }
-    
-    // dimensions should match
-//    guard let bufferDescription = buffer.formatDescription, let hint = assetWriterInput.sourceFormatHint, bufferDescription.dimensions.width == hint.dimensions.width, bufferDescription.dimensions.height == hint.dimensions.height else {
-//        print("Dimensions are not matching")
-////        assetWriterInput.sourceFormatHint?.dimensions
-//
-////        print("Buffer Dimensions \(buffer.formatDescription!.dimensions)")
-//        print("Hint Dimensions \(assetWriterInput.sourceFormatHint!.dimensions)")
-////        return false
-//    }
-    let bufferDescription = buffer.formatDescription!
-    print("Buffer Media Type \(bufferDescription.mediaType)")
-    
-    print("Buffer \(buffer)")
-    print("Input \(assetWriterInput)")
-    return true
 }

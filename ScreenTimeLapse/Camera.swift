@@ -1,4 +1,3 @@
-import Foundation
 import AVFoundation
 
 var frameNumber = 0
@@ -39,11 +38,9 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
                 try setupStream(device: self.inputDevice)
                                 
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
-                
+
                 // starts the stream
                 self.captureSession!.startRunning()
-                
-                print("Started Running: Things are here \(self.captureSession!.isRunning)")
             } catch{
                 logger.error("Failed to setup stream")
             }
@@ -76,32 +73,37 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     
     /// Setting up stream
     func setupStream(device: AVCaptureDevice) throws {
+        
+        let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
+        
+        // get the front camera
+        print(discovery.devices)
+        let camera = discovery.devices.first { device in
+            device.manufacturer == "Apple Inc."
+        }!
+        
+        
         let captureSession = AVCaptureSession()
-        print(device.manufacturer)
-        let cameraInput = try AVCaptureDeviceInput(device: device)
+        let cameraInput = try! AVCaptureDeviceInput(device: camera)
         captureSession.addInput(cameraInput)
         
         // Adding the output to the camera session
-        videoOutput = AVCaptureVideoDataOutput()
+        let out = AVCaptureVideoDataOutput()
         
-        guard let videoOutput = videoOutput else {
-            logger.error("Can't add video output")
-            return
-        }
-        
-        let availableFormatTypes = videoOutput.availableVideoPixelFormatTypes
-        videoOutput.videoSettings = [
+        let availableFormatTypes = out.availableVideoPixelFormatTypes
+        out.videoSettings = [
             kCVPixelBufferPixelFormatTypeKey as String: Int(availableFormatTypes.first!),
             kCVPixelBufferIOSurfacePropertiesKey as String : [:]
         ]
-        videoOutput.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
-        videoOutput.alwaysDiscardsLateVideoFrames = true
+        out.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
+        out.alwaysDiscardsLateVideoFrames = true
 
-        captureSession.addOutput(videoOutput)
+        captureSession.addOutput(out)
         captureSession.startRunning()
 
         self.captureSession = captureSession
         self.cameraInput = cameraInput
+        self.videoOutput = out
     }
     
     // MARK: -User Interaction
@@ -155,39 +157,17 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     
     /// Equivalent to `stream` for `Screen`. Takes sample buffers and processes them
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
-        // do not step in without being locked
-        print("Initial sample buffer")
-
-        
-        print("Connection \(connection)")
-        print("Output \(output)")
-        
         processingGroup.enter()
                 
-                // Process the sample buffer asynchronously on the capture queue
+        // Process the sample buffer asynchronously on the capture queue
         captureQue.async { [self] in
-            print(frameNumber)
-                    frameNumber += 1
+            handleVideo(buffer: sampleBuffer)
             
-            if(frameNumber > 3){
-                return
-            }
-                    // Your processing code here
-                    if let videoDataOutput = output as? AVCaptureVideoDataOutput {
-                        handleVideo(buffer: sampleBuffer)
-                    } else {
-                        print("Non video data present")
-                    }
-                    
-                    // Signal that processing is complete for this frame or sample
-                    processingGroup.leave()
-                }
+            processingGroup.leave()
+        }
                 
-                // Wait for the current frame's processing to complete before the next one
-                processingGroup.wait()
-        
-           
+        // Wait for the current frame's processing to complete before the next one
+        processingGroup.wait()
     }
     
     // TODO: Remove and consolodate `handleVideo`
@@ -236,23 +216,6 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
             return
         }
         
-//        if adapter!.append(imageBuffer, withPresentationTime: CMSampleBufferGetPresentationTimeStamp(buffer)){
-//            print("Was able to release image buffer")
-//        } else {
-//            print("Was not able to use image buffer")
-//        }
-        
-//        if canAddSampleBuffer(buffer: buffer, assetWriterInput: input) {
-//
-//            if input.append(buffer) {
-//                print("Appended successfully")
-//            } else {
-//                print("Append failed")
-//            }
-//            print("ADDED Buffer")
-//        }
-        
-        print(CMSampleBufferGetDataBuffer(buffer))
         if input.append(buffer) {
             print("Appended Buffer Successfully")
         } else {

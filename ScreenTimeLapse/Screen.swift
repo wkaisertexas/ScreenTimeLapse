@@ -1,14 +1,8 @@
-import Foundation
 import ScreenCaptureKit
 import AVFoundation
-import VideoToolbox
 import SwiftUI
-import CoreVideo
-import Cocoa
-
 
 let workspace = NSWorkspace.shared
-
 
 /// Records the output of a `SCDisplay` in a stream-like format using `SCStreamOutput`
 ///

@@ -1,11 +1,5 @@
-import Foundation
 import AVFoundation
 import ScreenCaptureKit
-import Combine
-
-import AppKit // TODO: remove this
-
-import SwiftUI // for CI images
 
 // TODO: remove for testing purposes
 var frameCount = 0
@@ -129,9 +123,7 @@ extension Recordable{
                 logger.log("WE failed")
                 return
             }
-            
-            canAddSampleBuffer(buffer: buffer, assetWriterInput: input)
-            
+                        
             input.append(try buffer.offsettingTiming(by: offset))
             logger.log("Appended buffer")
         } catch {
@@ -139,22 +131,6 @@ extension Recordable{
         }
     }
 }
-
-
-
-func printSampleBufferSize(sampleBuffer: CMSampleBuffer) {
-    guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
-        print("Failed to get format description")
-        return
-    }
-    
-    let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
-    let width = Int(dimensions.width)
-    let height = Int(dimensions.height)
-    
-    print("Width: \(width), Height: \(height)")
-}
-
 
 extension CMSampleBuffer {
     func offsettingTiming(by offset: CMTime) throws -> CMSampleBuffer {
