@@ -17,11 +17,9 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     var connection: AVCaptureConnection?
     var cameraInput: AVCaptureDeviceInput?
     var videoOutput: AVCaptureVideoDataOutput?
-//    var adapter: AVAssetWriterInputPixelBufferAdaptor?
     
     let captureQue = DispatchQueue(label: "com.smartservices.captureQueue") // dispatch que does not work for some reason
     let processingGroup = DispatchGroup()
-
     
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
@@ -39,25 +37,13 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
         Task(priority: .userInitiated){
             do{
                 try setupStream(device: self.inputDevice)
-                
-                logger.debug("Setup stream")
-                
-                print(inputDevice.activeFormat)
-                
-                print("Active Format \(inputDevice.activeFormat)")
-                print("Active Color Space \(inputDevice.activeColorSpace)")
-
-
+                                
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
-                
-                logger.log("Camera Setup Asset Writer \(self.writer)")
-                logger.log("Camera Setup Asset Writer Input \(self.input)")
                 
                 // starts the stream
                 self.captureSession!.startRunning()
-                if self.captureSession!.isRunning{
-                    print("session is running")
-                }
+                
+                print("Started Running: Things are here \(self.captureSession!.isRunning)")
             } catch{
                 logger.error("Failed to setup stream")
             }
@@ -66,31 +52,16 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     
     /// Sets up the `AVAssetWriter` and `AVAssetWriterInput`
     func setupWriter(device: AVCaptureDevice, path: String) throws -> (AVAssetWriter, AVAssetWriterInput){
-//        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc3840x2160)
-//        var settings = settingsAssistant!.videoSettings!
-        var settings = videoOutput!.recommendedVideoSettingsForAssetWriter(writingTo: .mp4)!
-                
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
-        
-        if FileManager.default.isDeletableFile(atPath: url.path) {
-                    print("Could delted the file")
-            _ = try? FileManager.default.removeItem(atPath: url.path)
-                }
         
         let rootFolderURL = try FileManager.default.urls(
                     for: .documentDirectory,
                     in: .userDomainMask
         )[0].appendingPathComponent(path, conformingTo: .mpeg4Movie)
 
-        logger.debug("URL: \(rootFolderURL)")
-        logger.debug("Path: \(path)")
-        
         let writer = try AVAssetWriter(outputURL: rootFolderURL, fileType: .mp4)
    
-                    
-        print("Camera Writer Settings \(settings)")
-        print("Base settings \(baseConfig.videoSettings)")
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+        let input = AVAssetWriterInput(mediaType: .video, outputSettings: baseConfig.videoSettings)
         input.expectsMediaDataInRealTime = true
         writer.shouldOptimizeForNetworkUse = true
 
@@ -106,86 +77,29 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     /// Setting up stream
     func setupStream(device: AVCaptureDevice) throws {
         let captureSession = AVCaptureSession()
-        let cameraInput = try AVCaptureDeviceInput(device: self.inputDevice)
-
-        
-        print("Session Preset \(captureSession.sessionPreset)")
-      
-        
-        print(self.inputDevice.formats)
-        print(self.inputDevice.activeFormat)
-        
-        if captureSession.canAddInput(cameraInput) {
-            logger.log("Added input")
-            captureSession.addInput(cameraInput)
-        }
+        print(device.manufacturer)
+        let cameraInput = try AVCaptureDeviceInput(device: device)
+        captureSession.addInput(cameraInput)
         
         // Adding the output to the camera session
         videoOutput = AVCaptureVideoDataOutput()
-//        videoOutput?.automaticallyConfiguresOutputBufferDimensions = false -> unavailable in macos
         
-        guard let videoOutput = videoOutput, captureSession.canAddOutput(videoOutput) else {
+        guard let videoOutput = videoOutput else {
             logger.error("Can't add video output")
             return
         }
-    
-        captureSession.addOutput(videoOutput)
-        captureSession.beginConfiguration()
         
-        captureSession.sessionPreset = .high
-        
-        
-        videoOutput.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
-
-        
-//        videoOutput.videoSettings = nil
-        
-        
-        videoOutput.videoSettings = videoOutput.recommendedVideoSettings(forVideoCodecType: .h264, assetWriterOutputFileType: .mp4)!
-            
-        
-//        videoOutput.videoSettings = videoOutput.recommendedVideoSettingsForAssetWriter(writingTo: <#T##AVFileType#>)
-        
-        print(videoOutput.videoSettings)
-        print(videoOutput)
-        
-        print("Pixel format type key")
-        print(kCVPixelBufferPixelFormatTypeKey)
-        
-        print(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange)
-        let settings: [String: Any] = [
-            kCVPixelBufferPixelFormatTypeKey as String: 875704422,
-            kCVPixelBufferWidthKey as String: 1920,
-            kCVPixelBufferHeightKey as String: 1080,
-            AVVideoScalingModeKey: AVVideoScalingModeFit,
-            AVVideoCodecKey: AVVideoCodecType.h264,
-//            AVVideoEncoderSpecificationKey: kVTEncodeFrameOptionKey_AcknowledgedLTRTokens,
+        let availableFormatTypes = videoOutput.availableVideoPixelFormatTypes
+        videoOutput.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: Int(availableFormatTypes.first!),
+            kCVPixelBufferIOSurfacePropertiesKey as String : [:]
         ]
-        
-        videoOutput.videoSettings = settings
+        videoOutput.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
+        videoOutput.alwaysDiscardsLateVideoFrames = true
 
-//        videoOutput.videoSettings = nil
-//        videoOutput.alwaysDiscardsLateVideoFrames = true
-//        videoOutput.videoSettings
-        
-        print(videoOutput.availableVideoPixelFormatTypes)
-        print(videoOutput.availableVideoCodecTypesForAssetWriter(writingTo: .mp4))
-        print(videoOutput.attributeKeys)
-        print(captureSession.inputs)
-        print(captureSession.outputs)
-        
-        print(cameraInput.attributeKeys)
-//        videoOutput.alwaysDiscardsLateVideoFrames = true
-        
-        print("Video Settings: \(videoOutput.videoSettings)")
-        
-        print(videoOutput.sampleBufferDelegate)
+        captureSession.addOutput(videoOutput)
+        captureSession.startRunning()
 
-        captureSession.commitConfiguration()
-        
-//        videoOutput.setSampleBufferDelegate(self, queue: captureQue)
-
-        
         self.captureSession = captureSession
         self.cameraInput = cameraInput
     }
@@ -244,11 +158,10 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
         
         // do not step in without being locked
         print("Initial sample buffer")
-        print(sampleBuffer)
+
         
         print("Connection \(connection)")
         print("Output \(output)")
-        
         
         processingGroup.enter()
                 
@@ -256,6 +169,10 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
         captureQue.async { [self] in
             print(frameNumber)
                     frameNumber += 1
+            
+            if(frameNumber > 3){
+                return
+            }
                     // Your processing code here
                     if let videoDataOutput = output as? AVCaptureVideoDataOutput {
                         handleVideo(buffer: sampleBuffer)
@@ -275,46 +192,21 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
     
     // TODO: Remove and consolodate `handleVideo`
     func handleVideo(buffer: CMSampleBuffer){
-        print("Decode \(buffer.decodeTimeStamp)")
-        print(CMSampleBufferGetDataBuffer(buffer))
-        print(CMSampleBufferGetImageBuffer(buffer))
-        
         guard let input = self.input, let writer = self.writer else {
             print("Not video writer present")
             return
         }
         
-        if writer.status != .failed {
-            print("Writer has NOT failed")
+        if writer.status == .failed {
+            print("Writer has failed")
+            return
         }
-                
-//        guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
-//                                                                                      createIfNecessary: false),
-//        var attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
-//        else {
-//            logger.error("Attachments Array does not work")
-//            return
-//        }
-        
-//        print("Attachments \(attachments)")
+            
         guard buffer.isValid else {
             logger.log("Invalid Camera Buffer")
             return
         }
         
-//        buffer = (try! buffer.singleSampleBuffers()).
-//        buffer = (try! buffer.singleSampleBuffers())
-        
-
-        do {
-            try buffer.makeDataReady()
-        } catch {
-            print("Trying to make data ready")
-            return
-        }
-//        let newBuffer = (try! buffer.singleSampleBuffers())
-
-
         print("Sample Buffer\(buffer)")
         if writer.status == .unknown {
             // set the timescale of the input
@@ -323,10 +215,9 @@ class Camera: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Recordable
             if !writer.startWriting() {
                 print("Writer had an error while starting \(writer.error)")
             }
-            writer.startSession(atSourceTime: buffer.decodeTimeStamp)
+//            writer.startSession(atSourceTime: buffer.decodeTimeStamp)
+            writer.startSession(atSourceTime: .zero)
             if input.append(buffer) {
-                
-                print(input.canPerformMultiplePasses)
                 print("Was able to append the first buffer")
             } else {
                 print(buffer)
