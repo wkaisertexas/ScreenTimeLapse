@@ -71,7 +71,7 @@ class RecorderViewModel: ObservableObject {
         
         self.cameras.indices
             .forEach{ index in
-//                cameras[index].pauseRecording()
+                cameras[index].pauseRecording()
             }
         
         self.screens.indices
@@ -86,7 +86,7 @@ class RecorderViewModel: ObservableObject {
         
         self.cameras.indices
             .forEach{ index in
-//                cameras[index].resumeRecording()
+                cameras[index].resumeRecording()
             }
         
         self.screens.indices

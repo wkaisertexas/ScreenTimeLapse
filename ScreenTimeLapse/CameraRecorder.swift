@@ -27,37 +27,46 @@ class RecordVideo: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
         super.init()        
         
-        Task(priority: .userInitiated){
-            let captureSession = AVCaptureSession()
-            let cameraInput = try! AVCaptureDeviceInput(device: device)
-            captureSession.addInput(cameraInput)
+        let captureSession = AVCaptureSession()
+        let cameraInput = try! AVCaptureDeviceInput(device: device)
+        captureSession.addInput(cameraInput)
 
-            // Adding the output to the camera session
-            let out = AVCaptureVideoDataOutput()
+        // Adding the output to the camera session
+        let out = AVCaptureVideoDataOutput()
 
-            let availableFormatTypes = out.availableVideoPixelFormatTypes
-            out.videoSettings = [
-                kCVPixelBufferPixelFormatTypeKey as String: Int(availableFormatTypes.first!),
-                kCVPixelBufferIOSurfacePropertiesKey as String : [:]
-            ]
+        let availableFormatTypes = out.availableVideoPixelFormatTypes
+        out.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: Int(availableFormatTypes.first!),
+            kCVPixelBufferIOSurfacePropertiesKey as String : [:]
+        ]
 
-            out.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
-            out.alwaysDiscardsLateVideoFrames = true
+        out.setSampleBufferDelegate(self, queue: .global(qos: .userInitiated))
+        out.alwaysDiscardsLateVideoFrames = true
 
-            captureSession.addOutput(out)
-            captureSession.startRunning()
+        captureSession.addOutput(out)
             
-            self.videoDataOutput = out
-            self.captureSession = captureSession
-            self.camera = device
-            self.camptureSessionInput = cameraInput
-        }
-       
+        self.videoDataOutput = out
+        self.captureSession = captureSession
+        self.camera = device
+        self.camptureSessionInput = cameraInput
+    }
+    
+    func startRunning(){
+        self.captureSession!.startRunning()
+    }
+    
+    func stopSession(){
+        self.captureSession!.stopRunning()
+    }
+    
+    func isRecording() -> Bool{
+        return self.captureSession?.isRunning ?? false
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        // TODO: add a check to make sure it is video data
+        
         self.callback(sampleBuffer)
-
     }
-    
 }
