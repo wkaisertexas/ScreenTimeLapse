@@ -7,6 +7,11 @@ struct ContentView: View {
     @EnvironmentObject private var viewModel: RecorderViewModel
         
     var body: some View {
+        // Button which is clicked
+        Button("Start recording"){
+//            mainBody = RecordVideo()
+        }
+        
         ActionButton()
         Divider()
         InputDevices()

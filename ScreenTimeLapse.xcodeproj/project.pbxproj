@@ -10,14 +10,15 @@
 		3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C629AD741800D3EC7B /* Screen.swift */; };
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
+		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
+		3EC1487A2AEB063B00F41639 /* CameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC148792AEB063B00F41639 /* CameraDelegate.swift */; };
 		3EE5FE0D296232C700768BF7 /* ScreenTimeLapseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
 		3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */; };
-		3EE5FE16296232C800768BF7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE15296232C800768BF7 /* Persistence.swift */; };
 		3EE5FE24296232C800768BF7 /* ScreenTimeLapseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */; };
 		3EE5FE2E296232C800768BF7 /* ScreenTimeLapseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE2D296232C800768BF7 /* ScreenTimeLapseUITests.swift */; };
 		3EE5FE30296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE2F296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift */; };
@@ -48,15 +49,16 @@
 		3E4D87C829AD744C00D3EC7B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
+		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		3EC148792AEB063B00F41639 /* CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDelegate.swift; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTimeLapse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EE5FE10296232C800768BF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3EE5FE15296232C800768BF7 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScreenTimeLapse.entitlements; sourceTree = "<group>"; };
 		3EE5FE1F296232C800768BF7 /* ScreenTimeLapseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeLapseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseTests.swift; sourceTree = "<group>"; };
@@ -120,7 +122,6 @@
 				3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */,
 				3EE5FE0E296232C700768BF7 /* ContentView.swift */,
 				3EE5FE10296232C800768BF7 /* Assets.xcassets */,
-				3EE5FE15296232C800768BF7 /* Persistence.swift */,
 				3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */,
 				3EE5FE12296232C800768BF7 /* Preview Content */,
 				3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */,
@@ -130,6 +131,8 @@
 				3E4D87C829AD744C00D3EC7B /* Camera.swift */,
 				3E61935A2A2EC12200333918 /* VideoConfiguration.swift */,
 				3E9894D02A2ED44600C25059 /* Logger.swift */,
+				3EC148792AEB063B00F41639 /* CameraDelegate.swift */,
+				3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */,
 			);
 			path = ScreenTimeLapse;
 			sourceTree = "<group>";
@@ -290,9 +293,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EE5FE16296232C800768BF7 /* Persistence.swift in Sources */,
 				3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */,
+				3EC1487A2AEB063B00F41639 /* CameraDelegate.swift in Sources */,
 				3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */,
+				3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */,
 				3EEFFBB929A9B662002D0040 /* Utils.swift in Sources */,
 				3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */,
 				3E9894D12A2ED44600C25059 /* Logger.swift in Sources */,

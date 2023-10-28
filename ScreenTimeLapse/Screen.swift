@@ -234,6 +234,81 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 print("Unknown future case")
         }
     }
+    
+    /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
+    func handleVideo(buffer: CMSampleBuffer){
+        
+                print("Handle video called")
+        guard self.input != nil else { // both
+            logger.error("No AVAssetWriter with the name `input` is present")
+            return
+        }
+        
+        do{
+            guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
+                                                                                          createIfNecessary: false),
+            var attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
+            else {
+                logger.error("Attachments Array does not work")
+                return
+            }
+                                                                                                
+            // the status needs to be not `.complete`
+            print(attachments)
+            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
+                return }
+            
+            guard let writer = self.writer, let input = self.input else {return}
+            
+            if writer.status == .unknown {
+               writer.startWriting()
+                    
+                let latency = attachments.value(forKey: "SCStreamMetricCaptureLatencyTime") as! Double
+                print(latency)
+                
+                writer.startSession(atSourceTime: .zero)
+                
+                offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+                return
+            }
+            
+            guard writer.status != .failed else {
+                logger.log("WE failed")
+                return
+            }
+                        
+            input.append(try buffer.offsettingTiming(by: offset))
+            logger.log("Appended buffer")
+        } catch {
+            logger.error("Invalid framebuffer")
+        }
+    }
+    
+    /// Uses the frame rate and duration to determine if the frame should be saved
+    func shouldSaveVideo(buffer: CMSampleBuffer) -> Bool{
+        let maxTime = buffer.presentationTimeStamp + buffer.duration
+        
+        if let last = self.lastSavedFrame {
+            if maxTime.seconds < last.seconds + Double(metaData.getFrameTime()){
+                self.lastSavedFrame = maxTime
+                return true
+            }
+            
+            return false
+        } else {
+            self.lastSavedFrame = maxTime
+            return true
+        }
+    }
+    
+    /// Provides a default way to deal with streams which do not work
+    func handleStreamStartFailure(err: Error?){
+        if let error = err{
+            logger.log("Stream start failure \(String(describing: error))")
+        } else{
+            logger.log("Stream started sucessfully")
+        }
+    }
 }
 
 /// Defines behavior when the state of the `SCStream` changes.
@@ -242,5 +317,26 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 class StreamDelegate : NSObject, SCStreamDelegate {
     func stream(_ stream: SCStream, didStopWithError error: Error) {
         logger.error("The stream stopped with \(error.localizedDescription)")
+    }
+}
+
+// Allows timings offsets
+extension CMSampleBuffer {
+    func offsettingTiming(by offset: CMTime) throws -> CMSampleBuffer {
+        let newSampleTimingInfos: [CMSampleTimingInfo]
+        
+        do {
+            newSampleTimingInfos = try sampleTimingInfos().map {
+                var newSampleTiming = $0
+                newSampleTiming.presentationTimeStamp = CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: 0.2)
+                print(newSampleTiming)
+
+                return newSampleTiming
+            }
+        } catch {
+            newSampleTimingInfos = []
+        }
+        let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
+        return newSampleBuffer
     }
 }
