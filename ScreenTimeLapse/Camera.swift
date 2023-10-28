@@ -33,6 +33,9 @@ class Camera: NSObject, Recordable {
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
 
                 self.recordVideo?.startRunning()
+                
+                print("Writer \(writer)")
+                print("Input \(input)")
             } catch{
                 logger.error("Failed to setup stream")
             }
@@ -42,12 +45,20 @@ class Camera: NSObject, Recordable {
     /// Sets up the `AVAssetWriter` and `AVAssetWriterInput`
     func setupWriter(device: AVCaptureDevice, path: String) throws -> (AVAssetWriter, AVAssetWriterInput){
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
+        
+        do { // delete old video
+            try FileManager.default.removeItem(at: url)
+        } catch { print("Failed to delete file \(error.localizedDescription)")}
+        
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
+        var settings = settingsAssistant!.videoSettings!
+        
+        print("Saving to URL \(url)")
 
-        let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
+        let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
    
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: baseConfig.videoSettings)
-        input.expectsMediaDataInRealTime = true
-        writer.shouldOptimizeForNetworkUse = true
+        let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+//        input.expectsMediaDataInRealTime = true
 
         guard writer.canAdd(input) else {
             print("Can't add input")
@@ -125,17 +136,18 @@ class Camera: NSObject, Recordable {
         }
 
         if writer.status == .unknown {
-            if !writer.startWriting() {
-                print("Writer had an error while starting \(writer.error)")
-            }
+            writer.startWriting()
+            
             writer.startSession(atSourceTime: buffer.presentationTimeStamp)
             
-            if input.append(buffer) {
-                print("Was able to append the first buffer")
-            } else {
-                print(buffer)
-                print("Was not able to append the first buffer")
-            }
+            
+            input.append(buffer)
+//            if input.append(buffer) {
+//                print("Was able to append the first buffer")
+//            } else {
+//                print(buffer)
+//                print("Was not able to append the first buffer")
+//            }
             return
         }
         
@@ -159,7 +171,7 @@ class Camera: NSObject, Recordable {
     /// Generates a random filename
     func getFilename() -> String {
         let randomValue = Int(arc4random_uniform(100_000)) + 1
-        return "\(randomValue).mp4"
+        return "\(randomValue).mov"
     }
 }
 

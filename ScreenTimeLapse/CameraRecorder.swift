@@ -22,6 +22,8 @@ class RecordVideo: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     let callback: (CMSampleBuffer) -> Void
     
+    let captureQue = DispatchQueue(label: "com.myapp.captureQueue")
+    
     init(device: AVCaptureDevice, callback: @escaping (CMSampleBuffer) -> Void){
         self.callback = callback
 
@@ -64,9 +66,8 @@ class RecordVideo: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
-        // TODO: add a check to make sure it is video data
-        
-        self.callback(sampleBuffer)
+        captureQue.async {
+            self.callback(sampleBuffer)
+        }
     }
 }

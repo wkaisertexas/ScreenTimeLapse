@@ -113,10 +113,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         var settings = settingsAssistant!.videoSettings!
         
         logger.debug("\(settings.keys.debugDescription)") // shows the user some of the base settings
-        if let jsonString = try? JSONSerialization.data(withJSONObject: settings, options: .prettyPrinted),
-           let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
-            print(prettyPrintedString)
-        }
         
         let colorPropertySettings = [
             AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
@@ -134,19 +130,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             AVVideoWidthKey: screen.width,
             AVVideoHeightKey: screen.height,
             AVVideoColorPropertiesKey: colorPropertySettings,
-//            AVVideoColorPropertiesKey: [
-//                AVVideoColorPrimariesKey: AVVideoColorPrimaries_SMPTE_C,
-//                AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-//                AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_601_4,
-//            ],
-//            AVVideoCompressionPropertiesKey: [
-//                AVVideoAverageBitRateKey: 8_000_000, // Good for HEVC
-//                kVTCompressionPropertyKey_ProfileLevel: kVTProfileLevel_H264_High_4_2
-//            ],
-//            kCVPixel as String: AVCaptureColorSpace.sRGB,
-//            kCVPixel as String: AVCaptureColorSpace.P3_D65,
-//            AVVideoColorPropertiesKey: AVVideoColorPrimaries_P3_D65,
-//            kCVPixelBufferPixelFormatTypeKey: kCVPixelFormatType_32BGRA,
         ]
         
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
@@ -157,10 +140,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         let writer = try AVAssetWriter(url: url, fileType: .mov)
                         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-//        input.transform = CGAffineTransform()
-//        input.transform = CGAffineTransform(scaleX: 2, y: 2)
         input.expectsMediaDataInRealTime = true
-        
         
         writer.add(input)
                 
@@ -181,18 +161,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         config.showsCursor = showCursor
         config.queueDepth = 10
         config.colorSpaceName = CGColorSpace.extendedSRGB
-//        config.colorMatrix = kCVPixelBufferProResRAWKey_ColorMatrix
-        config.colorMatrix = kCVImageBufferYCbCrMatrix_ITU_R_2020;
-//        config.colorMatrix = kCVImageBufferYCbCrMatrix_ITU_R_709_2;
-        print(kCVImageBufferYCbCrMatrix_ITU_R_709_2)
-        print(kCVImageBufferYCbCrMatrix_ITU_R_2020)
-//        config.colorMatrix = kVTProfileLevel_HEVC_Main_AutoLevel;
-        
-//        config.colorMatrix = String(AVVideoYCbCrMatrix_ITU_R_601_4.utf16)
-//        config.colorSpaceName = CGColorSpace.itur_2100_PQ; // TODO: look at color spaces
         config.backgroundColor = .white
-//        config.pixelFormat = kCMPixelFormat_422YpCbCr8
-//        config.pixelFormat = kCMPixelFormat_444YpCbCr10
         print(config)
         
         stream = SCStream(
