@@ -5,23 +5,11 @@ var mainBody: RecordVideo?
 
 @main
 struct ScreenTimeLapseApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @ObservedObject var recorderViewModel = RecorderViewModel()
 
     var body: some Scene {
-//        Window("My window", id: "Main Window"){
-//            Button("Start recording"){
-//                            let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
-//                
-//                            // get the front camera
-//                            print(discovery.devices)
-//                            let camera = discovery.devices.first { device in
-//                                device.manufacturer == "Apple Inc."
-//                            }!
-//                
-//                mainBody = RecordVideo(device: camera)
-//                sleep(15)
-//            }
-//        }
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
@@ -31,5 +19,12 @@ struct ScreenTimeLapseApp: App {
                 await recorderViewModel.getDisplayInfo()
             }
         }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Hide the dock icon
+        NSApp.setActivationPolicy(.accessory)
     }
 }
