@@ -11,6 +11,7 @@
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
+		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
@@ -50,6 +51,7 @@
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
+		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				3E9894D02A2ED44600C25059 /* Logger.swift */,
 				3EC148792AEB063B00F41639 /* CameraDelegate.swift */,
 				3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */,
+				3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */,
 			);
 			path = ScreenTimeLapse;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */,
+				3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */,
 				3EC1487A2AEB063B00F41639 /* CameraDelegate.swift in Sources */,
 				3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */,
 				3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */,
@@ -394,7 +398,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HELP = "https://apple.com";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -451,7 +455,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HELP = "https://apple.com";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

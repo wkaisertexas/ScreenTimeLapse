@@ -1,11 +1,9 @@
 import SwiftUI
 import AVFoundation
 
-var mainBody: RecordVideo?
-
 @main
 struct ScreenTimeLapseApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @NSApplicationDelegateAdaptor(ScreenTimeLapseAppDelegate.self) var appDelegate
 
     @ObservedObject var recorderViewModel = RecorderViewModel()
 
@@ -14,17 +12,22 @@ struct ScreenTimeLapseApp: App {
             ContentView().environmentObject(recorderViewModel)
         } label: {
             Text(verbatim: recorderViewModel.state.description)
-        }.onChange(of: recorderViewModel.state){ _ in
+        }
+        .onChange(of: recorderViewModel.state) {
             Task{
                 await recorderViewModel.getDisplayInfo()
             }
         }
+        
+        Settings{
+            PreferencesView()
+        }
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide the dock icon
-        NSApp.setActivationPolicy(.accessory)
+      //   NSApp.setActivationPolicy(.accessory) -> Causing issues
     }
 }

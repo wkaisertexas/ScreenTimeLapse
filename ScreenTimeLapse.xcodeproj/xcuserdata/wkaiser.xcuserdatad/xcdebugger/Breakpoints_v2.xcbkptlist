@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "E0675D29-8758-410F-9E76-B2D4252656E3"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "19160493-1DCC-4A0C-9C9E-2E8D8BCE554F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/ScreenTimeLapseApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3"
+            endingLineNumber = "3"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "58913548-7AAD-4CC3-BE0B-72B56AA132FB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/Camera.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "startRecording()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "58913548-7AAD-4CC3-BE0B-72B56AA132FB - 261fa6808433f9ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Camera.startRecording() -&gt; ()"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Camera.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "58913548-7AAD-4CC3-BE0B-72B56AA132FB - 261fa6808433f808"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Camera.startRecording() -&gt; ()"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Camera.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "58913548-7AAD-4CC3-BE0B-72B56AA132FB - 261fa6808433faf7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Camera.startRecording() -&gt; ()"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Camera.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "324">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "12340ADA-7442-4AFE-BC7F-941FFF695744"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/Camera.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "handleVideo(buffer:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "12340ADA-7442-4AFE-BC7F-941FFF695744 - 632894b7134ab1a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Camera.handleVideo(buffer: __C.CMSampleBufferRef) -&gt; ()"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Camera.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "1832">
+               </Location>
+               <Location
+                  uuid = "12340ADA-7442-4AFE-BC7F-941FFF695744 - 632894b7134abe24"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Camera.handleVideo(buffer: __C.CMSampleBufferRef) -&gt; ()"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Camera.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "912">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "21A2AEC2-13B2-460C-95A2-78396E0A35CA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapseUITests/ScreenTimeLapseUITests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "testLaunchPerformance()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "72147362-896B-4D01-87AF-56028E4F2EBE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/PreferencesView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "previews"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
