@@ -17,6 +17,25 @@ struct VideoConfiguration {
 //                AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel
 //        ],
     ]
+    
+    let validFormats: [AVFileType] = [
+        .mov, .mp4, .avci, .heif
+    ]
+    
+    func convertFormatToString(_ input: AVFileType) -> String {
+        switch(input){
+            case .mov:
+                return ".mov"
+            case .mp4:
+                return ".mp4"
+            case .avci:
+                return "avci"
+            case .heif:
+                return "heif"
+            default:
+                return ""
+        }
+    }
 }
 
 let baseConfig = VideoConfiguration()

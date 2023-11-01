@@ -28,6 +28,6 @@ struct ScreenTimeLapseApp: App {
 class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide the dock icon
-      //   NSApp.setActivationPolicy(.accessory) -> Causing issues
+      //   NSApp.setActivationPolicy(.accessory) //-> Causing issues
     }
 }

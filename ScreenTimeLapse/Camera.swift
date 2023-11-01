@@ -49,7 +49,7 @@ class Camera: NSObject, Recordable {
         do { // delete old video
             try FileManager.default.removeItem(at: url)
         } catch { print("Failed to delete file \(error.localizedDescription)")}
-        
+       
         let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
         var settings = settingsAssistant!.videoSettings!
         

@@ -8,26 +8,6 @@
 import SwiftUI
 import AVFoundation
 
-// TODO: Probably move this into a seperate file
-enum QualitySettings: CustomStringConvertible, CaseIterable {
-    case low
-    case medium
-    case high
-    
-    var description: String {
-        switch self {
-            case .low:
-                return "Low"
-            case .medium:
-                return "Medium"
-            case .high:
-                return "High"
-        }
-    }
-}
-
-//let VALIDFORMATS: [] = []
-
 struct PreferencesView: View {
     @AppStorage("showNotifications") private var showNotifications = false
     
@@ -35,6 +15,8 @@ struct PreferencesView: View {
     @AppStorage("timeMultiple") private var timeMultiple = 5
     
     @State private var quality : QualitySettings = .medium
+    
+    @State private var format : AVFileType = baseConfig.validFormats.first!
     
     var body: some View {
         TabView{
@@ -63,6 +45,12 @@ struct PreferencesView: View {
                         Text(qualitySetting.description)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
+                
+                Picker("Format", selection: $format){
+                    ForEach(baseConfig.validFormats, id: \.self){ format in
+                        Text(baseConfig.convertFormatToString(format))
+                    }
+                }
             }
         }.tabItem{
             Label("Preferences", systemImage: "hand.raised")
