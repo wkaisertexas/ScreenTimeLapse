@@ -181,10 +181,10 @@ struct InputDevices: View{
     /// Renders  single `SCRunningApplication` as either enabled or disabled
     @ViewBuilder
     func app(_ app: SCRunningApplication) -> some View{
-        Button(action: {
-            viewModel.toggleApp(app: app)
-        }){
-            if let runningApp = NSRunningApplication(processIdentifier: app.processID), let appIcon = runningApp.icon {
+        if let runningApp = NSRunningApplication(processIdentifier: app.processID), runningApp.activationPolicy == .regular, let appIcon = runningApp.icon {
+            Button(action: {
+                viewModel.toggleApp(app: app)
+            }){
                 Image(nsImage: appIcon)
                 Text(app.applicationName)
             }
@@ -236,8 +236,8 @@ struct PropertyModifiers: View{
 struct Info: View{
     @Environment(\.openURL) var openURL
     
-    var HELP: String = "https://google.com"
-    var ABOUT: String = "https://apple.com"
+    var HELP: String = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
+    var ABOUT: String = "https://github.com/wkaisertexas/ScreenTimeLapse"
 
     var body: some View{
         Button("Help"){
