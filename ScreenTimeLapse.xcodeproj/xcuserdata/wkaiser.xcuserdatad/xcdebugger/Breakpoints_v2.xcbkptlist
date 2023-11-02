@@ -30,8 +30,8 @@
             filePath = "ScreenTimeLapse/Camera.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "startRecording()"
             landmarkType = "7">
             <Locations>
@@ -93,8 +93,8 @@
             filePath = "ScreenTimeLapse/Camera.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "handleVideo(buffer:)"
             landmarkType = "7">
             <Locations>

@@ -14,9 +14,9 @@ struct PreferencesView: View {
     @AppStorage("framesPerSecond") private var framesPerSecond = 30
     @AppStorage("timeMultiple") private var timeMultiple = 5
     
-    @State private var quality : QualitySettings = .medium
+    @AppStorage("quality") var quality : QualitySettings = .medium
     
-    @State private var format : AVFileType = baseConfig.validFormats.first!
+    @AppStorage("format") private var format : AVFileType = baseConfig.validFormats.first!
     
     var body: some View {
         TabView{

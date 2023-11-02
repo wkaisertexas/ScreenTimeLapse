@@ -29,11 +29,11 @@ struct VideoConfiguration {
             case .mp4:
                 return ".mp4"
             case .avci:
-                return "avci"
+                return ".avci"
             case .heif:
-                return "heif"
+                return ".heif"
             default:
-                return ""
+                return "Unsupported format"
         }
     }
 }

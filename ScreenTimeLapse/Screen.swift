@@ -19,6 +19,10 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     var screen: SCDisplay
     var stream: SCStream?
     var showCursor: Bool
+    
+    // Recording timings
+    var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
+    var timescale: Double = 1 // offset set based on settings
         
     override var description: String {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
@@ -133,11 +137,14 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         ]
         
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
-
-        logger.debug("URL: \(url)")
-        logger.debug("Path: \(path)")
         
-        let writer = try AVAssetWriter(url: url, fileType: .mov)
+        var fileType : AVFileType = baseConfig.validFormats.first!
+        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
+           let preferenceType = fileTypeValue as? AVFileType{
+            fileType = preferenceType
+        }
+        
+        let writer = try AVAssetWriter(url: url, fileType: fileType)
                         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
         input.expectsMediaDataInRealTime = true
@@ -162,7 +169,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         config.queueDepth = 10
         config.colorSpaceName = CGColorSpace.extendedSRGB
         config.backgroundColor = .white
-        print(config)
         
         stream = SCStream(
             filter: contentFilter,
@@ -170,13 +176,15 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             delegate: StreamDelegate()
         )
         
-        try stream!.addStreamOutput(
+        guard let stream = stream else { return }
+        
+        try stream.addStreamOutput(
             self,
             type: .screen,
             sampleHandlerQueue: .global(qos: .userInitiated)
         )
         
-        stream?.startCapture(completionHandler: handleStreamStartFailure)
+        stream.startCapture(completionHandler: handleStreamStartFailure)
     }
     
     /// Generates a filename specific to `SCDisplay` and `CMTime`
@@ -206,8 +214,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
     func handleVideo(buffer: CMSampleBuffer){
-        
-                print("Handle video called")
         guard self.input != nil else { // both
             logger.error("No AVAssetWriter with the name `input` is present")
             return
@@ -223,7 +229,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             }
                                                                                                 
             // the status needs to be not `.complete`
-            print(attachments)
             guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
                 return }
             
@@ -233,20 +238,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                writer.startWriting()
                     
                 let latency = attachments.value(forKey: "SCStreamMetricCaptureLatencyTime") as! Double
-                print(latency)
-                
-                writer.startSession(atSourceTime: .zero)
                 
                 offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+                writer.startSession(atSourceTime: offset)
                 return
             }
             
             guard writer.status != .failed else {
-                logger.log("WE failed")
+                logger.log("Screen - failed")
                 return
             }
                         
-            input.append(try buffer.offsettingTiming(by: offset))
+            input.append(try buffer.offsettingTiming(by: offset, multiplier: 0.2))
             logger.log("Appended buffer")
         } catch {
             logger.error("Invalid framebuffer")
@@ -289,23 +292,3 @@ class StreamDelegate : NSObject, SCStreamDelegate {
     }
 }
 
-// Allows timings offsets
-extension CMSampleBuffer {
-    func offsettingTiming(by offset: CMTime) throws -> CMSampleBuffer {
-        let newSampleTimingInfos: [CMSampleTimingInfo]
-        
-        do {
-            newSampleTimingInfos = try sampleTimingInfos().map {
-                var newSampleTiming = $0
-                newSampleTiming.presentationTimeStamp = CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: 0.2)
-                print(newSampleTiming)
-
-                return newSampleTiming
-            }
-        } catch {
-            newSampleTimingInfos = []
-        }
-        let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
-        return newSampleBuffer
-    }
-}

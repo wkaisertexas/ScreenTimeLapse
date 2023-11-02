@@ -1,6 +1,7 @@
 import AVFoundation
+import SwiftUI
 
-/// Records the output of a camera in a stream-like format
+/// Records the output of a `AVCaptureDevice` in a stream-like format
 class Camera: NSObject, Recordable {
     var state: RecordingState = .stopped
     var metaData: OutputInfo = OutputInfo()
@@ -12,7 +13,10 @@ class Camera: NSObject, Recordable {
     // Audio Video Capture-Specific Functionality
     var inputDevice: AVCaptureDevice
     var recordVideo: RecordVideo?
-
+    
+    // Offset
+    var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
+    
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
             return "\(self.inputDevice.localizedName)"
@@ -33,9 +37,6 @@ class Camera: NSObject, Recordable {
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
 
                 self.recordVideo?.startRunning()
-                
-                print("Writer \(writer)")
-                print("Input \(input)")
             } catch{
                 logger.error("Failed to setup stream")
             }
@@ -53,12 +54,16 @@ class Camera: NSObject, Recordable {
         let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
         var settings = settingsAssistant!.videoSettings!
         
-        print("Saving to URL \(url)")
+        var fileType : AVFileType = baseConfig.validFormats.first!
+        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
+           let preferenceType = fileTypeValue as? AVFileType{
+            fileType = preferenceType
+        }
 
-        let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
+        let writer = try AVAssetWriter(outputURL: url, fileType: fileType)
    
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-//        input.expectsMediaDataInRealTime = true
+        input.expectsMediaDataInRealTime = true
 
         guard writer.canAdd(input) else {
             print("Can't add input")
@@ -85,7 +90,7 @@ class Camera: NSObject, Recordable {
         
         self.state = .stopped
          
-        logger.log("Screen -- saved recording")
+        logger.log("Camera - saved recording")
         
         if let recorder = recordVideo, recorder.isRecording() {
             recorder.stopSession()

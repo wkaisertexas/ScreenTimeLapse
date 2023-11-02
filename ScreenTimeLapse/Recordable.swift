@@ -3,7 +3,6 @@ import ScreenCaptureKit
 
 // TODO: remove for testing purposes
 var frameCount = 0
-var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
 
 /// Represents an object interactable with a ``RecorderViewModel``
 protocol Recordable : CustomStringConvertible {
@@ -54,5 +53,26 @@ extension Recordable{
     
     mutating func saveRecording() {
         logger.log("Saving recorder")
+    }
+}
+
+// Allows timings offsets
+extension CMSampleBuffer {
+    func offsettingTiming(by offset: CMTime, multiplier: Float64) throws -> CMSampleBuffer {
+        let newSampleTimingInfos: [CMSampleTimingInfo]
+        
+        do {
+            newSampleTimingInfos = try sampleTimingInfos().map {
+                var newSampleTiming = $0
+                newSampleTiming.presentationTimeStamp = offset + CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: multiplier)
+                print(newSampleTiming)
+
+                return newSampleTiming
+            }
+        } catch {
+            newSampleTimingInfos = []
+        }
+        let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
+        return newSampleBuffer
     }
 }

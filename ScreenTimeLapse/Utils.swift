@@ -29,7 +29,7 @@ enum RecordingState : CustomStringConvertible{
     case paused
 }
 
-enum QualitySettings: CustomStringConvertible, CaseIterable {
+enum QualitySettings: String, Codable, CaseIterable {
     case low
     case medium
     case high
