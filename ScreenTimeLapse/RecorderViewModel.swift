@@ -147,7 +147,7 @@ class RecorderViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    /// Checks to make sure at least one ``Screen`` or ``MyRecordingCamera`` is enabled
+    /// Checks to make sure at least one ``Screen`` or ``Camera`` is enabled
     func recordersDisabled() -> Bool{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
     }
@@ -218,7 +218,7 @@ class RecorderViewModel: ObservableObject {
         return newScreens
     }
     
-    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom ``MyRecordingCamera`` object
+    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom ``Camera`` object
     private func convertCameras(camera input: [AVCaptureDevice]) -> [Camera]{
         var newCameras = input
             .filter{ camera in

@@ -196,18 +196,21 @@ struct InputDevices: View{
 struct Info: View{
     @Environment(\.openURL) var openURL
     
-    var HELP: String = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
-    var ABOUT: String = "https://github.com/wkaisertexas/ScreenTimeLapse"
-
     var body: some View{
         SettingsLink()
             .keyboardShortcut(",")
-        Button("Help"){
-            openURL(URL(string: HELP)!)
-        }
+        Divider()
         Button("About"){
-            openURL(URL(string: ABOUT)!)
+            if let url = URL(string: baseConfig.ABOUT) {
+                openURL(url)
+            }
         }
+        Button("Help"){
+            if let url = URL(string: baseConfig.HELP) {
+                openURL(url)
+            }
+        }
+        Divider()
         Button("Quit"){
             NSApplication.shared.terminate(nil)
         }.keyboardShortcut("q")

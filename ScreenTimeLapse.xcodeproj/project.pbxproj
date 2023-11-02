@@ -12,7 +12,6 @@
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
-		3E82067D2AF2F220003DC9F0 /* PresistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82067C2AF2F220003DC9F0 /* PresistenceManager.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
@@ -53,7 +52,6 @@
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
-		3E82067C2AF2F220003DC9F0 /* PresistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresistenceManager.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 				3EC148792AEB063B00F41639 /* CameraDelegate.swift */,
 				3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */,
 				3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */,
-				3E82067C2AF2F220003DC9F0 /* PresistenceManager.swift */,
 			);
 			path = ScreenTimeLapse;
 			sourceTree = "<group>";
@@ -310,7 +307,6 @@
 				3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */,
 				3EE5FE0D296232C700768BF7 /* ScreenTimeLapseApp.swift in Sources */,
 				3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */,
-				3E82067D2AF2F220003DC9F0 /* PresistenceManager.swift in Sources */,
 				3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

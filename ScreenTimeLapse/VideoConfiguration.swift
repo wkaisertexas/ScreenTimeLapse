@@ -22,6 +22,9 @@ struct VideoConfiguration {
         .mov, .mp4, .avci, .heif
     ]
     
+    let HELP = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
+    let ABOUT = "https://github.com/wkaisertexas/ScreenTimeLapse"
+    
     func convertFormatToString(_ input: AVFileType) -> String {
         switch(input){
             case .mov:
