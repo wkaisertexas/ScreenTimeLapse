@@ -18,6 +18,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     // ScreenCaptureKit-Specific Functionality
     var screen: SCDisplay
     var stream: SCStream?
+    var apps: [SCRunningApplication : Bool] = [:]
     var showCursor: Bool
     
     // Recording timings
@@ -28,18 +29,20 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
     }
     
-    init(screen: SCDisplay, showCursor: Bool) {
+    init(screen: SCDisplay, showCursor: Bool, apps: [SCRunningApplication : Bool]) {
         self.screen = screen
         self.showCursor = showCursor
+        self.apps = apps
     }
     
     // MARK: -User Interaction
-    func startRecording() {
+    func startRecording(excluding: [SCRunningApplication]) {
         guard self.enabled else { return }
         guard self.state != .recording else { return }
         
         self.state = .recording
-        setup(path: getFilename(), excluding: []) // TODO: implement logic which actually gets the excluding
+        
+        setup(path: getFilename(), excluding: excluding) 
     }
     
     func pauseRecording() {
