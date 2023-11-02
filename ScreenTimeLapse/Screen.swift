@@ -128,13 +128,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         settings[AVVideoHeightKey] = screen.height
         settings[AVVideoColorPropertiesKey] = colorPropertySettings
         
-        print(settings)
-        let videoOutputSettings: [String : Any] = [
-            AVVideoCodecKey: AVVideoCodecType.h264,
-            AVVideoWidthKey: screen.width,
-            AVVideoHeightKey: screen.height,
-            AVVideoColorPropertiesKey: colorPropertySettings,
-        ]
+//        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
         let url = URL(string: path, relativeTo: .temporaryDirectory)!
         

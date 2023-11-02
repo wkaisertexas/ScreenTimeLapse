@@ -55,6 +55,9 @@ class Camera: NSObject, Recordable {
         let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
         var settings = settingsAssistant!.videoSettings!
         
+        // getting and setting the frame rate
+//        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
+        
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
            let preferenceType = fileTypeValue as? AVFileType{
