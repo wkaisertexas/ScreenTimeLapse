@@ -1,9 +1,6 @@
 import AVFoundation
 import ScreenCaptureKit
 
-// TODO: remove for testing purposes
-var frameCount = 0
-
 /// Represents an object interactable with a ``RecorderViewModel``
 protocol Recordable : CustomStringConvertible {
     var metaData: OutputInfo {get set}
@@ -13,6 +10,9 @@ protocol Recordable : CustomStringConvertible {
     var writer: AVAssetWriter? {get set}
     var input: AVAssetWriterInput? {get set}
     var lastSavedFrame: CMTime? {get set}
+    
+    var timeMultiple: Double {get set}
+    var offset: CMTime {get set}
     
     // MARK: -Intents
     mutating func startRecording()
@@ -65,8 +65,6 @@ extension CMSampleBuffer {
             newSampleTimingInfos = try sampleTimingInfos().map {
                 var newSampleTiming = $0
                 newSampleTiming.presentationTimeStamp = offset + CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: multiplier)
-                print(newSampleTiming)
-
                 return newSampleTiming
             }
         } catch {

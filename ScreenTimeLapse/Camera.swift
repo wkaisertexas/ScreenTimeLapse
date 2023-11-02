@@ -16,6 +16,7 @@ class Camera: NSObject, Recordable {
     
     // Offset
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
+    var timeMultiple: Double = 1 // offset set based on settings
     
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
@@ -70,6 +71,9 @@ class Camera: NSObject, Recordable {
             return (writer, input)
         }
         writer.add(input)
+        
+        // timing offset
+        timeMultiple = UserDefaults.standard.double(forKey: "timeMultiple")
         
         return (writer, input)
     }
@@ -141,18 +145,12 @@ class Camera: NSObject, Recordable {
         }
 
         if writer.status == .unknown {
+            self.offset = buffer.presentationTimeStamp
+            
             writer.startWriting()
-            
-            writer.startSession(atSourceTime: buffer.presentationTimeStamp)
-            
+            writer.startSession(atSourceTime: self.offset)
             
             input.append(buffer)
-//            if input.append(buffer) {
-//                print("Was able to append the first buffer")
-//            } else {
-//                print(buffer)
-//                print("Was not able to append the first buffer")
-//            }
             return
         }
         
@@ -165,11 +163,11 @@ class Camera: NSObject, Recordable {
             print("Is not ready for more data")
             return
         }
-
-        if input.append(buffer) {
+        
+        if input.append(try! buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple)) {
             print("Appended Buffer Successfully")
         } else {
-            print("Append failed now ")
+            print("Append camera failed now ")
         }
     }
     

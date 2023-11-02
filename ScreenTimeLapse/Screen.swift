@@ -22,7 +22,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     // Recording timings
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
-    var timescale: Double = 1 // offset set based on settings
+    var timeMultiple: Double = 1 // offset set based on settings
         
     override var description: String {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
@@ -150,6 +150,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         input.expectsMediaDataInRealTime = true
         
         writer.add(input)
+        
+        // timeMultiple setup -> for some reason, does not return optional
+        timeMultiple = UserDefaults.standard.double(forKey: "timeMultiple")
                 
         return (writer, input)
     }
@@ -249,7 +252,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 return
             }
                         
-            input.append(try buffer.offsettingTiming(by: offset, multiplier: 0.2))
+            input.append(try buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple))
             logger.log("Appended buffer")
         } catch {
             logger.error("Invalid framebuffer")
