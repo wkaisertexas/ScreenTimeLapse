@@ -133,7 +133,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
 //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
-        let url = URL(string: path, relativeTo: .temporaryDirectory)!
+        var url = URL(string: path, relativeTo: .temporaryDirectory)!
+        
+        if let location = UserDefaults.standard.url(forKey: "saveLocation"){
+            url = URL(string: path, relativeTo: location)!
+        } else {
+            logger.error("Error: no screen save location present")
+        }
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -222,7 +228,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         do{
             guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
                                                                                           createIfNecessary: false),
-            var attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
+                  let attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
             else {
                 logger.error("Attachments Array does not work")
                 return
@@ -236,12 +242,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             
             if writer.status == .unknown {
                writer.startWriting()
-                    
-                let latency = attachments.value(forKey: "SCStreamMetricCaptureLatencyTime") as! Double
-                
-                offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
-                writer.startSession(atSourceTime: offset)
-                return
+               offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+               writer.startSession(atSourceTime: offset)
+               return
             }
             
             guard writer.status != .failed else {

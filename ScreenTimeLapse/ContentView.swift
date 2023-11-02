@@ -146,7 +146,7 @@ struct InputDevices: View{
         }
     }
     
-    /// Renders all avaible `MyRecordingCamera` objects as an interactable list
+    /// Renders all avaible `Camera` objects as an interactable list
     @ViewBuilder
     func camerasMenu() -> some View{
         viewModel.cameras.isEmpty ? nil :
@@ -166,7 +166,7 @@ struct InputDevices: View{
         }
     }
     
-    /// Renders a single `MyRecordingCamera` as a button with either an enabled or disabled checkmark
+    /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
     @ViewBuilder
     func camera(_ camera: Camera) -> some View{
         Button(action: {

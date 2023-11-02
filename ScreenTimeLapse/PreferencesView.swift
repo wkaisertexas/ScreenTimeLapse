@@ -18,6 +18,9 @@ struct PreferencesView: View {
     
     @AppStorage("format") private var format : AVFileType = baseConfig.validFormats.first!
     
+    @AppStorage("saveLocation") private var saveLocation : URL = FileManager.default.homeDirectoryForCurrentUser
+    @State private var showPicker = false
+    
     var body: some View {
         TabView{
             videoSettings()
@@ -29,11 +32,11 @@ struct PreferencesView: View {
         Form {
             Section(header: Text("Playback")) {
                 Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-                    Text("Output Frames per Seconds (FPS): \(framesPerSecond)")
+                    Text("Output FPS \(framesPerSecond)")
                 }
                 
                 Stepper(value: $timeMultiple, in: 1...60, step: 1){
-                    Text("How much faster than realtime: \(timeMultiple) x")
+                    Text("Times faster \(timeMultiple) x")
                 }
                 
             }
@@ -41,7 +44,7 @@ struct PreferencesView: View {
                 Toggle("Show notifications", isOn: $showNotifications)
                 
                 Picker("Quality", selection: $quality){
-                    ForEach(QualitySettings.allCases, id: \.self) {  qualitySetting in
+                    ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
                         Text(qualitySetting.description)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
@@ -49,6 +52,27 @@ struct PreferencesView: View {
                 Picker("Format", selection: $format){
                     ForEach(baseConfig.validFormats, id: \.self){ format in
                         Text(baseConfig.convertFormatToString(format))
+                    }
+                }
+            }
+            Section(header: Text("Output")) {
+                Button(action: {
+                    showPicker.toggle()
+                }){
+                    Label("Choose Folder", systemImage: "folder")
+                }
+                .disabled(showPicker)
+                .onChange(of: showPicker){ [ self ] in
+                    guard showPicker else { return }
+                    let panel = NSOpenPanel()
+                    panel.allowsMultipleSelection = false
+                    panel.canChooseDirectories = true
+                    panel.canChooseFiles = false
+                    panel.begin { [ self ] res in
+                        showPicker = false
+                        guard res == .OK, let pickedURL = panel.url else { return }
+                        
+                        saveLocation = pickedURL
                     }
                 }
             }

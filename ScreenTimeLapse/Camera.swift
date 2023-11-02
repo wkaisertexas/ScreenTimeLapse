@@ -46,7 +46,13 @@ class Camera: NSObject, Recordable {
     
     /// Sets up the `AVAssetWriter` and `AVAssetWriterInput`
     func setupWriter(device: AVCaptureDevice, path: String) throws -> (AVAssetWriter, AVAssetWriterInput){
-        let url = URL(string: path, relativeTo: .temporaryDirectory)!
+        var url = URL(string: path, relativeTo: .temporaryDirectory)!
+       
+        if let location = UserDefaults.standard.url(forKey: "saveLocation"){
+            url = URL(string: path, relativeTo: location)!
+        } else {
+            logger.error("No camera save location present")
+        }
         
         do { // delete old video
             try FileManager.default.removeItem(at: url)
