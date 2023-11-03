@@ -243,7 +243,7 @@ class RecorderViewModel: ObservableObject {
     
     /// Converts a `SCDisplay` into a ``Screen``
     private func getScreenRecorder(_ screen: SCDisplay) -> Screen{
-        Screen(screen: screen, showCursor: showCursor, apps: apps)
+        Screen(screen: screen, showCursor: showCursor)
     }
     
     /// Converts a `AVCaptureDevice` into a ``Camera``

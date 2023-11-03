@@ -29,10 +29,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
     }
     
-    init(screen: SCDisplay, showCursor: Bool, apps: [SCRunningApplication : Bool]) {
+    init(screen: SCDisplay, showCursor: Bool) {
         self.screen = screen
         self.showCursor = showCursor
-        self.apps = apps
     }
     
     // MARK: -User Interaction
