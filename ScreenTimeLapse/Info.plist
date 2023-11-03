@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundle </key>
+	<false/>
 	<key>NSDesktopFolderUsageDescription</key>
 	<string>Save recordings to Desktop</string>
 	<key>NSDocumentsFolderUsageDescription</key>
@@ -11,8 +13,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Recording a timelapse of selected camera</string>
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict/>
-	</array>
+	<array/>
 </dict>
 </plist>
