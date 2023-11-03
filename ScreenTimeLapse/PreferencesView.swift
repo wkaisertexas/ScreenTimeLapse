@@ -18,6 +18,8 @@ struct PreferencesView: View {
     
     @AppStorage("format") private var format : AVFileType = baseConfig.validFormats.first!
     
+    @AppStorage("hideIcon") private var hideIcon : Bool = false
+    
     @AppStorage("saveLocation") private var saveLocation : URL = FileManager.default.homeDirectoryForCurrentUser
     @State private var showPicker = false
     
@@ -41,6 +43,7 @@ struct PreferencesView: View {
                 
             }
             Section(header: Text("Capture")){
+                Toggle("Hide Icon In Dock", isOn: $hideIcon)
                 Toggle("Show notifications", isOn: $showNotifications)
                 
                 Picker("Quality", selection: $quality){
@@ -75,9 +78,10 @@ struct PreferencesView: View {
                         saveLocation = pickedURL
                     }
                 }
+                
             }
         }.tabItem{
-            Label("Preferences", systemImage: "hand.raised")
+            Label("Preferences", systemImage: "gear")
         }
     }
 }

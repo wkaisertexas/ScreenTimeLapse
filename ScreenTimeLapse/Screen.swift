@@ -116,7 +116,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc3840x2160WithAlpha)
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc3840x2160)
         var settings = settingsAssistant!.videoSettings!
         
         logger.debug("\(settings.keys.debugDescription)") // shows the user some of the base settings
