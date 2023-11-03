@@ -17,6 +17,8 @@
 
 ## Introduction
 
+<img width="553" alt="Screenshot 2023-11-03 at 4 24 52 PM" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/ddc9d380-dedd-4adb-ae63-51292794518d">
+
 A open-source menu bar application for creating screen and camera timelapses without excessive file sizes.
 
 ## Features
