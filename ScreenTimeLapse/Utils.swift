@@ -29,6 +29,23 @@ enum RecordingState : CustomStringConvertible{
     case paused
 }
 
+enum QualitySettings: String, Codable, CaseIterable {
+    case low
+    case medium
+    case high
+    
+    var description: String {
+        switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+        }
+    }
+}
+
 extension SCRunningApplication : Comparable {
     public static func < (lhs: SCRunningApplication, rhs: SCRunningApplication) -> Bool {
         lhs.bundleIdentifier < rhs.bundleIdentifier

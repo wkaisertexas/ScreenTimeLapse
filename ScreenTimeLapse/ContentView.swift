@@ -146,7 +146,7 @@ struct InputDevices: View{
         }
     }
     
-    /// Renders all avaible `MyRecordingCamera` objects as an interactable list
+    /// Renders all avaible `Camera` objects as an interactable list
     @ViewBuilder
     func camerasMenu() -> some View{
         viewModel.cameras.isEmpty ? nil :
@@ -166,7 +166,7 @@ struct InputDevices: View{
         }
     }
     
-    /// Renders a single `MyRecordingCamera` as a button with either an enabled or disabled checkmark
+    /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
     @ViewBuilder
     func camera(_ camera: Camera) -> some View{
         Button(action: {
@@ -181,10 +181,10 @@ struct InputDevices: View{
     /// Renders  single `SCRunningApplication` as either enabled or disabled
     @ViewBuilder
     func app(_ app: SCRunningApplication) -> some View{
-        Button(action: {
-            viewModel.toggleApp(app: app)
-        }){
-            if let runningApp = NSRunningApplication(processIdentifier: app.processID), let appIcon = runningApp.icon {
+        if let runningApp = NSRunningApplication(processIdentifier: app.processID), runningApp.activationPolicy == .regular, let appIcon = runningApp.icon {
+            Button(action: {
+                viewModel.toggleApp(app: app)
+            }){
                 Image(nsImage: appIcon)
                 Text(app.applicationName)
             }
@@ -192,86 +192,28 @@ struct InputDevices: View{
     }
 }
 
-/// Recording property modifying alerts
-/// Determines the viewmodel's `frameRate` and `timeDivisor`
-struct PropertyModifiers: View{
-    @EnvironmentObject private var viewModel: RecorderViewModel
-    
-    @State private var fr_alert = false
-    @State private var su_alert = false
-    
-    var body: some View{
-        frameRateAdjust()
-        speedMultipleAdjust()
-    }
-    
-    @ViewBuilder
-    func frameRateAdjust() -> some View {
-//        Button(String(format: "( %.1f ) Adjust frame rate", frame_rate)){
-//            fr_alert = true
-//        }.alert("Change frame rate", isPresented: $fr_alert, actions: {
-//            TextField("Frame rate", value: $frame_rate, format: .number)
-//        }, message: {
-//            TextField("Frame rate", value: $frame_rate, format: .number)
-//        })
-    }
-    
-    @ViewBuilder
-    func speedMultipleAdjust() -> some View {
-//        Button(String(format: "( %.1fx ) Adjust speed multiple", speed_up)){
-//            su_alert.toggle()
-//        }.sheet(isPresented: $su_alert){
-//            TextField("This is where you input the number", value: $frame_rate, format: .number)
-//        }
-    }
-    
-    let speed_formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter
-    }()
-}
-
 /// Random info about the project
 struct Info: View{
     @Environment(\.openURL) var openURL
     
-    var HELP: String = "https://google.com"
-    var ABOUT: String = "https://apple.com"
-
     var body: some View{
-        Button("Help"){
-            openURL(URL(string: HELP)!)
-        }
+        SettingsLink()
+            .keyboardShortcut(",")
+        Divider()
         Button("About"){
-            openURL(URL(string: ABOUT)!)
+            if let url = URL(string: baseConfig.ABOUT) {
+                openURL(url)
+            }
         }
+        Button("Help"){
+            if let url = URL(string: baseConfig.HELP) {
+                openURL(url)
+            }
+        }
+        Divider()
         Button("Quit"){
             NSApplication.shared.terminate(nil)
         }.keyboardShortcut("q")
     }
 }
 
-struct Prefrences: View{
-    // TODO: Replace these with actual values later
-    @State var showCursor: Bool = false
-    @State var frameRate: Double = 25.0
-    @State var timeMultiple: Double = 3.0
-    var body: some View{
-        Form{
-            Section(header: Text("View Info")){
-                Toggle("Show Cursor", isOn: $showCursor)
-                
-                Slider(value: $frameRate, in: 0...100, step: 1.0)
-                Slider(value: $frameRate, in: 0...100, step: 1.0)
-                Slider(value: $frameRate, in: 0...100, step: 1.0)
-            }
-        }
-    }
-}
-
-struct SettingsPreview: PreviewProvider {
-    static var previews: some View{
-        Prefrences()
-    }
-}

@@ -33,7 +33,7 @@ class RecorderViewModel: ObservableObject {
     
     /// Gets all cameras attached to the computer and creates ``MyRecordingCamera``s for them
     func getCameras(){
-        let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: AVMediaType.video, position: .unspecified)
+        let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: .video, position: .unspecified)
         
         self.cameras = convertCameras(camera: discovery.devices)
     }
@@ -54,6 +54,8 @@ class RecorderViewModel: ObservableObject {
         
         logger.log("Started recording at RecorderViewModel")
         
+        var excludedApps = apps.filter{ !$0.value }.map{ $0.key }
+        
         self.cameras.indices
             .forEach{ index in
                 cameras[index].startRecording()
@@ -61,7 +63,7 @@ class RecorderViewModel: ObservableObject {
         
         self.screens.indices
             .forEach{ index in
-                screens[index].startRecording()
+                screens[index].startRecording(excluding: excludedApps)
             }
     }
     
@@ -137,7 +139,7 @@ class RecorderViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    /// Toggles a ``MyRecordingCamera``
+    /// Toggles a ``Camera``
     ///
     /// Rather than a dictionary like ``apps`` this was encapsulated in a custom struct
     func toggleCameras(camera: Camera){
@@ -145,7 +147,7 @@ class RecorderViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    /// Checks to make sure at least one ``Screen`` or ``MyRecordingCamera`` is enabled
+    /// Checks to make sure at least one ``Screen`` or ``Camera`` is enabled
     func recordersDisabled() -> Bool{
         !(cameras.contains{ $0.enabled } || screens.contains{ $0.enabled })
     }
@@ -209,14 +211,14 @@ class RecorderViewModel: ObservableObject {
                 first.screen.displayID < second.screen.displayID
             }
         
-//        if self.screens.isEmpty, !newScreens.isEmpty{
-//            newScreens.first!.enabled = true
-//        }
+        if self.screens.isEmpty, !newScreens.isEmpty{
+            newScreens.first!.enabled = true
+        }
         
         return newScreens
     }
     
-    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom ``MyRecordingCamera`` object
+    /// Converts a `AVCaptureDevice` array from from a Discovery session into custom ``Camera`` object
     private func convertCameras(camera input: [AVCaptureDevice]) -> [Camera]{
         var newCameras = input
             .filter{ camera in
@@ -234,10 +236,6 @@ class RecorderViewModel: ObservableObject {
                 first.inputDevice.uniqueID < second.inputDevice.uniqueID
             }
         
-        if self.cameras.isEmpty, !newCameras.isEmpty {
-            newCameras.first!.enabled = true
-        }
-        
         return newCameras
     }
     
@@ -245,10 +243,10 @@ class RecorderViewModel: ObservableObject {
     
     /// Converts a `SCDisplay` into a ``Screen``
     private func getScreenRecorder(_ screen: SCDisplay) -> Screen{
-        Screen(screen: screen, showCursor: showCursor)
+        Screen(screen: screen, showCursor: showCursor, apps: apps)
     }
     
-    /// Converts a `AVCaptureDevice` into a ``MyRecordingCamera``
+    /// Converts a `AVCaptureDevice` into a ``Camera``
     private func getCameraRecorder(_ camera: AVCaptureDevice) -> Camera{
         Camera(camera: camera)
     }

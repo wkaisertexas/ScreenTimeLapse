@@ -1,6 +1,7 @@
 import AVFoundation
+import SwiftUI
 
-/// Records the output of a camera in a stream-like format
+/// Records the output of a `AVCaptureDevice` in a stream-like format
 class Camera: NSObject, Recordable {
     var state: RecordingState = .stopped
     var metaData: OutputInfo = OutputInfo()
@@ -12,7 +13,11 @@ class Camera: NSObject, Recordable {
     // Audio Video Capture-Specific Functionality
     var inputDevice: AVCaptureDevice
     var recordVideo: RecordVideo?
-
+    
+    // Offset
+    var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
+    var timeMultiple: Double = 1 // offset set based on settings
+    
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
             return "\(self.inputDevice.localizedName)"
@@ -33,9 +38,6 @@ class Camera: NSObject, Recordable {
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
 
                 self.recordVideo?.startRunning()
-                
-                print("Writer \(writer)")
-                print("Input \(input)")
             } catch{
                 logger.error("Failed to setup stream")
             }
@@ -44,27 +46,43 @@ class Camera: NSObject, Recordable {
     
     /// Sets up the `AVAssetWriter` and `AVAssetWriterInput`
     func setupWriter(device: AVCaptureDevice, path: String) throws -> (AVAssetWriter, AVAssetWriterInput){
-        let url = URL(string: path, relativeTo: .temporaryDirectory)!
+        var url = URL(string: path, relativeTo: .temporaryDirectory)!
+       
+        if let location = UserDefaults.standard.url(forKey: "saveLocation"){
+            url = URL(string: path, relativeTo: location)!
+        } else {
+            logger.error("No camera save location present")
+        }
         
         do { // delete old video
             try FileManager.default.removeItem(at: url)
         } catch { print("Failed to delete file \(error.localizedDescription)")}
-        
+       
         let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
         var settings = settingsAssistant!.videoSettings!
         
-        print("Saving to URL \(url)")
+        // getting and setting the frame rate
+//        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
+        
+        var fileType : AVFileType = baseConfig.validFormats.first!
+        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
+           let preferenceType = fileTypeValue as? AVFileType{
+            fileType = preferenceType
+        }
 
-        let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
+        let writer = try AVAssetWriter(outputURL: url, fileType: fileType)
    
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-//        input.expectsMediaDataInRealTime = true
+        input.expectsMediaDataInRealTime = true
 
         guard writer.canAdd(input) else {
             print("Can't add input")
             return (writer, input)
         }
         writer.add(input)
+        
+        // timing offset
+        timeMultiple = UserDefaults.standard.double(forKey: "timeMultiple")
         
         return (writer, input)
     }
@@ -85,7 +103,7 @@ class Camera: NSObject, Recordable {
         
         self.state = .stopped
          
-        logger.log("Screen -- saved recording")
+        logger.log("Camera - saved recording")
         
         if let recorder = recordVideo, recorder.isRecording() {
             recorder.stopSession()
@@ -136,18 +154,12 @@ class Camera: NSObject, Recordable {
         }
 
         if writer.status == .unknown {
+            self.offset = buffer.presentationTimeStamp
+            
             writer.startWriting()
-            
-            writer.startSession(atSourceTime: buffer.presentationTimeStamp)
-            
+            writer.startSession(atSourceTime: self.offset)
             
             input.append(buffer)
-//            if input.append(buffer) {
-//                print("Was able to append the first buffer")
-//            } else {
-//                print(buffer)
-//                print("Was not able to append the first buffer")
-//            }
             return
         }
         
@@ -160,11 +172,11 @@ class Camera: NSObject, Recordable {
             print("Is not ready for more data")
             return
         }
-
-        if input.append(buffer) {
+        
+        if input.append(try! buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple)) {
             print("Appended Buffer Successfully")
         } else {
-            print("Append failed now ")
+            print("Append camera failed now ")
         }
     }
     
