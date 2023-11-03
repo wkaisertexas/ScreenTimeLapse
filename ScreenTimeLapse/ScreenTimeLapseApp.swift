@@ -22,6 +22,7 @@ struct ScreenTimeLapseApp: App {
         Settings{
             PreferencesView()
         }
+        .defaultSize( .init(width: 450, height: 200))
     }
 }
 

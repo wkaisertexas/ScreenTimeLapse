@@ -27,16 +27,11 @@ final class ScreenTimeLapseUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    func recordVideo() throws {
+        
+    }
+    
     func testRecording() throws {
-        
-        let app = XCUIApplication()
-        
-        let mainWindwo = app.windows["recorder.main"]
-        
-        
-        
-        app.menuBars.containing(.menuBarItem, identifier:"Apple").element.click()
-        
     }
 
     func testLaunchPerformance() throws {
