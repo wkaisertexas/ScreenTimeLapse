@@ -85,6 +85,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 // Asset writing failed with an error
                 if let error = writer!.error {
                     logger.error("Asset writing failed with error: \(error.localizedDescription)")
+                   // TODO: Consider showing an alert here
                 }
             }
         }
@@ -99,9 +100,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             do{
                 (self.writer, self.input) = try setupWriter(screen: screen, path: path)
                 
-                logger.log("Setup Asset Writer \(self.writer)")
-                logger.log("Setup Asset Writer Input \(self.input)")
-                
                 try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
                 
                 logger.debug("Setup stream")
@@ -115,21 +113,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc3840x2160)
-        var settings = settingsAssistant!.videoSettings!
-        
-        logger.debug("\(settings.keys.debugDescription)") // shows the user some of the base settings
-        
-        let colorPropertySettings = [
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_2020,
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-        ]
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc7680x4320)!
+        settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(videoCodecType: .hevc, width: screen.width * 2, height: screen.height * 2)
 
-        settings[AVVideoWidthKey] = screen.width
-        settings[AVVideoHeightKey] = screen.height
-        settings[AVVideoColorPropertiesKey] = colorPropertySettings
+        var settings = settingsAssistant.videoSettings!
         
+        settings[AVVideoWidthKey] = screen.width * 2
+        settings[AVVideoHeightKey] = screen.height * 2
+        settings[AVVideoColorPropertiesKey] = [
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2,
+        ]
 //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
         var url = URL(string: path, relativeTo: .temporaryDirectory)!
@@ -168,12 +163,30 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         )
         
         let config = SCStreamConfiguration()
-        config.width = screen.width
-        config.height = screen.height
+        
+        config.width = screen.width * 2
+        config.height = screen.height * 2
         config.showsCursor = showCursor
-        config.queueDepth = 10
-        config.colorSpaceName = CGColorSpace.extendedSRGB
+        config.queueDepth = 20
+        config.colorSpaceName = CGColorSpace.displayP3
         config.backgroundColor = .white
+        config.capturesAudio = false
+        
+        // new features to match default recording impl.
+        config.streamName = "\(screen.displayID) Screen Recording"
+        config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
+        config.shouldBeOpaque = true
+
+        // use the userdefault here
+        if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
+           let quality = qualityValue as? QualitySettings {
+            config.captureResolution = switch quality {
+                case .high : SCCaptureResolutionType.best
+                case .medium : SCCaptureResolutionType.automatic
+                case .low : SCCaptureResolutionType.nominal
+            }
+        }
+        
         
         stream = SCStream(
             filter: contentFilter,
