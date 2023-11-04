@@ -17,7 +17,7 @@
 
 ## Introduction
 <p align="center">
-  <img width="553" alt="Application demonstration photo in menu bar" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/ddc9d380-dedd-4adb-ae63-51292794518d">
+<img width="553" alt="Application demonstration photo in menu bar" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/785ee2b6-1ef5-4302-83da-c3d81a069074">
 </p>
 
 <p align="center">
