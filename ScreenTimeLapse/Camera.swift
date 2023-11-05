@@ -49,7 +49,9 @@ class Camera: NSObject, Recordable {
     func setupWriter(device: AVCaptureDevice, path: String) throws -> (AVAssetWriter, AVAssetWriterInput){
         let url = getFileDestination(path: path)
         
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc7680x4320)
+        let videoSettings = VideoSettings.hevc_displayP3
+        
+        let settingsAssistant = AVOutputSettingsAssistant(preset: videoSettings.preset)
         var settings = settingsAssistant!.videoSettings!
         
         // getting and setting the frame rate
@@ -58,11 +60,7 @@ class Camera: NSObject, Recordable {
         let dimensions = device.activeFormat.formatDescription.dimensions
         settings[AVVideoWidthKey] = dimensions.width
         settings[AVVideoHeightKey] = dimensions.height
-        settings[AVVideoColorPropertiesKey] = [
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2,
-        ]
+        settings[AVVideoColorPropertiesKey] = videoSettings.preset
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -116,7 +114,7 @@ class Camera: NSObject, Recordable {
         }
         
         // Same as screen
-        while(!(input.isReadyForMoreMediaData ?? false)){
+        while(!input.isReadyForMoreMediaData){
             logger.log("Not able to mark the stream as finished")
             sleep(1) // sleeping for a second
         }
@@ -125,13 +123,17 @@ class Camera: NSObject, Recordable {
         writer.finishWriting { [self] in
             if writer.status == .completed {
                 // Asset writing completed successfully
-                print(writer.outputURL)
-                workspace.open(writer.outputURL)
+                if UserDefaults.standard.bool(forKey: "showAfterSave"){
+                    workspace.open(writer.outputURL)
+                }
+                
+                sendNotification(title: "\(self) saved", body: "Saved video")
             } else if writer.status == .failed {
                 // Asset writing failed with an error
-                if let error = writer.error {
-                    logger.error("Asset writing failed with error: \(String(describing: error))")
-                }
+                guard let error = writer.error else { return }
+                
+                logger.error("Asset writing failed with error: \(String(describing: error))")
+                sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)")
             }
         }
     }

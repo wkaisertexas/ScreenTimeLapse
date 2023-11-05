@@ -14,8 +14,8 @@
             filePath = "ScreenTimeLapse/Camera.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "startRecording()"
             landmarkType = "7">
             <Locations>
@@ -93,8 +93,8 @@
             filePath = "ScreenTimeLapse/PreferencesView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "previews"
             landmarkType = "24">
          </BreakpointContent>

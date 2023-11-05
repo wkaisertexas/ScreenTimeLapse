@@ -56,6 +56,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     func saveRecording() {
         guard self.enabled else { return }
         
+        guard let writer = writer, let input = input else { return }
+        
         self.state = .stopped
         
         logger.log("Screen -- saved recording")
@@ -64,20 +66,24 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             stream.stopCapture()
         }
         
-        while(!(input?.isReadyForMoreMediaData ?? false)){
+        while(!input.isReadyForMoreMediaData){
             logger.log("Not able to mark the stream as finished")
             sleep(1) // sleeping for a second
         }
         
-        input?.markAsFinished()
-        sendNotification(title: "Testing", body: "Not testing")
-        writer!.finishWriting { [self] in
-            if self.writer!.status == .completed {
+        input.markAsFinished()
+        writer.finishWriting { [self] in
+            if writer.status == .completed {
                 // Asset writing completed successfully
-                workspace.open(self.writer!.outputURL)
-            } else if writer!.status == .failed {
+                
+                if UserDefaults.standard.bool(forKey: "showAfterSave"){
+                    workspace.open(writer.outputURL)
+                }
+                
+                sendNotification(title: "\(self) saved", body: "Saved video")
+            } else if writer.status == .failed {
                 // Asset writing failed with an error
-                if let error = writer!.error {
+                if let error = writer.error {
                     logger.error("Asset writing failed with error: \(error.localizedDescription)")
                     sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)")
                 }

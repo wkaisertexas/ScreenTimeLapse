@@ -10,6 +10,7 @@ import AVFoundation
 
 struct PreferencesView: View {
     @AppStorage("showNotifications") private var showNotifications = false
+    @AppStorage("showAfterSave") private var showAfterSave = false
     
     @AppStorage("framesPerSecond") private var framesPerSecond = 30
     @AppStorage("timeMultiple") private var timeMultiple = 5
@@ -58,6 +59,7 @@ struct PreferencesView: View {
     func captureVideoSettings() -> some View{
         Toggle("Hide Icon In Dock", isOn: $hideIcon)
         Toggle("Show notifications", isOn: $showNotifications)
+        Toggle("Show video after saving", isOn: $showAfterSave)
         
         Picker("Quality", selection: $quality){
             ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
