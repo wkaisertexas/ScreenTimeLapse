@@ -58,11 +58,20 @@ class Camera: NSObject, Recordable {
             try FileManager.default.removeItem(at: url)
         } catch { print("Failed to delete file \(error.localizedDescription)")}
        
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc1920x1080)
+        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc7680x4320)
         var settings = settingsAssistant!.videoSettings!
         
         // getting and setting the frame rate
 //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
+    
+        let dimensions = device.activeFormat.formatDescription.dimensions
+        settings[AVVideoWidthKey] = dimensions.width
+        settings[AVVideoHeightKey] = dimensions.height
+        settings[AVVideoColorPropertiesKey] = [
+            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
+            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2,
+        ]
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
