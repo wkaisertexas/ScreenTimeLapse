@@ -5,7 +5,7 @@ import ScreenCaptureKit
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel: RecorderViewModel
-        
+    
     var body: some View {
         ActionButton()
         Divider()
@@ -21,14 +21,14 @@ struct ActionButton: View{
     
     var body: some View{
         switch viewModel.state{
-            case .stopped:
-                startButton()
-            case .recording:
-                pauseButton()
-                exitButton()
-            case .paused:
-                resumeButton()
-                exitButton()
+        case .stopped:
+            startButton()
+        case .recording:
+            pauseButton()
+            exitButton()
+        case .paused:
+            resumeButton()
+            exitButton()
         }
     }
     
@@ -73,7 +73,7 @@ struct ActionButton: View{
 /// Input devices of the project
 struct InputDevices: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
-
+    
     var body: some View{
         appsMenu().pickerStyle(.menu)
         Divider()
@@ -161,7 +161,7 @@ struct InputDevices: View{
     func screen(_ screen: Screen) -> some View{
         Button(action: {viewModel.toggleScreen(screen: screen)}){
             screen.enabled ? Image(systemName: "checkmark") : nil
-                
+            
             Text(screen.description)
         }
     }
@@ -173,7 +173,7 @@ struct InputDevices: View{
             viewModel.toggleCameras(camera: camera)
         }){
             camera.enabled ? Image(systemName: "checkmark") : nil
-                
+            
             Text(camera.description)
         }
     }

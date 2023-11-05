@@ -5,9 +5,9 @@ import AVFoundation
 @main
 struct ScreenTimeLapseApp: App {
     @NSApplicationDelegateAdaptor(ScreenTimeLapseAppDelegate.self) var appDelegate
-
+    
     @ObservedObject var recorderViewModel = RecorderViewModel()
-
+    
     var body: some Scene {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
@@ -30,7 +30,7 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide the dock icon
         if UserDefaults.standard.bool(forKey: "hideIcon") {
-            NSApp.setActivationPolicy(.accessory) 
+            NSApp.setActivationPolicy(.accessory)
         }
         
         // Notifications

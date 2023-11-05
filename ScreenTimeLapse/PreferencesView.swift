@@ -45,54 +45,54 @@ struct PreferencesView: View {
     // MARK: Submenus
     @ViewBuilder
     func playbackVideoSettings() -> some View{
-            Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-                Text("Output FPS \(framesPerSecond)")
-            }
-            
-            Stepper(value: $timeMultiple, in: 1...60, step: 1){
-                Text("Times faster \(timeMultiple) x")
-            }
+        Stepper(value: $framesPerSecond, in: 1...60, step: 1){
+            Text("Output FPS \(framesPerSecond)")
+        }
+        
+        Stepper(value: $timeMultiple, in: 1...60, step: 1){
+            Text("Times faster \(timeMultiple) x")
+        }
     }
     
     @ViewBuilder
     func captureVideoSettings() -> some View{
-            Toggle("Hide Icon In Dock", isOn: $hideIcon)
-            Toggle("Show notifications", isOn: $showNotifications)
-            
-            Picker("Quality", selection: $quality){
-                ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
-                    Text(qualitySetting.description)
-                }
-            }.pickerStyle(SegmentedPickerStyle())
-            
-            Picker("Format", selection: $format){
-                ForEach(baseConfig.validFormats, id: \.self){ format in
-                    Text(baseConfig.convertFormatToString(format))
-                }
+        Toggle("Hide Icon In Dock", isOn: $hideIcon)
+        Toggle("Show notifications", isOn: $showNotifications)
+        
+        Picker("Quality", selection: $quality){
+            ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
+                Text(qualitySetting.description)
             }
+        }.pickerStyle(SegmentedPickerStyle())
+        
+        Picker("Format", selection: $format){
+            ForEach(baseConfig.validFormats, id: \.self){ format in
+                Text(baseConfig.convertFormatToString(format))
+            }
+        }
     }
     
     @ViewBuilder
     func outputVideoSettings() -> some View{
-            Button(action: {
-                showPicker.toggle()
-            }){
-                Label("Choose Output Folder", systemImage: "folder")
+        Button(action: {
+            showPicker.toggle()
+        }){
+            Label("Choose Output Folder", systemImage: "folder")
+        }
+        .disabled(showPicker)
+        .onChange(of: showPicker){ [ self ] in
+            guard showPicker else { return }
+            let panel = NSOpenPanel()
+            panel.allowsMultipleSelection = false
+            panel.canChooseDirectories = true
+            panel.canChooseFiles = false
+            panel.begin { [ self ] res in
+                showPicker = false
+                guard res == .OK, let pickedURL = panel.url else { return }
+                
+                saveLocation = pickedURL
             }
-            .disabled(showPicker)
-            .onChange(of: showPicker){ [ self ] in
-                guard showPicker else { return }
-                let panel = NSOpenPanel()
-                panel.allowsMultipleSelection = false
-                panel.canChooseDirectories = true
-                panel.canChooseFiles = false
-                panel.begin { [ self ] res in
-                    showPicker = false
-                    guard res == .OK, let pickedURL = panel.url else { return }
-                    
-                    saveLocation = pickedURL
-                }
-            }
+        }
     }
 }
 

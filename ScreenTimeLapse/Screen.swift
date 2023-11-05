@@ -42,7 +42,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         self.state = .recording
         
-        setup(path: getFilename(), excluding: excluding) 
+        setup(path: getFilename(), excluding: excluding)
     }
     
     func pauseRecording() {
@@ -59,13 +59,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         self.state = .stopped
         
         logger.log("Screen -- saved recording")
-        
-        // given this is a UI task, the main thread is running this application
-        // screen recording is happening on another thread, a screen recorder might
-        // be in the middle of appending data or handling data when this is happening
-       
-        // the stream of data needs to be stopped as per my notes on this
-        // a pseudo-blocking data structure needs to exist to wait until the status is non-zero
         
         if let stream = stream {
             stream.stopCapture()
@@ -119,14 +112,14 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
         
         settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(videoCodecType: .hevc, width: screen.width * 2, height: screen.height * 2)
-
+        
         var settings = settingsAssistant.videoSettings!
         
         settings[AVVideoWidthKey] = screen.width * 2
         settings[AVVideoHeightKey] = screen.height * 2
         settings[AVVideoColorPropertiesKey] = config.colorProperties
         
-//        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
+        //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -136,7 +129,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         let url = getFileDestination(path: path)
         let writer = try AVAssetWriter(url: url, fileType: fileType)
-                        
+        
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
         input.expectsMediaDataInRealTime = true
         
@@ -144,7 +137,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         // timeMultiple setup -> for some reason, does not return optional
         timeMultiple = UserDefaults.standard.double(forKey: "timeMultiple")
-                
+        
         return (writer, input)
     }
     
@@ -174,9 +167,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
            let quality = qualityValue as? QualitySettings {
             config.captureResolution = switch quality {
-                case .high : SCCaptureResolutionType.best
-                case .medium : SCCaptureResolutionType.automatic
-                case .low : SCCaptureResolutionType.nominal
+            case .high : SCCaptureResolutionType.best
+            case .medium : SCCaptureResolutionType.automatic
+            case .low : SCCaptureResolutionType.nominal
             }
         }
         
@@ -208,12 +201,12 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         guard self.state == .recording else { return }
         
         switch of{
-            case .screen:
-                handleVideo(buffer: didOutputSampleBuffer)
-            case .audio:
-                print("Audio should not be captured")
-            default:
-                print("Unknown future case")
+        case .screen:
+            handleVideo(buffer: didOutputSampleBuffer)
+        case .audio:
+            print("Audio should not be captured")
+        default:
+            print("Unknown future case")
         }
     }
     
@@ -226,13 +219,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         do{
             guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
-                                                                                          createIfNecessary: false),
+                                                                                           createIfNecessary: false),
                   let attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
             else {
                 logger.error("Attachments Array does not work")
                 return
             }
-                                                                                                
+            
             // the status needs to be not `.complete`
             guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
                 return }
@@ -240,17 +233,17 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             guard let writer = self.writer, let input = self.input else {return}
             
             if writer.status == .unknown {
-               writer.startWriting()
-               offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
-               writer.startSession(atSourceTime: offset)
-               return
+                writer.startWriting()
+                offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+                writer.startSession(atSourceTime: offset)
+                return
             }
             
             guard writer.status != .failed else {
                 logger.log("Screen - failed")
                 return
             }
-                        
+            
             input.append(try buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple))
             frameCount += 1
             if frameCount % baseConfig.logFrequency == 0 {

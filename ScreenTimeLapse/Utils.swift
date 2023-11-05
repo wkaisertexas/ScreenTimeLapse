@@ -15,12 +15,12 @@ struct OutputInfo{
 enum RecordingState : CustomStringConvertible{
     var description: String {
         switch self{
-            case .stopped:
-                return "🔴"
-            case .paused:
-                return "▶️"
-            case .recording:
-                return "⏸️"
+        case .stopped:
+            return "🔴"
+        case .paused:
+            return "▶️"
+        case .recording:
+            return "⏸️"
         }
     }
     
@@ -36,12 +36,12 @@ enum QualitySettings: String, Codable, CaseIterable {
     
     var description: String {
         switch self {
-            case .low:
-                return "Low"
-            case .medium:
-                return "Medium"
-            case .high:
-                return "High"
+        case .low:
+            return "Low"
+        case .medium:
+            return "Medium"
+        case .high:
+            return "High"
         }
     }
 }

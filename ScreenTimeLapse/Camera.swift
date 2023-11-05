@@ -26,7 +26,7 @@ class Camera: NSObject, Recordable {
             return "\(self.inputDevice.localizedName) - \(inputDevice.manufacturer)"
         }
     }
-
+    
     init(camera: AVCaptureDevice){
         self.inputDevice = camera
     }
@@ -35,9 +35,9 @@ class Camera: NSObject, Recordable {
         Task(priority: .userInitiated){ [self] in // does doing this in a task fuck things up
             do{
                 self.recordVideo = RecordVideo(device: inputDevice, callback: handleVideo) // minimal
-
+                
                 (self.writer, self.input) = try setupWriter(device: self.inputDevice, path: path)
-
+                
                 self.recordVideo?.startRunning()
             } catch{
                 logger.error("Failed to setup stream")
@@ -53,8 +53,8 @@ class Camera: NSObject, Recordable {
         var settings = settingsAssistant!.videoSettings!
         
         // getting and setting the frame rate
-//        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
-    
+        //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
+        
         let dimensions = device.activeFormat.formatDescription.dimensions
         settings[AVVideoWidthKey] = dimensions.width
         settings[AVVideoHeightKey] = dimensions.height
@@ -69,12 +69,12 @@ class Camera: NSObject, Recordable {
            let preferenceType = fileTypeValue as? AVFileType{
             fileType = preferenceType
         }
-
+        
         let writer = try AVAssetWriter(outputURL: url, fileType: fileType)
-   
+        
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
         input.expectsMediaDataInRealTime = true
-
+        
         guard writer.canAdd(input) else {
             print("Can't add input")
             return (writer, input)
@@ -102,7 +102,7 @@ class Camera: NSObject, Recordable {
         guard self.enabled else { return }
         
         self.state = .stopped
-         
+        
         logger.log("Camera - saved recording")
         
         if let recorder = recordVideo, recorder.isRecording() {
@@ -142,17 +142,17 @@ class Camera: NSObject, Recordable {
             print("Not video writer present")
             return
         }
-
+        
         guard writer.status != .failed else {
             print("Writer has failed")
             return
         }
-
+        
         guard buffer.isValid else {
             logger.log("Invalid Camera Buffer")
             return
         }
-
+        
         if writer.status == .unknown {
             self.offset = buffer.presentationTimeStamp
             
@@ -167,7 +167,7 @@ class Camera: NSObject, Recordable {
             print("The writer has failed \(String(describing: writer.error!))")
             return
         }
-
+        
         guard input.isReadyForMoreMediaData else {
             print("Is not ready for more data")
             return
