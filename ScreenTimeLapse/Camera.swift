@@ -17,6 +17,7 @@ class Camera: NSObject, Recordable {
     // Offset
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
+    var frameCount: Int = 0
     
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
@@ -173,7 +174,10 @@ class Camera: NSObject, Recordable {
         }
         
         if input.append(try! buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple)) {
-            print("Appended Buffer Successfully")
+            frameCount += 1
+            if frameCount % baseConfig.logFrequency == 0 {
+                logger.log("\(self) Appended Buffer \(self.frameCount)")
+            }
         } else {
             print("Append camera failed now ")
         }

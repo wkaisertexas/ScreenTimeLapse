@@ -24,7 +24,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     // Recording timings
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
-        
+    var frameCount: Int = 0
+    
     override var description: String {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
     }
@@ -76,16 +77,16 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         }
         
         input?.markAsFinished()
+        sendNotification(title: "Testing", body: "Not testing")
         writer!.finishWriting { [self] in
             if self.writer!.status == .completed {
                 // Asset writing completed successfully
-                print(self.writer!.outputURL)
                 workspace.open(self.writer!.outputURL)
             } else if writer!.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer!.error {
                     logger.error("Asset writing failed with error: \(error.localizedDescription)")
-                   // TODO: Consider showing an alert here
+                    sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)")
                 }
             }
         }
@@ -113,18 +114,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .hevc7680x4320)!
+        let config : VideoSettings = .hevc_displayP3
+        
+        let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
+        
         settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(videoCodecType: .hevc, width: screen.width * 2, height: screen.height * 2)
 
         var settings = settingsAssistant.videoSettings!
         
         settings[AVVideoWidthKey] = screen.width * 2
         settings[AVVideoHeightKey] = screen.height * 2
-        settings[AVVideoColorPropertiesKey] = [
-            AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
-            AVVideoColorPrimariesKey: AVVideoColorPrimaries_P3_D65,
-            AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2,
-        ]
+        settings[AVVideoColorPropertiesKey] = config.colorProperties
+        
 //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
         var fileType : AVFileType = baseConfig.validFormats.first!
@@ -156,21 +157,20 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         )
         
         let config = SCStreamConfiguration()
-        
+        config.streamName = "\(screen.displayID) Screen Recording"
+        config.queueDepth = 20
         config.width = screen.width * 2
         config.height = screen.height * 2
         config.showsCursor = showCursor
-        config.queueDepth = 20
-        config.colorSpaceName = CGColorSpace.displayP3
-        config.backgroundColor = .white
         config.capturesAudio = false
-        
-        // new features to match default recording impl.
-        config.streamName = "\(screen.displayID) Screen Recording"
-        config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
+        config.backgroundColor = .white
         config.shouldBeOpaque = true
-
-        // use the userdefault here
+        
+        // color settings
+        config.colorSpaceName = CGColorSpace.displayP3
+        config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
+        
+        // Gettings quality from user defaults
         if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
            let quality = qualityValue as? QualitySettings {
             config.captureResolution = switch quality {
@@ -179,7 +179,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 case .low : SCCaptureResolutionType.nominal
             }
         }
-        
         
         stream = SCStream(
             filter: contentFilter,
@@ -207,11 +206,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     /// Saves each `CMSampleBuffer` from the screen
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
         guard self.state == .recording else { return }
-        
-        guard didOutputSampleBuffer.isValid else {
-            logger.error("The sample buffer IS NOT valid")
-            return
-        }
         
         switch of{
             case .screen:
@@ -258,7 +252,10 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             }
                         
             input.append(try buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple))
-            logger.log("Appended buffer")
+            frameCount += 1
+            if frameCount % baseConfig.logFrequency == 0 {
+                logger.log("\(self) Appended buffers \(self.frameCount)")
+            }
         } catch {
             logger.error("Invalid framebuffer")
         }

@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 import AVFoundation
 
 @main
@@ -22,7 +23,6 @@ struct ScreenTimeLapseApp: App {
         Settings{
             PreferencesView()
         }
-        .defaultSize( .init(width: 450, height: 200))
     }
 }
 
@@ -31,6 +31,31 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
         // Hide the dock icon
         if UserDefaults.standard.bool(forKey: "hideIcon") {
             NSApp.setActivationPolicy(.accessory) 
+        }
+        
+        // Notifications
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized:
+                logger.log("Authorized notification settings")
+            case .denied:
+                logger.log("Denied notification settings")
+            case .provisional:
+                logger.log("Provisional notifications present")
+            case .notDetermined:
+                logger.log("Requesting Notification Permissions")
+                
+                let center = UNUserNotificationCenter.current()
+                center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                    if granted {
+                        logger.log("Permissions granted")
+                    } else {
+                        logger.error("Permissions denined")
+                    }
+                }
+            @unknown default:
+                logger.error("Unknown default")
+            }
         }
     }
 }

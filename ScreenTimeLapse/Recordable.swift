@@ -1,5 +1,6 @@
 import AVFoundation
 import ScreenCaptureKit
+import UserNotifications
 
 /// Represents an object interactable with a ``RecorderViewModel``
 protocol Recordable : CustomStringConvertible {
@@ -13,6 +14,7 @@ protocol Recordable : CustomStringConvertible {
     
     var timeMultiple: Double {get set}
     var offset: CMTime {get set}
+    var frameCount: Int {get set}
     
     // MARK: -Intents
     mutating func startRecording()
@@ -23,6 +25,8 @@ protocol Recordable : CustomStringConvertible {
     
     func getFilename() -> String
     func getFileDestination(path: String) -> URL
+    
+    func sendNotification(title: String, body: String)
 }
 
 extension Recordable{
@@ -73,6 +77,27 @@ extension Recordable{
         } catch { print("Failed to delete file \(error.localizedDescription)")}
 
         return url
+    }
+    
+    /// Sends a notification using `UserNotifications` framework
+    /// Exists on `Recordable` because this can be modifyied is an **iOS** application is in the future
+    func sendNotification(title: String, body: String){
+        guard UserDefaults.standard.bool(forKey: "showNotifications") else {return}
+        
+        let center = UNUserNotificationCenter.current()
+    
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default // .defaultCritical
+       
+        let request = UNNotificationRequest(identifier: "recordingStatusNotifications", content: content, trigger: nil)
+        
+        center.add(request) { error in
+            if let error = error {
+                logger.log("Failed to send notification with error \(error)")
+            }
+        }
     }
 }
 
