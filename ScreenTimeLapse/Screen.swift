@@ -127,20 +127,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         ]
 //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
-        var url = URL(string: path, relativeTo: .temporaryDirectory)!
-        
-        if let location = UserDefaults.standard.url(forKey: "saveLocation"){
-            url = URL(string: path, relativeTo: location)!
-        } else {
-            logger.error("Error: no screen save location present")
-        }
-        
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
            let preferenceType = fileTypeValue as? AVFileType{
             fileType = preferenceType
         }
         
+        let url = getFileDestination(path: path)
         let writer = try AVAssetWriter(url: url, fileType: fileType)
                         
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)

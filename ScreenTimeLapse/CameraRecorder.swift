@@ -1,6 +1,6 @@
 //
-//  Shit.swift
-//  TestPRoject
+//  CameraRecorder.swift
+//  ScreenTimeLapse
 //
 //  Created by William Kaiser on 10/25/23.
 //

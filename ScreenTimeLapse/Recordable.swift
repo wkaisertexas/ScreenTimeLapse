@@ -22,6 +22,7 @@ protocol Recordable : CustomStringConvertible {
     mutating func saveRecording()
     
     func getFilename() -> String
+    func getFileDestination(path: String) -> URL
 }
 
 extension Recordable{
@@ -53,6 +54,25 @@ extension Recordable{
     
     mutating func saveRecording() {
         logger.log("Saving recorder")
+    }
+    
+    func getFileDestination(path: String) -> URL {
+        var url = URL(string: path, relativeTo: .temporaryDirectory)!
+       
+        if let location = UserDefaults.standard.url(forKey: "saveLocation"),
+           FileManager.default.fileExists(atPath: location.path),
+           FileManager.default.isWritableFile(atPath: location.path)
+        {
+            url = URL(string: path, relativeTo: location)!
+        } else {
+            logger.error("No camera save location present")
+        }
+        
+         do { // delete old video
+            try FileManager.default.removeItem(at: url)
+        } catch { print("Failed to delete file \(error.localizedDescription)")}
+
+        return url
     }
 }
 
