@@ -81,6 +81,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 }
                 
                 sendNotification(title: "\(self) saved", body: "Saved video")
+                
+                logger.log("Saved video to \(writer.outputURL.path(percentEncoded: true))")
             } else if writer.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer.error {
