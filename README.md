@@ -43,7 +43,7 @@ brew install --cask timelapse
 
 ## Local Development
 
-To develop Dub locally, you will need to clone and open this repository in XCode.
+To develop ScreenTimeLapse locally, you will need to clone and open this repository in XCode.
 
 Once that's done, you can use the following commands to run the app locally:
 
