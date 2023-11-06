@@ -12,7 +12,7 @@ struct ScreenTimeLapseApp: App {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
-            Text(verbatim: recorderViewModel.state.description)
+            Image(systemName: recorderViewModel.state.description)
         }
         .onChange(of: recorderViewModel.state) {
             Task{

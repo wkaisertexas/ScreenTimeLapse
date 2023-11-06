@@ -16,11 +16,11 @@ enum RecordingState : CustomStringConvertible{
     var description: String {
         switch self{
         case .stopped:
-            return "🔴"
+            return "record.circle.fill"
         case .paused:
-            return "▶️"
+            return "play.fill"
         case .recording:
-            return "⏸️"
+            return "pause.fill"
         }
     }
     
