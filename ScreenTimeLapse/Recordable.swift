@@ -27,9 +27,6 @@ protocol Recordable : CustomStringConvertible {
     mutating func saveRecording()
     
     func getFilename() -> String
-    func getFileDestination(path: String) -> URL
-    
-    func sendNotification(title: String, body: String)
 }
 
 extension Recordable{    
