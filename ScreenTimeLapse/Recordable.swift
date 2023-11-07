@@ -10,11 +10,14 @@ protocol Recordable : CustomStringConvertible {
     
     var writer: AVAssetWriter? {get set}
     var input: AVAssetWriterInput? {get set}
-    var lastSavedFrame: CMTime? {get set}
     
     var timeMultiple: Double {get set}
     var offset: CMTime {get set}
     var frameCount: Int {get set}
+    
+    var lastAppenedFrame: CMTime {get set}
+    var tmpFrameBuffer: CMSampleBuffer? {get set}
+    var frameRate: CMTimeScale {get}
     
     // MARK: -Intents
     mutating func startRecording()
@@ -29,7 +32,14 @@ protocol Recordable : CustomStringConvertible {
     func sendNotification(title: String, body: String)
 }
 
-extension Recordable{
+extension Recordable{    
+    var frameRate: CMTimeScale {
+        guard let writer = writer else {return .zero}
+        print(writer.overallDurationHint)
+//        return writer.movieTimeScale
+        return CMTimeScale(30.0)
+    }
+    
     /// Starts recording if ``enabled``
     mutating func startRecording() {
         guard self.enabled else { return }
@@ -98,6 +108,41 @@ extension Recordable{
                 logger.log("Failed to send notification with error \(error)")
             }
         }
+    }
+    
+    /// Appends a buffer depending on a couple of factors
+    /// The `tmpFrameBuffer` is used to keep track of deletable buffers
+    /// Saves **30%** of space at only **2x** speed. Austensibly much higher for higher time multiples
+    func appendBuffer(buffer: CMSampleBuffer) -> (CMSampleBuffer, CMTime){
+        guard let input = input else { return (buffer, lastAppenedFrame) }
+        
+        // Determines if we should append
+        let currentPTS = buffer.presentationTimeStamp
+        
+        let differenceTime =  CMTimeMultiplyByFloat64(CMTime(seconds: 1.0 / 30, preferredTimescale: 30), multiplier: timeMultiple)
+        
+        guard currentPTS > lastAppenedFrame + differenceTime else {
+            // okay to replace the tmp buffer
+            print("Saved frame!")
+            return (buffer, lastAppenedFrame)
+        }
+                
+        guard let newBuffer = try? tmpFrameBuffer?.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple) else {
+            return (buffer, lastAppenedFrame)
+        }
+        
+        guard input.append(newBuffer) else {
+            logger.error("failed to append data")
+            return (buffer, lastAppenedFrame)
+        }
+        
+        if let tmpFrameBuffer = tmpFrameBuffer{
+            return (buffer, tmpFrameBuffer.presentationTimeStamp)
+        } else {
+            // Initial condition
+            return (buffer, buffer.presentationTimeStamp)
+        }
+
     }
 }
 

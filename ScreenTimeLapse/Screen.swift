@@ -26,6 +26,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
     
+    var lastAppenedFrame: CMTime = .zero
+    var tmpFrameBuffer: CMSampleBuffer?
+    
     override var description: String {
         "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
     }
@@ -123,9 +126,15 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         var settings = settingsAssistant.videoSettings!
         
+        
         settings[AVVideoWidthKey] = screen.width * 2
         settings[AVVideoHeightKey] = screen.height * 2
         settings[AVVideoColorPropertiesKey] = config.colorProperties
+//        settings[kCVPixelBufferPixelFormatTypeKey as String] = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+//        settings["SASdfasdf"] = 1231
+        print(settings)
+        
+        // TODO: check if the pixel buffer makes sense
         
         //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
         
@@ -238,11 +247,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
                 return }
             
-            guard let writer = self.writer, let input = self.input else {return}
+            guard let writer = self.writer else {return}
             
             if writer.status == .unknown {
                 writer.startWriting()
-                offset = try buffer.sampleTimingInfos().first!.presentationTimeStamp
+                offset = buffer.presentationTimeStamp
                 writer.startSession(atSourceTime: offset)
                 return
             }
@@ -251,8 +260,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 logger.log("Screen - failed")
                 return
             }
-            
-            input.append(try buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple))
+           
+            (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
+
             frameCount += 1
             if frameCount % baseConfig.logFrequency == 0 {
                 logger.log("\(self) Appended buffers \(self.frameCount)")

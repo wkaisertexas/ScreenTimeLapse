@@ -8,7 +8,6 @@ class Camera: NSObject, Recordable {
     var enabled: Bool = false
     var writer: AVAssetWriter?
     var input: AVAssetWriterInput?
-    var lastSavedFrame: CMTime?
     
     // Audio Video Capture-Specific Functionality
     var inputDevice: AVCaptureDevice
@@ -18,6 +17,9 @@ class Camera: NSObject, Recordable {
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
+    
+    var lastAppenedFrame: CMTime = .zero
+    var tmpFrameBuffer: CMSampleBuffer?
     
     override var description: String {
         if inputDevice.manufacturer.isEmpty{
@@ -51,8 +53,8 @@ class Camera: NSObject, Recordable {
         
         let videoSettings = VideoSettings.hevc_displayP3
         
-        let settingsAssistant = AVOutputSettingsAssistant(preset: videoSettings.preset)
-        var settings = settingsAssistant!.videoSettings!
+        let settingsAssistant = AVOutputSettingsAssistant(preset: videoSettings.preset)!
+        var settings = settingsAssistant.videoSettings!
         
         // getting and setting the frame rate
         //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
@@ -61,6 +63,7 @@ class Camera: NSObject, Recordable {
         settings[AVVideoWidthKey] = dimensions.width
         settings[AVVideoHeightKey] = dimensions.height
         settings[AVVideoColorPropertiesKey] = videoSettings.preset
+//        settings[kCVPixelBufferPixelFormatTypeKey] = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -175,13 +178,13 @@ class Camera: NSObject, Recordable {
             return
         }
         
-        if input.append(try! buffer.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple)) {
-            frameCount += 1
-            if frameCount % baseConfig.logFrequency == 0 {
-                logger.log("\(self) Appended Buffer \(self.frameCount)")
-            }
-        } else {
-            print("Append camera failed now ")
+        (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
+        
+        // log frame count
+        frameCount += 1
+        if frameCount % baseConfig.logFrequency == 0 {
+            let logMessage : String = "\(self) Appended Buffer \(frameCount)"
+            logger.log("\(logMessage)")
         }
     }
     
