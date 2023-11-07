@@ -63,7 +63,7 @@ class RecorderViewModel: ObservableObject {
         
         self.screens.indices
             .forEach{ index in
-                screens[index].startRecording(excluding: excludedApps)
+                screens[index].startRecording(excluding: excludedApps, showCursor: showCursor)
             }
     }
     

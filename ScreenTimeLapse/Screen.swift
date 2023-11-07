@@ -19,7 +19,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     var screen: SCDisplay
     var stream: SCStream?
     var apps: [SCRunningApplication : Bool] = [:]
-    var showCursor: Bool
+    var showCursor: Bool = true
     
     // Recording timings
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
@@ -35,13 +35,14 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     init(screen: SCDisplay, showCursor: Bool) {
         self.screen = screen
-        self.showCursor = showCursor
     }
     
     // MARK: -User Interaction
-    func startRecording(excluding: [SCRunningApplication]) {
+    func startRecording(excluding: [SCRunningApplication], showCursor: Bool) {
         guard self.enabled else { return }
         guard self.state != .recording else { return }
+        
+        self.showCursor = showCursor
         
         self.state = .recording
         
@@ -55,7 +56,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     func resumeRecording() {
         self.state = .recording
     }
-    
+ 
+    /// Saves recording and stops `stream`
     func saveRecording() {
         guard self.enabled else { return }
         
@@ -85,7 +87,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 
                 sendNotification(title: "\(self) saved", body: "Saved video")
                 
-                logger.log("Saved video to \(writer.outputURL.path(percentEncoded: true))")
+                logger.log("Saved video to \(writer.outputURL.absoluteString)")
             } else if writer.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer.error {

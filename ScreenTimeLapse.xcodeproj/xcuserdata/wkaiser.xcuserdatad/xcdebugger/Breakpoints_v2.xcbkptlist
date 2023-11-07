@@ -14,8 +14,8 @@
             filePath = "ScreenTimeLapse/Camera.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "startRecording()"
             landmarkType = "7">
             <Locations>
@@ -97,6 +97,85 @@
             endingLineNumber = "102"
             landmarkName = "previews"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0E575CB6-00BA-4EAD-A820-2F04FE482D3E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/Screen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "handleVideo(buffer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5F64A5F2-5EA9-405E-ABCA-459A3DA0F474"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapse/Screen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "setupWriter(screen:path:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5F64A5F2-5EA9-405E-ABCA-459A3DA0F474 - 5f9eb2d15f538619"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Screen.setupWriter(screen: __C.SCDisplay, path: Swift.String) throws -&gt; (__C.AVAssetWriter, __C.AVAssetWriterInput)"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Screen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "1652">
+               </Location>
+               <Location
+                  uuid = "5F64A5F2-5EA9-405E-ABCA-459A3DA0F474 - 5f9eb2d15f538676"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Screen.setupWriter(screen: __C.SCDisplay, path: Swift.String) throws -&gt; (__C.AVAssetWriter, __C.AVAssetWriterInput)"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Screen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "1704">
+               </Location>
+               <Location
+                  uuid = "5F64A5F2-5EA9-405E-ABCA-459A3DA0F474 - 5f9eb2d15f5387b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapse.Screen.setupWriter(screen: __C.SCDisplay, path: Swift.String) throws -&gt; (__C.AVAssetWriter, __C.AVAssetWriterInput)"
+                  moduleName = "ScreenTimeLapse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapse/Screen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "1704">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
