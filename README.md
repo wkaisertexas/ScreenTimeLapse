@@ -80,6 +80,6 @@ We love our contributors! Here's how you can contribute:
 
 ## License
 
-Inspired by [Screen-TimeLapez](https://apps.apple.com/us/app/screen-timelapsez/id1440244990) and [Amethyst](https://github.com/ianyh/Amethyst), ScreenTimeLapse is open-source under the MIT Liscense. You can [find it here](https://github.com/wkaisertexas/ScreenTimeLapse/LISCENSE/LICENSE.md).
+Inspired by [Screen-TimeLapez](https://apps.apple.com/us/app/screen-timelapsez/id1440244990) and [Amethyst](https://github.com/ianyh/Amethyst), ScreenTimeLapse is open-source under the [MIT Liscense](https://github.com/wkaisertexas/ScreenTimeLapse/LISCENSE/LICENSE.md).
 
 [^1]: [Apple's screen recorder convert's the display's color space](https://community.adobe.com/t5/premiere-pro-discussions/inaccurate-colors-from-desktop-recording/m-p/12168181) from **DCI_P3** to **sRGB**. The error is typically subtle, but makes the tool unsuitable for color sensitive work. Color is difficult and even [HDR video have persistent issues with overexposure in screenshots](https://github.com/iina/iina/issues/3866). 
