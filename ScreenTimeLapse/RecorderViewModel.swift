@@ -54,7 +54,7 @@ class RecorderViewModel: ObservableObject {
         
         logger.log("Started recording at RecorderViewModel")
         
-        var excludedApps = apps.filter{ !$0.value }.map{ $0.key }
+        let excludedApps = apps.filter{ !$0.value }.map{ $0.key }
         
         self.cameras.indices
             .forEach{ index in

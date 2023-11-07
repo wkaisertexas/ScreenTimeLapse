@@ -32,8 +32,6 @@ protocol Recordable : CustomStringConvertible {
 extension Recordable{    
     var frameRate: CMTimeScale {
         guard let writer = writer else {return .zero}
-        print(writer.overallDurationHint)
-//        return writer.movieTimeScale
         return CMTimeScale(30.0)
     }
     

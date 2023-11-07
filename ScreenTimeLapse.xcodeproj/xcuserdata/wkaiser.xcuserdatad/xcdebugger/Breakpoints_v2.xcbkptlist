@@ -109,8 +109,8 @@
             filePath = "ScreenTimeLapse/Screen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "handleVideo(buffer:)"
             landmarkType = "7">
          </BreakpointContent>

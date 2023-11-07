@@ -236,41 +236,37 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             return
         }
         
-        do{
-            guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
-                                                                                           createIfNecessary: false),
-                  let attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
-            else {
-                logger.error("Attachments Array does not work")
-                return
-            }
-            
-            // the status needs to be not `.complete`
-            guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
-                return }
-            
-            guard let writer = self.writer else {return}
-            
-            if writer.status == .unknown {
-                writer.startWriting()
-                offset = buffer.presentationTimeStamp
-                writer.startSession(atSourceTime: offset)
-                return
-            }
-            
-            guard writer.status != .failed else {
-                logger.log("Screen - failed")
-                return
-            }
-           
-            (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
-
-            frameCount += 1
-            if frameCount % baseConfig.logFrequency == 0 {
-                logger.log("\(self) Appended buffers \(self.frameCount)")
-            }
-        } catch {
-            logger.error("Invalid framebuffer")
+        guard let attachmentsArray : NSArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
+                                                                                       createIfNecessary: false),
+              let attachments : NSDictionary = attachmentsArray.firstObject as? NSDictionary
+        else {
+            logger.error("Attachments Array does not work")
+            return
+        }
+        
+        // the status needs to be not `.complete`
+        guard let rawStatusValue = attachments[SCStreamFrameInfo.status] as? Int, let status = SCFrameStatus(rawValue: rawStatusValue), status == .complete else {
+            return }
+        
+        guard let writer = self.writer else {return}
+        
+        if writer.status == .unknown {
+            writer.startWriting()
+            offset = buffer.presentationTimeStamp
+            writer.startSession(atSourceTime: offset)
+            return
+        }
+        
+        guard writer.status != .failed else {
+            logger.log("Screen - failed")
+            return
+        }
+        
+        (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
+        
+        frameCount += 1
+        if frameCount % baseConfig.logFrequency == 0 {
+            logger.log("\(self) Appended buffers \(self.frameCount)")
         }
     }
     
