@@ -26,6 +26,7 @@
 
 ## Features
 
+- **Color Accurate**: What you see is what you get. Never screen record faded videos again[^1]
 - **Minimalist Design**: a fully featured web recorder in your menu bar
 - **Hardware Accelerated**: fully utilized hardware accelerated encoding for a lightweight recording experience
 - **Space Saving**: Avoid the excessive file sizes of high quality video (can be as high as 7 GB / hour).
@@ -79,4 +80,6 @@ We love our contributors! Here's how you can contribute:
 
 ## License
 
-Inspired by [ScreenTimeLapez](https://apps.apple.com/us/app/screen-timelapsez/id1440244990) and [Amethyst](https://github.com/ianyh/Amethyst), ScreenTimeLapse is open-source under the MIT Liscense. You can [find it here](https://github.com/wkaisertexas/ScreenTimeLapse/LICENSE.md)
+Inspired by [Screen-TimeLapez](https://apps.apple.com/us/app/screen-timelapsez/id1440244990) and [Amethyst](https://github.com/ianyh/Amethyst), ScreenTimeLapse is open-source under the MIT Liscense. You can [find it here](https://github.com/wkaisertexas/ScreenTimeLapse/LISCENSE/LICENSE.md).
+
+[^1]: [Apple's screen recorder convert's the display's color space](https://community.adobe.com/t5/premiere-pro-discussions/inaccurate-colors-from-desktop-recording/m-p/12168181) from **DCI_P3** to **sRGB**. The error is typically subtle, but makes the tool unsuitable for color sensitive work. Color is difficult and even [HDR video have persistent issues with overexposure in screenshots](https://github.com/iina/iina/issues/3866). 
