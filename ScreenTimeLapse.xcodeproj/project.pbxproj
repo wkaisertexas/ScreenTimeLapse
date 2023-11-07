@@ -98,10 +98,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3EE5FE00296232C700768BF7 = {
+		3EA0DF982AF9DD9E001D409B /* LISCENSE */ = {
 			isa = PBXGroup;
 			children = (
 				3E75E34D2AF17A870016EB52 /* LISCENSE */,
+			);
+			path = LISCENSE;
+			sourceTree = "<group>";
+		};
+		3EE5FE00296232C700768BF7 = {
+			isa = PBXGroup;
+			children = (
+				3EA0DF982AF9DD9E001D409B /* LISCENSE */,
 				3E571FDF29AF248500AD153D /* README.md */,
 				3EE5FE0B296232C700768BF7 /* ScreenTimeLapse */,
 				3EE5FE22296232C800768BF7 /* ScreenTimeLapseTests */,
