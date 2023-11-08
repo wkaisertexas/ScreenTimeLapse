@@ -38,9 +38,11 @@
 
 The recommended way to install **TimeLapse** is through [Homebrew](https://brew.sh/) cask.
 
-```console
-brew install --cask timelapse
+```bash
+brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/screentimelapse.rb 
 ```
+
+> Note: once this repo gets **75 stars** and **30 watchers** you will be able to install the app using `brew install --cask screentimelapse`
 
 ## Local Development
 
