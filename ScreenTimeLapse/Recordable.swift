@@ -86,7 +86,7 @@ extension Recordable{
     
     /// Sends a notification using `UserNotifications` framework
     /// Exists on `Recordable` because this can be modifyied is an **iOS** application is in the future
-    func sendNotification(title: String, body: String){
+    func sendNotification(title: String, body: String, url: URL?){
         guard UserDefaults.standard.bool(forKey: "showNotifications") else {return}
         
         let center = UNUserNotificationCenter.current()
@@ -94,6 +94,11 @@ extension Recordable{
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
+        
+        if let url = url {
+            content.userInfo = ["fileURL": url.absoluteString]
+        }
+        
         content.sound = .default // .defaultCritical
        
         let request = UNNotificationRequest(identifier: "recordingStatusNotifications", content: content, trigger: nil)

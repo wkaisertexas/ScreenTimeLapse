@@ -130,13 +130,13 @@ class Camera: NSObject, Recordable {
                     workspace.open(writer.outputURL)
                 }
                 
-                sendNotification(title: "\(self) saved", body: "Saved video")
+                sendNotification(title: "\(self) saved", body: "Saved video", url: writer.outputURL)
             } else if writer.status == .failed {
                 // Asset writing failed with an error
                 guard let error = writer.error else { return }
                 
                 logger.error("Asset writing failed with error: \(String(describing: error))")
-                sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)")
+                sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)", url: nil)
             }
         }
     }

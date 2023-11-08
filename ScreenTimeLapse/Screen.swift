@@ -85,14 +85,14 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                     workspace.open(writer.outputURL)
                 }
                 
-                sendNotification(title: "\(self) saved", body: "Saved video")
+                sendNotification(title: "\(self) saved", body: "Saved video", url: writer.outputURL)
                 
                 logger.log("Saved video to \(writer.outputURL.absoluteString)")
             } else if writer.status == .failed {
                 // Asset writing failed with an error
                 if let error = writer.error {
                     logger.error("Asset writing failed with error: \(error.localizedDescription)")
-                    sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)")
+                    sendNotification(title: "Could not save asset", body: "\(error.localizedDescription)", url: nil)
                 }
             }
         }

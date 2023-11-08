@@ -26,7 +26,10 @@ struct ScreenTimeLapseApp: App {
     }
 }
 
-class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
+/// General purpose `NSApplicationDelegate` and `UNUserNotificationCenterDelegate`
+/// Abstracts away custom features unable to be set in `info.plist` or any other config files
+class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
+    /// Triggered when the application finished launcing and recieves a launch notification `Notification` on the event
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide the dock icon
         if UserDefaults.standard.bool(forKey: "hideIcon") {
@@ -57,5 +60,20 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate {
                 logger.error("Unknown default")
             }
         }
+        
+        // Setting the notification delegate
+        UNUserNotificationCenter.current().delegate = self
+    }
+   
+    /// Handles when a user clicks on a notification uses the `response.notification.request.content.userInfo` to read attached data to open the `fileURL` key
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        // opens the file just saved
+        if let filePath = response.notification.request.content.userInfo["fileURL"] as? String, let fileURL = URL(string: filePath) {
+            workspace.open(fileURL)
+        }
+        
+        // completion handler things: `nil` in thsi case
+        completionHandler()
     }
 }
