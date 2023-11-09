@@ -82,7 +82,7 @@ struct PreferencesView: View {
             Label("Choose Output Folder", systemImage: "folder")
         }
         .disabled(showPicker)
-        .onChange(of: showPicker){ [ self ] in
+        .onChange(of: showPicker){ _ in
             guard showPicker else { return }
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false

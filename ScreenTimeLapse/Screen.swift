@@ -169,27 +169,30 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         )
         
         let config = SCStreamConfiguration()
-        config.streamName = "\(screen.displayID) Screen Recording"
         config.queueDepth = 20
         config.width = screen.width * 2
         config.height = screen.height * 2
         config.showsCursor = showCursor
         config.capturesAudio = false
         config.backgroundColor = .white
-        config.shouldBeOpaque = true
         
         // color settings
         config.colorSpaceName = CGColorSpace.displayP3
         config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
         
-        // Gettings quality from user defaults
-        if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
-           let quality = qualityValue as? QualitySettings {
-            config.captureResolution = switch quality {
-            case .high : SCCaptureResolutionType.best
-            case .medium : SCCaptureResolutionType.automatic
-            case .low : SCCaptureResolutionType.nominal
+        if #available(macOS 14.0, *) {
+            // Gettings quality from user defaults
+            if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
+               let quality = qualityValue as? QualitySettings {
+                config.captureResolution = switch quality {
+                case .high : SCCaptureResolutionType.best
+                case .medium : SCCaptureResolutionType.automatic
+                case .low : SCCaptureResolutionType.nominal
+                }
             }
+            
+            config.streamName = "\(screen.displayID) Screen Recording"
+            config.shouldBeOpaque = true
         }
         
         stream = SCStream(

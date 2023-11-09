@@ -197,9 +197,11 @@ struct Info: View{
     @Environment(\.openURL) var openURL
     
     var body: some View{
-        SettingsLink()
-            .keyboardShortcut(",")
-        Divider()
+        if #available(macOS 14.0, *) {
+            SettingsLink()
+                .keyboardShortcut(",")
+            Divider()
+        }
         Button("About"){
             if let url = URL(string: baseConfig.ABOUT) {
                 openURL(url)

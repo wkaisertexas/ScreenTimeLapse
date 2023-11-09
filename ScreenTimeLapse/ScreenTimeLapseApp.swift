@@ -14,7 +14,7 @@ struct ScreenTimeLapseApp: App {
         } label: {
             Image(systemName: recorderViewModel.state.description)
         }
-        .onChange(of: recorderViewModel.state) {
+        .onChange(of: recorderViewModel.state) { _ in
             Task{
                 await recorderViewModel.getDisplayInfo()
             }
@@ -25,6 +25,7 @@ struct ScreenTimeLapseApp: App {
         }
     }
 }
+
 
 /// General purpose `NSApplicationDelegate` and `UNUserNotificationCenterDelegate`
 /// Abstracts away custom features unable to be set in `info.plist` or any other config files
