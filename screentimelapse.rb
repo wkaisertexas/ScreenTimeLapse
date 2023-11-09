@@ -8,7 +8,7 @@ cask "screentimelapse" do
   homepage "https://github.com/wkaisertexas/ScreenTimeLapse"
 
   auto_updates true
-  depends_on macos: ">= :sonoma"
+  depends_on macos: ">= :ventura"
 
   app "ScreenTimeLapse.app"
 end
