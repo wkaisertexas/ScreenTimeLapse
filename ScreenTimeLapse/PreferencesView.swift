@@ -60,12 +60,14 @@ struct PreferencesView: View {
         Toggle("Hide Icon In Dock", isOn: $hideIcon)
         Toggle("Show notifications", isOn: $showNotifications)
         Toggle("Show video after saving", isOn: $showAfterSave)
-        
-        Picker("Quality", selection: $quality){
-            ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
-                Text(qualitySetting.description)
-            }
-        }.pickerStyle(SegmentedPickerStyle())
+       
+        if #available(macOS 14.0, *){
+            Picker("Quality", selection: $quality){
+                ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
+                    Text(qualitySetting.description)
+                }
+            }.pickerStyle(SegmentedPickerStyle())
+        }
         
         Picker("Format", selection: $format){
             ForEach(baseConfig.validFormats, id: \.self){ format in
