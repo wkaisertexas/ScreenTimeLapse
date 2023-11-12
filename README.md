@@ -42,7 +42,13 @@ The recommended way to install **TimeLapse** is through [Homebrew](https://brew.
 brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/screentimelapse.rb 
 ```
 
-> Note: once this repo gets **75 stars** and **30 watchers** you will be able to install the app using `brew install --cask screentimelapse`
+> Note: once this repo gets **75 stars** and **30 watchers** you will be able to install the app using `brew install --cask screentimelapse`. Additionally, the application is **not signed** so Apple will give you a scary warning about how the app can not be checked for malware. You can go in system settings to launch it anyways.
+
+## Direct Download
+
+If you wish, you can go directly to the [releases page](https://github.com/wkaisertexas/ScreenTimeLapse/releases) and download `ScreenTimeLapse.zip`. Both Chrome and Safari give a warning about downloading suspicious files. Ignore then, extract the archive and you should get a `ScreenTimeLapse.app` file. Move that file into your `Applications` directory. 
+
+After you first try to open the application, Apple presents you with a scary-looking popup about "not being able to check the app for malware". If you go into `Settings` and into `Privacy and Security` and scroll down to the botton you will see `"ScreenTimeLapse" was blocked from use because it is not from an identified developer.` Underneath this message to the right is the `Open Anyway` button which you can press to open the application. 
 
 ## Local Development
 
