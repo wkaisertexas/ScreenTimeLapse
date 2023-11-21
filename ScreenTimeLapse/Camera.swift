@@ -62,7 +62,7 @@ class Camera: NSObject, Recordable {
         let dimensions = device.activeFormat.formatDescription.dimensions
         settings[AVVideoWidthKey] = dimensions.width
         settings[AVVideoHeightKey] = dimensions.height
-        settings[AVVideoColorPropertiesKey] = videoSettings.preset
+        settings[AVVideoColorPropertiesKey] = videoSettings.colorProperties
 //        settings[kCVPixelBufferPixelFormatTypeKey] = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         
         var fileType : AVFileType = baseConfig.validFormats.first!
