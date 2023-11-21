@@ -93,10 +93,10 @@ struct InputDevices: View{
             }
             
             Section("Disabled"){
-                ForEach(viewModel.apps.keys.filter{!viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
+                ForEach(viewModel.excludedApps, id: \.self, content: app)
             }
             Section("Enabled"){
-                ForEach(viewModel.apps.keys.filter{viewModel.apps[$0]!}.sorted(by: <), id: \.self, content: app)
+                ForEach(viewModel.includedApps, id: \.self, content: app)
             }
         }
     }

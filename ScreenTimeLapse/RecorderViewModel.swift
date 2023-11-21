@@ -46,6 +46,16 @@ class RecorderViewModel: ObservableObject {
         }.map{elem in elem.key}
     }
     
+    /// Breaks aparts `apps` to what should be **included**
+    var includedApps: [SCRunningApplication] {
+        apps.keys.filter{apps[$0]!}.sorted(by: <)
+    }
+    
+    /// Breaks aparts `apps` to what should be **excluded**
+    var excludedApps: [SCRunningApplication] {
+        apps.keys.filter{!apps[$0]!}.sorted(by: <)
+    }
+    
     // MARK: -Recording
     
     /// Starts recording ``cameras`` and ``screens``
