@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-    A <i>TimeLapse</i> is open-source menu bar application for creating screen and camera timelapses without excessive file sizes.
+    <i>TimeLapse</i> is a open-source, minimalist, menu bar application for creating color accurate screen and camera timelapses without enormous file sizes.
 </p>
 
 ## Features
