@@ -34,7 +34,6 @@ struct ActionButton: View{
     
     // MARK: -Button View Builders
     
-    @ViewBuilder
     func startButton() -> some View{
         Button("Start Recording"){
             viewModel.startRecording()
@@ -43,7 +42,6 @@ struct ActionButton: View{
         .disabled(viewModel.recordersDisabled())
     }
     
-    @ViewBuilder
     func pauseButton() -> some View{
         Button("Pause Recording"){
             viewModel.pauseRecording()
@@ -52,7 +50,6 @@ struct ActionButton: View{
         .disabled(viewModel.recordersDisabled())
     }
     
-    @ViewBuilder
     func resumeButton() -> some View{
         Button("Resume Recording"){
             viewModel.resumeRecording()
@@ -61,7 +58,6 @@ struct ActionButton: View{
         .disabled(viewModel.recordersDisabled())
     }
     
-    @ViewBuilder
     func exitButton() -> some View{
         Button("Exit Recording"){
             viewModel.stopRecording()
@@ -85,7 +81,6 @@ struct InputDevices: View{
     // MARK: -Sections
     
     /// Renders all the `SCRunningApplications` which can either be enabled or disabled
-    @ViewBuilder
     func appsMenu() -> some View {
         Menu("Apps"){
             Section("Actions"){
@@ -138,7 +133,6 @@ struct InputDevices: View{
     }
     
     /// Renders all available `Screen` objects as an interactable list
-    @ViewBuilder
     func screensMenu() -> some View {
         viewModel.screens.isEmpty ? nil :
         Section("Screens"){
@@ -147,7 +141,6 @@ struct InputDevices: View{
     }
     
     /// Renders all avaible `Camera` objects as an interactable list
-    @ViewBuilder
     func camerasMenu() -> some View{
         viewModel.cameras.isEmpty ? nil :
         Section("Cameras"){
@@ -157,7 +150,6 @@ struct InputDevices: View{
     
     // MARK: -Components
     /// Renders a single `Screen` as a button with either an enabled or disabled checkmark
-    @ViewBuilder
     func screen(_ screen: Screen) -> some View{
         Button(action: {viewModel.toggleScreen(screen: screen)}){
             screen.enabled ? Image(systemName: "checkmark") : nil
@@ -167,7 +159,6 @@ struct InputDevices: View{
     }
     
     /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
-    @ViewBuilder
     func camera(_ camera: Camera) -> some View{
         Button(action: {
             viewModel.toggleCameras(camera: camera)
