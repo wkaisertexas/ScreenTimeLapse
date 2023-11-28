@@ -45,12 +45,12 @@ struct PreferencesView: View {
     
     // MARK: Submenus
     @ViewBuilder
-    func playbackVideoSettings() -> some View{
+    func playbackVideoSettings() -> some View {
         Stepper(value: $framesPerSecond, in: 1...60, step: 1){
             Text("Output FPS \(framesPerSecond)")
         }
         
-        Stepper(value: $timeMultiple, in: 1...60, step: 1){
+        Stepper(value: $timeMultiple, in: 1...240, step: 1){
             Text("Times faster \(timeMultiple) x")
         }
     }
@@ -76,7 +76,6 @@ struct PreferencesView: View {
         }
     }
     
-    @ViewBuilder
     func outputVideoSettings() -> some View{
         Button(action: {
             showPicker.toggle()
