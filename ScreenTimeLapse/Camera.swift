@@ -131,6 +131,8 @@ class Camera: NSObject, Recordable {
                 }
                 
                 sendNotification(title: "\(self) saved", body: "Saved video", url: writer.outputURL)
+                
+                logger.log("Saved video to \(writer.outputURL.absoluteString)")
             } else if writer.status == .failed {
                 // Asset writing failed with an error
                 guard let error = writer.error else { return }

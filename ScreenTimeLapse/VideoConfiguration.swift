@@ -72,6 +72,7 @@ struct VideoConfiguration {
             return "Unsupported format"
         }
     }
+    
 }
 
 let baseConfig = VideoConfiguration()

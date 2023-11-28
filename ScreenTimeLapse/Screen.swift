@@ -170,8 +170,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         let config = SCStreamConfiguration()
         config.queueDepth = 20
-        config.width = screen.width * 2
-        config.height = screen.height * 2
+        config.width = screen.width
+        config.height = screen.height
         config.showsCursor = showCursor
         config.capturesAudio = false
         config.backgroundColor = .white

@@ -57,7 +57,13 @@ struct PreferencesView: View {
     
     @ViewBuilder
     func captureVideoSettings() -> some View{
-        Toggle("Hide Icon In Dock", isOn: $hideIcon)
+        Toggle("Hide Icon In Dock", isOn: $hideIcon).onChange(of: hideIcon){ hide in
+            if hide {
+                NSApp.setActivationPolicy(.accessory)
+            } else {
+                NSApp.setActivationPolicy(.regular)
+            }
+        }
         Toggle("Show notifications", isOn: $showNotifications)
         Toggle("Show video after saving", isOn: $showAfterSave)
        
