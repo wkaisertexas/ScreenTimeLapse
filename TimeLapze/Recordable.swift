@@ -123,7 +123,6 @@ extension Recordable{
         
         guard currentPTS > lastAppenedFrame + differenceTime else {
             // okay to replace the tmp buffer
-            print("Saved frame!")
             return (buffer, lastAppenedFrame)
         }
                 

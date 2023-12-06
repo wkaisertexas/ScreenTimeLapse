@@ -3,7 +3,7 @@ import UserNotifications
 import AVFoundation
 
 @main
-struct ScreenTimeLapseApp: App {
+struct TimeLapzeApp: App {
     @NSApplicationDelegateAdaptor(ScreenTimeLapseAppDelegate.self) var appDelegate
     
     @ObservedObject var recorderViewModel = RecorderViewModel()
@@ -12,13 +12,13 @@ struct ScreenTimeLapseApp: App {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
-            Image(systemName: recorderViewModel.state.description)
+            Image(systemName: recorderViewModel.state.description).accessibilityLabel("ScreenTimeLapse MenuBar")
         }
         .onChange(of: recorderViewModel.state) { _ in
             Task{
                 await recorderViewModel.getDisplayInfo()
             }
-        }
+        }.menuBarExtraStyle(.window)
         
         Settings{
             PreferencesView()

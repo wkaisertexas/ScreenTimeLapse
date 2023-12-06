@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EE5FE08296232C700768BF7"
-               BuildableName = "ScreenTimeLapse.app"
-               BlueprintName = "ScreenTimeLapse"
-               ReferencedContainer = "container:ScreenTimeLapse.xcodeproj">
+               BuildableName = "TimeLapze.app"
+               BlueprintName = "TimeLapze"
+               ReferencedContainer = "container:TimeLapze.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EE5FE1E296232C800768BF7"
-               BuildableName = "ScreenTimeLapseTests.xctest"
-               BlueprintName = "ScreenTimeLapseTests"
-               ReferencedContainer = "container:ScreenTimeLapse.xcodeproj">
+               BuildableName = "TimeLapzeTests.xctest"
+               BlueprintName = "TimeLapzeTests"
+               ReferencedContainer = "container:TimeLapze.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,9 +46,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EE5FE28296232C800768BF7"
-               BuildableName = "ScreenTimeLapseUITests.xctest"
-               BlueprintName = "ScreenTimeLapseUITests"
-               ReferencedContainer = "container:ScreenTimeLapse.xcodeproj">
+               BuildableName = "TimeLapzeUITests.xctest"
+               BlueprintName = "TimeLapzeUITests"
+               ReferencedContainer = "container:TimeLapze.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EE5FE08296232C700768BF7"
-            BuildableName = "ScreenTimeLapse.app"
-            BlueprintName = "ScreenTimeLapse"
-            ReferencedContainer = "container:ScreenTimeLapse.xcodeproj">
+            BuildableName = "TimeLapze.app"
+            BlueprintName = "TimeLapze"
+            ReferencedContainer = "container:TimeLapze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EE5FE08296232C700768BF7"
-            BuildableName = "ScreenTimeLapse.app"
-            BlueprintName = "ScreenTimeLapse"
-            ReferencedContainer = "container:ScreenTimeLapse.xcodeproj">
+            BuildableName = "TimeLapze.app"
+            BlueprintName = "TimeLapze"
+            ReferencedContainer = "container:TimeLapze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
