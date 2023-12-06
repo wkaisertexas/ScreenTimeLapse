@@ -10,7 +10,7 @@ import XCTest
 
 
 
-final class ScreenTimeLapseUITests: XCTestCase {
+final class TimeLapzeUITests: XCTestCase {
     let app = XCUIApplication()
 
     override func setUpWithError() throws {
@@ -19,7 +19,7 @@ final class ScreenTimeLapseUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        // In UI /Users/wkaiser/Documents/ScreenTimeLapse/TimeLapze/Logger.swifttests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
         app.launch()
     }
 
@@ -32,6 +32,10 @@ final class ScreenTimeLapseUITests: XCTestCase {
     }
     
     func testRecording() throws {
+        
+        
+        print(app)
+        
     }
 
     func testLaunchPerformance() throws {

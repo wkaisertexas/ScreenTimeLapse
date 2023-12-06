@@ -77,10 +77,42 @@
             filePath = "ScreenTimeLapseUITests/ScreenTimeLapseUITests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "testLaunchPerformance()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "21A2AEC2-13B2-460C-95A2-78396E0A35CA - 792388d31afae50a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScreenTimeLapseUITests.ScreenTimeLapseUITests.testLaunchPerformance() throws -&gt; ()"
+                  moduleName = "ScreenTimeLapseUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapseUITests/ScreenTimeLapseUITests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "21A2AEC2-13B2-460C-95A2-78396E0A35CA - 905c6bb262d04847"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in ScreenTimeLapseUITests.ScreenTimeLapseUITests.testLaunchPerformance() throws -&gt; ()"
+                  moduleName = "ScreenTimeLapseUITests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/ScreenTimeLapseUITests/ScreenTimeLapseUITests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -176,6 +208,22 @@
                   offsetFromSymbolStart = "1704">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C820F554-9CB6-40E3-A7B6-CFEE5FE85107"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScreenTimeLapseUITests/ScreenTimeLapseUITests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "testRecording()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

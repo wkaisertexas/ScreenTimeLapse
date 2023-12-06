@@ -169,8 +169,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         )
         
         let config = SCStreamConfiguration()
-        config.queueDepth = 20
-        config.width = screen.width * 2
+        config.queueDepth = 20 
+        config.width = screen.width * 2 // required to get colors to look right
         config.height = screen.height * 2
         config.showsCursor = showCursor
         config.capturesAudio = false
@@ -218,18 +218,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         return "\(screen.displayID)-\(randomValue).mov"
     }
     
-    let dispatchQue = DispatchQueue(label: "linearizing")
-    
     /// Saves each `CMSampleBuffer` from the screen
     func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
         guard self.state == .recording else { return }
         
         switch of{
         case .screen:
-            dispatchQue.async {
-                self.handleVideo(buffer: didOutputSampleBuffer)
-            }
-            
+            handleVideo(buffer: didOutputSampleBuffer)
         case .audio:
             print("Audio should not be captured")
         default:
@@ -262,7 +257,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             writer.startWriting()
             offset = buffer.presentationTimeStamp
             writer.startSession(atSourceTime: offset)
-//            input!.append(buffer)
             return
         }
         
