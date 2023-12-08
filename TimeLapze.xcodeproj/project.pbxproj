@@ -11,7 +11,7 @@
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
-		3E75E34E2AF17A870016EB52 /* LISCENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LISCENSE */; };
+		3E75E34E2AF17A870016EB52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LICENSE */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
@@ -49,7 +49,7 @@
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
-		3E75E34D2AF17A870016EB52 /* LISCENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LISCENSE; sourceTree = "<group>"; };
+		3E75E34D2AF17A870016EB52 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LICENSE; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
@@ -92,18 +92,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3EA0DF982AF9DD9E001D409B /* LISCENSE */ = {
+		3EA0DF982AF9DD9E001D409B /* LICENSE */ = {
 			isa = PBXGroup;
 			children = (
-				3E75E34D2AF17A870016EB52 /* LISCENSE */,
+				3E75E34D2AF17A870016EB52 /* LICENSE */,
 			);
-			path = LISCENSE;
+			path = LICENSE;
 			sourceTree = "<group>";
 		};
 		3EE5FE00296232C700768BF7 = {
 			isa = PBXGroup;
 			children = (
-				3EA0DF982AF9DD9E001D409B /* LISCENSE */,
+				3EA0DF982AF9DD9E001D409B /* LICENSE */,
 				3E571FDF29AF248500AD153D /* README.md */,
 				3EE5FE0B296232C700768BF7 /* TimeLapze */,
 				3EE5FE22296232C800768BF7 /* TimeLapzeTests */,
@@ -273,7 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
-				3E75E34E2AF17A870016EB52 /* LISCENSE in Resources */,
+				3E75E34E2AF17A870016EB52 /* LICENSE in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,5 @@
-<img alt="TimeLapse, easily screen screen and camera recordings" src="https://github.com/wkaisertexas/tiktok-uploader/assets/27795014/3b390663-1416-42bb-81eb-5f297ed04e26">
-<h1 align="center">Screen Time Lapse</h1>
+<img alt="TimeLapze, easily screen screen and camera recordings" src="https://github.com/wkaisertexas/tiktok-uploader/assets/27795014/3b390663-1416-42bb-81eb-5f297ed04e26">
+<h1 align="center">TimeLapze</h1>
 
 <p align="center">
   A open-source menu bar application for creating screen and camera timelapses without excessive file sizes.
@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-    <i>TimeLapse</i> is a open-source, minimalist, menu bar application for creating color accurate screen and camera timelapses without enormous file sizes.
+    <i>TimeLapze</i> is a open-source, minimalist, menu bar application for creating color accurate screen and camera timelapses without enormous file sizes.
 </p>
 
 ## Features
@@ -36,7 +36,7 @@
 
 ## Installation
 
-The recommended way to install **TimeLapse** is through [Homebrew](https://brew.sh/) cask.
+The recommended way to install **TimeLapze** is through [Homebrew](https://brew.sh/) cask.
 
 ```bash
 brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/screentimelapse.rb 
@@ -46,20 +46,18 @@ brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLap
 
 ## Direct Download
 
-If you wish, you can go directly to the [releases page](https://github.com/wkaisertexas/ScreenTimeLapse/releases) and download `ScreenTimeLapse.zip`. Both Chrome and Safari give a warning about downloading suspicious files. Ignore then, extract the archive and you should get a `ScreenTimeLapse.app` file. Move that file into your `Applications` directory. 
-
-After you first try to open the application, Apple presents you with a scary-looking popup about "not being able to check the app for malware". If you go into `Settings` and into `Privacy and Security` and scroll down to the botton you will see `"ScreenTimeLapse" was blocked from use because it is not from an identified developer.` Underneath this message to the right is the `Open Anyway` button which you can press to open the application. 
+If you wish, you can go directly to the [releases page](https://github.com/wkaisertexas/ScreenTimeLapse/releases) and download `TimeLapze.zip`. Both Chrome and Safari give a warning about downloading suspicious files. Ignore then, extract the archive and you should get a `ScreenTimeLapse.app` file. Move that file into your `Applications` directory. 
 
 ## Local Development
 
-To develop ScreenTimeLapse locally, you will need to clone and open this repository in XCode.
+To develop TimeLapze locally, you will need to clone and open this repository in XCode.
 
 Once that's done, you can use the following commands to run the app locally:
 
 ```console
 git clone https://github.com/wkaisertexas/ScreenTimeLapse
 cd ScreenTimeLapse
-open ScreenTimeLapse.xcodeproj
+open TimeLapze.xcodeproj
 ```
 
 Following this, you need to allow the app to be built for local signining. 
@@ -88,6 +86,6 @@ We love our contributors! Here's how you can contribute:
 
 ## License
 
-Inspired by [Screen-TimeLapez](https://apps.apple.com/us/app/screen-timelapsez/id1440244990) and [Amethyst](https://github.com/ianyh/Amethyst), ScreenTimeLapse is open-source under the [MIT Liscense](https://github.com/wkaisertexas/ScreenTimeLapse/LISCENSE/LICENSE.md).
+ ScreenTimeLapse is open-source under the [MIT Liscense](https://github.com/wkaisertexas/ScreenTimeLapse/LICENSE/LICENSE.md).
 
 [^1]: [Apple's screen recorder convert's the display's color space](https://community.adobe.com/t5/premiere-pro-discussions/inaccurate-colors-from-desktop-recording/m-p/12168181) from **DCI_P3** to **sRGB**. The error is typically subtle, but makes the tool unsuitable for color sensitive work. Color is difficult and even [HDR video have persistent issues with overexposure in screenshots](https://github.com/iina/iina/issues/3866). 
