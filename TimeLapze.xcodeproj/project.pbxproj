@@ -55,14 +55,16 @@
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* TimeLapze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLapze.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeApp.swift; sourceTree = "<group>"; };
+		3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EE5FE10296232C800768BF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScreenTimeLapse.entitlements; sourceTree = "<group>"; };
 		3EE5FE1F296232C800768BF7 /* TimeLapzeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseTests.swift; sourceTree = "<group>"; };
 		3EE5FE29296232C800768BF7 /* TimeLapzeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EE5FE2D296232C800768BF7 /* TimeLapzeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeUITests.swift; sourceTree = "<group>"; };
+		3EE5FE2D296232C800768BF7 /* ScreenTimeLapseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseUITests.swift; sourceTree = "<group>"; };
+		3EE5FE2F296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EEFFBB829A9B662002D0040 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3EEFFBBA29A9ECA7002D0040 /* RecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
