@@ -56,15 +56,15 @@
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTimeLapse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EE5FE09296232C700768BF7 /* TimeLapze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLapze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* ScreenTimeLapseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EE5FE10296232C800768BF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3EE5FE1A296232C800768BF7 /* ScreenTimeLapse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScreenTimeLapse.entitlements; sourceTree = "<group>"; };
-		3EE5FE1F296232C800768BF7 /* ScreenTimeLapseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeLapseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EE5FE1F296232C800768BF7 /* TimeLapzeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE23296232C800768BF7 /* ScreenTimeLapseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseTests.swift; sourceTree = "<group>"; };
-		3EE5FE29296232C800768BF7 /* ScreenTimeLapseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeLapseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EE5FE29296232C800768BF7 /* TimeLapzeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE2D296232C800768BF7 /* ScreenTimeLapseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseUITests.swift; sourceTree = "<group>"; };
 		3EE5FE2F296232C800768BF7 /* ScreenTimeLapseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeLapseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EEFFBB829A9B662002D0040 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -119,9 +119,9 @@
 		3EE5FE0A296232C700768BF7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */,
-				3EE5FE1F296232C800768BF7 /* ScreenTimeLapseTests.xctest */,
-				3EE5FE29296232C800768BF7 /* ScreenTimeLapseUITests.xctest */,
+				3EE5FE09296232C700768BF7 /* TimeLapze.app */,
+				3EE5FE1F296232C800768BF7 /* TimeLapzeTests.xctest */,
+				3EE5FE29296232C800768BF7 /* TimeLapzeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,9 +177,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3EE5FE08296232C700768BF7 /* ScreenTimeLapse */ = {
+		3EE5FE08296232C700768BF7 /* TimeLapze */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EE5FE33296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapse" */;
+			buildConfigurationList = 3EE5FE33296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapze" */;
 			buildPhases = (
 				3EE5FE05296232C700768BF7 /* Sources */,
 				3EE5FE06296232C700768BF7 /* Frameworks */,
@@ -189,14 +189,14 @@
 			);
 			dependencies = (
 			);
-			name = ScreenTimeLapse;
+			name = TimeLapze;
 			productName = ScreenTimeLapse;
-			productReference = 3EE5FE09296232C700768BF7 /* ScreenTimeLapse.app */;
+			productReference = 3EE5FE09296232C700768BF7 /* TimeLapze.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3EE5FE1E296232C800768BF7 /* ScreenTimeLapseTests */ = {
+		3EE5FE1E296232C800768BF7 /* TimeLapzeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EE5FE36296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapseTests" */;
+			buildConfigurationList = 3EE5FE36296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapzeTests" */;
 			buildPhases = (
 				3EE5FE1B296232C800768BF7 /* Sources */,
 				3EE5FE1C296232C800768BF7 /* Frameworks */,
@@ -207,14 +207,14 @@
 			dependencies = (
 				3EE5FE21296232C800768BF7 /* PBXTargetDependency */,
 			);
-			name = ScreenTimeLapseTests;
+			name = TimeLapzeTests;
 			productName = ScreenTimeLapseTests;
-			productReference = 3EE5FE1F296232C800768BF7 /* ScreenTimeLapseTests.xctest */;
+			productReference = 3EE5FE1F296232C800768BF7 /* TimeLapzeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3EE5FE28296232C800768BF7 /* ScreenTimeLapseUITests */ = {
+		3EE5FE28296232C800768BF7 /* TimeLapzeUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EE5FE39296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapseUITests" */;
+			buildConfigurationList = 3EE5FE39296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapzeUITests" */;
 			buildPhases = (
 				3EE5FE25296232C800768BF7 /* Sources */,
 				3EE5FE26296232C800768BF7 /* Frameworks */,
@@ -225,9 +225,9 @@
 			dependencies = (
 				3EE5FE2B296232C800768BF7 /* PBXTargetDependency */,
 			);
-			name = ScreenTimeLapseUITests;
+			name = TimeLapzeUITests;
 			productName = ScreenTimeLapseUITests;
-			productReference = 3EE5FE29296232C800768BF7 /* ScreenTimeLapseUITests.xctest */;
+			productReference = 3EE5FE29296232C800768BF7 /* TimeLapzeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -253,7 +253,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3EE5FE04296232C700768BF7 /* Build configuration list for PBXProject "ScreenTimeLapse" */;
+			buildConfigurationList = 3EE5FE04296232C700768BF7 /* Build configuration list for PBXProject "TimeLapze" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -266,9 +266,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3EE5FE08296232C700768BF7 /* ScreenTimeLapse */,
-				3EE5FE1E296232C800768BF7 /* ScreenTimeLapseTests */,
-				3EE5FE28296232C800768BF7 /* ScreenTimeLapseUITests */,
+				3EE5FE08296232C700768BF7 /* TimeLapze */,
+				3EE5FE1E296232C800768BF7 /* TimeLapzeTests */,
+				3EE5FE28296232C800768BF7 /* TimeLapzeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -342,12 +342,12 @@
 /* Begin PBXTargetDependency section */
 		3EE5FE21296232C800768BF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3EE5FE08296232C700768BF7 /* ScreenTimeLapse */;
+			target = 3EE5FE08296232C700768BF7 /* TimeLapze */;
 			targetProxy = 3EE5FE20296232C800768BF7 /* PBXContainerItemProxy */;
 		};
 		3EE5FE2B296232C800768BF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3EE5FE08296232C700768BF7 /* ScreenTimeLapse */;
+			target = 3EE5FE08296232C700768BF7 /* TimeLapze */;
 			targetProxy = 3EE5FE2A296232C800768BF7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -495,9 +495,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenTimeLapse/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Screen Time Lapse";
+				INFOPLIST_KEY_CFBundleDisplayName = TimeLapze;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Recording a timelapse of selected camera";
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Save recordings to Desktop";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Save recordings to Documents";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Save recordings to Downloads";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +509,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = smartservices.ScreenTimeLapse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -532,9 +536,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenTimeLapse/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Screen Time Lapse";
+				INFOPLIST_KEY_CFBundleDisplayName = TimeLapze;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Recording a timelapse of selected camera";
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Save recordings to Desktop";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Save recordings to Documents";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Save recordings to Downloads";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -542,7 +550,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = smartservices.ScreenTimeLapse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -566,7 +574,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenTimeLapse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScreenTimeLapse";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeLapze.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeLapze";
 			};
 			name = Debug;
 		};
@@ -586,7 +594,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenTimeLapse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScreenTimeLapse";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeLapze.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeLapze";
 			};
 			name = Release;
 		};
@@ -632,7 +640,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3EE5FE04296232C700768BF7 /* Build configuration list for PBXProject "ScreenTimeLapse" */ = {
+		3EE5FE04296232C700768BF7 /* Build configuration list for PBXProject "TimeLapze" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EE5FE31296232C800768BF7 /* Debug */,
@@ -641,7 +649,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EE5FE33296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapse" */ = {
+		3EE5FE33296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapze" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EE5FE34296232C800768BF7 /* Debug */,
@@ -650,7 +658,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EE5FE36296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapseTests" */ = {
+		3EE5FE36296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapzeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EE5FE37296232C800768BF7 /* Debug */,
@@ -659,7 +667,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EE5FE39296232C800768BF7 /* Build configuration list for PBXNativeTarget "ScreenTimeLapseUITests" */ = {
+		3EE5FE39296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapzeUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EE5FE3A296232C800768BF7 /* Debug */,

@@ -151,15 +151,12 @@ extension CMSampleBuffer {
     func offsettingTiming(by offset: CMTime, multiplier: Float64) throws -> CMSampleBuffer {
         let newSampleTimingInfos: [CMSampleTimingInfo]
         
-        do {
-            newSampleTimingInfos = try sampleTimingInfos().map {
-                var newSampleTiming = $0
-                newSampleTiming.presentationTimeStamp = offset + CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: multiplier)
-                return newSampleTiming
-            }
-        } catch {
-            newSampleTimingInfos = []
+        newSampleTimingInfos = try sampleTimingInfos().map {
+            var newSampleTiming = $0
+            newSampleTiming.presentationTimeStamp = offset + CMTimeMultiplyByFloat64($0.presentationTimeStamp - offset, multiplier: multiplier)
+            return newSampleTiming
         }
+        
         let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
         return newSampleBuffer
     }
