@@ -26,9 +26,8 @@
 </p>
 
 <p align="center">
-
 <img alt="color accurate comparision" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/ca37fa51-7851-4080-9e8c-f95f9ed529a8"></img>
-
+Color accuracy is an important feature which prevents you from recording washed-out, photocopied-looking time lapses.
 </p>
 
 
