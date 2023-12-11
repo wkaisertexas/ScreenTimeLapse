@@ -16,6 +16,7 @@
 <br/>
 
 ## Introduction
+
 <p align="center">
 <img width="553" alt="Application demonstration photo in menu bar" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/785ee2b6-1ef5-4302-83da-c3d81a069074">
 </p>
@@ -23,6 +24,13 @@
 <p align="center">
     <i>TimeLapze</i> is a open-source, minimalist, menu bar application for creating color accurate screen and camera timelapses without enormous file sizes.
 </p>
+
+<p align="center">
+
+<img alt="color accurate comparision" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/ca37fa51-7851-4080-9e8c-f95f9ed529a8"></img>
+
+</p>
+
 
 ## Features
 
