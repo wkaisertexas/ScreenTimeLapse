@@ -193,7 +193,14 @@ class Camera: NSObject, Recordable {
     /// Generates a random filename
     func getFilename() -> String {
         let randomValue = Int(arc4random_uniform(100_000)) + 1
-        return "\(randomValue).mov"
+        
+        var fileType : AVFileType = baseConfig.validFormats.first!
+        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
+           let preferenceType = fileTypeValue as? AVFileType{
+            fileType = preferenceType
+        }
+        
+        return "\(randomValue)\(baseConfig.convertFormatToString(fileType))"
     }
 }
 

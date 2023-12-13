@@ -18,7 +18,7 @@ struct TimeLapzeApp: App {
             Task{
                 await recorderViewModel.getDisplayInfo()
             }
-        }.menuBarExtraStyle(.window)
+        }
         
         Settings{
             PreferencesView()

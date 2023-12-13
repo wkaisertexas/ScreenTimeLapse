@@ -226,5 +226,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0B025E8B-8476-458C-9310-467E9036CF9F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TimeLapze/Screen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "getFilename()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0B025E8B-8476-458C-9310-467E9036CF9F - 5c3a02bcdab084f0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TimeLapze.Screen.getFilename() -&gt; Swift.String"
+                  moduleName = "TimeLapze"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/TimeLapze/Screen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "228"
+                  endingLineNumber = "228"
+                  offsetFromSymbolStart = "1140">
+               </Location>
+               <Location
+                  uuid = "0B025E8B-8476-458C-9310-467E9036CF9F - 5c3a02bcdab08511"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TimeLapze.Screen.getFilename() -&gt; Swift.String"
+                  moduleName = "TimeLapze"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wkaiser/Documents/ScreenTimeLapse/TimeLapze/Screen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "1052">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
