@@ -144,8 +144,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
            let preferenceType = fileTypeValue as? AVFileType{
             fileType = preferenceType
-            
-            print("the file type has been sent")
         }
         
         let url = getFileDestination(path: path)

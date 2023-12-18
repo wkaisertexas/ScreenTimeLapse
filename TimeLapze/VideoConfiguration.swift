@@ -1,10 +1,3 @@
-//
-//  VideoConfiguration.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 6/5/23.
-//
-
 import AVFoundation
 
 enum VideoSettings : String {
@@ -50,7 +43,7 @@ enum VideoSettings : String {
 
 struct VideoConfiguration {
     let validFormats: [AVFileType] = [
-        .mov, .mp4, .avci, .heif
+        .mov, .mp4, .m4v
     ]
     
     let HELP = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
@@ -64,10 +57,8 @@ struct VideoConfiguration {
             return ".mov"
         case .mp4:
             return ".mp4"
-        case .avci:
-            return ".avci"
-        case .heif:
-            return ".heif"
+        case .m4v:
+            return ".m4v"
         default:
             return "Unsupported format"
         }
