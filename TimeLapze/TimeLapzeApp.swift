@@ -22,7 +22,7 @@ struct TimeLapzeApp: App {
         
         Settings{
             PreferencesView()
-        }
+        }.windowResizability(.contentSize)
     }
 }
 

@@ -214,8 +214,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     /// Generates a filename specific to `SCDisplay` and `CMTime`
     func getFilename() -> String {
-        let randomValue = Int(arc4random_uniform(100_000)) + 1
-        
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
            let preferenceType = fileTypeValue as? AVFileType{
@@ -224,7 +222,12 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         let typeDescription = baseConfig.convertFormatToString(fileType)
         
-        return "\(screen.displayID)-\(randomValue)\(typeDescription)"
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let formattedDate = formatter.string(from: currentDate)
+        
+        return "\(screen.displayID)-\(formattedDate)\(typeDescription)"
     }
     
     /// Saves each `CMSampleBuffer` from the screen

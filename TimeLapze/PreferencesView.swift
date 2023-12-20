@@ -13,7 +13,8 @@ struct PreferencesView: View {
     @AppStorage("showAfterSave") private var showAfterSave = false
     
     @AppStorage("framesPerSecond") private var framesPerSecond = 30
-    @AppStorage("timeMultiple") private var timeMultiple = 5
+    @AppStorage("FPS") private var fps : Double = 30.0
+    @AppStorage("timeMultiple") private var timeMultiple : Double = 5.0
     
     @AppStorage("quality") var quality : QualitySettings = .medium
     
@@ -24,17 +25,34 @@ struct PreferencesView: View {
     @AppStorage("saveLocation") private var saveLocation : URL = FileManager.default.homeDirectoryForCurrentUser
     @State private var showPicker = false
     
+    @Environment(\.openURL) var openURL
+    
     var body: some View {
         TabView{
+            generalSettings().tabItem{
+                Label("General", systemImage: "gear")
+            }
             videoSettings().tabItem{
-                Label("Preferences", systemImage: "gear")
+                Label("Video", systemImage: "video")
             }
         }
         .padding(20)
     }
     
     @ViewBuilder
+    func generalSettings() -> some View {
+        Text("TimeLapze General Settings")
+        
+        Form {
+            uiSettings()
+        }
+        .padding(20)
+    }
+    
+    @ViewBuilder
     func videoSettings() -> some View {
+        Text("Video Settings")
+        
         Form {
             playbackVideoSettings()
             captureVideoSettings()
@@ -45,18 +63,7 @@ struct PreferencesView: View {
     
     // MARK: Submenus
     @ViewBuilder
-    func playbackVideoSettings() -> some View {
-        Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-            Text("Output FPS \(framesPerSecond)")
-        }
-        
-        Stepper(value: $timeMultiple, in: 1...240, step: 1){
-            Text("Times faster \(timeMultiple) x")
-        }
-    }
-    
-    @ViewBuilder
-    func captureVideoSettings() -> some View{
+    func uiSettings() -> some View {
         Toggle("Hide Icon In Dock", isOn: $hideIcon).onChange(of: hideIcon){ hide in
             if hide {
                 NSApp.setActivationPolicy(.accessory)
@@ -66,8 +73,41 @@ struct PreferencesView: View {
         }
         Toggle("Show notifications", isOn: $showNotifications)
         Toggle("Show video after saving", isOn: $showAfterSave)
-       
-        if #available(macOS 14.0, *){
+        
+        HStack {
+            Button("About"){
+                if let url = URL(string: baseConfig.ABOUT) {
+                    openURL(url)
+                }
+            }
+            
+            Button("Help"){
+                if let url = URL(string: baseConfig.HELP) {
+                    openURL(url)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func playbackVideoSettings() -> some View {
+        Stepper(value: $framesPerSecond, in: 1...60, step: 1){
+            Text("Output FPS \(framesPerSecond)")
+        }
+//        Slider(value: $framesPerSecond, in: 1...60)
+        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
+        
+        Text("An hour long recording would be \(String(format: "%.1f", 60.0 / Double(timeMultiple))) minutes")
+        
+        HStack{
+            Text("\(String(format: "%.1f", timeMultiple))x faster")
+            Slider(value: $timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+        }
+    }
+    
+    @ViewBuilder
+    func captureVideoSettings() -> some View{
+         if #available(macOS 14.0, *){
             Picker("Quality", selection: $quality){
                 ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
                     Text(qualitySetting.description)
@@ -81,7 +121,8 @@ struct PreferencesView: View {
             }
         }
     }
-    
+   
+    @ViewBuilder
     func outputVideoSettings() -> some View{
         Button(action: {
             showPicker.toggle()
@@ -102,6 +143,8 @@ struct PreferencesView: View {
                 saveLocation = pickedURL
             }
         }
+        
+        Text("Save to \(saveLocation.path())")
     }
 }
 

@@ -192,7 +192,10 @@ class Camera: NSObject, Recordable {
     
     /// Generates a random filename
     func getFilename() -> String {
-        let randomValue = Int(arc4random_uniform(100_000)) + 1
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let formattedDate = formatter.string(from: currentDate)
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -200,7 +203,7 @@ class Camera: NSObject, Recordable {
             fileType = preferenceType
         }
         
-        return "\(randomValue)\(baseConfig.convertFormatToString(fileType))"
+        return "\(inputDevice.localizedName)\(formattedDate)\(baseConfig.convertFormatToString(fileType))"
     }
 }
 
