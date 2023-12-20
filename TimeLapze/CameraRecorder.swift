@@ -1,10 +1,3 @@
-//
-//  CameraRecorder.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 10/25/23.
-//
-
 import Foundation
 import AVFoundation
 import CoreMedia

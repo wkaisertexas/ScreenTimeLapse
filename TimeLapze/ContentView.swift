@@ -35,7 +35,7 @@ struct ActionButton: View{
     // MARK: -Button View Builders
     
     func startButton() -> some View{
-        Button("Start Recording"){
+        Button("Start Recording @ \(String(format: "%.1f", UserDefaults.standard.double(forKey: "timeMultiple")))x faster"){
             viewModel.startRecording()
         }
         .keyboardShortcut("R")

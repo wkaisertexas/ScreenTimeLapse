@@ -1,10 +1,3 @@
-//
-//  PreferencesView.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 10/31/23.
-//
-
 import SwiftUI
 import AVFoundation
 
@@ -41,9 +34,9 @@ struct PreferencesView: View {
     
     @ViewBuilder
     func generalSettings() -> some View {
-        Text("TimeLapze General Settings")
-        
         Form {
+            Text("TimeLapze General Settings")
+
             uiSettings()
         }
         .padding(20)
@@ -51,9 +44,9 @@ struct PreferencesView: View {
     
     @ViewBuilder
     func videoSettings() -> some View {
-        Text("Video Settings")
-        
         Form {
+            Text("Video Settings")
+
             playbackVideoSettings()
             captureVideoSettings()
             outputVideoSettings()
@@ -95,7 +88,7 @@ struct PreferencesView: View {
             Text("Output FPS \(framesPerSecond)")
         }
 //        Slider(value: $framesPerSecond, in: 1...60)
-        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
+//        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
         
         Text("An hour long recording would be \(String(format: "%.1f", 60.0 / Double(timeMultiple))) minutes")
         
