@@ -1,4 +1,5 @@
-<img alt="TimeLapze, easily screen screen and camera recordings" src="https://github.com/wkaisertexas/tiktok-uploader/assets/27795014/3b390663-1416-42bb-81eb-5f297ed04e26">
+<img alt="TimeLapze" src="https://github.com/wkaisertexas/ScreenTimeLapse/assets/27795014/d79916bd-e0d5-4da1-85ce-4bf95f0f44fb" />
+
 <h1 align="center">TimeLapze</h1>
 
 <p align="center">
