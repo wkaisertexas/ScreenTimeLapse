@@ -19,23 +19,27 @@ struct ContentView: View {
 struct ActionButton: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
     
+    @AppStorage("timeMultiple") private var timesFaster: Double?
+    
     var body: some View{
-        switch viewModel.state{
-        case .stopped:
-            startButton()
-        case .recording:
-            pauseButton()
-            exitButton()
-        case .paused:
-            resumeButton()
-            exitButton()
+        Section("\(String(format: "%.1f", timesFaster ?? 1.0))x faster recording"){
+            switch viewModel.state{
+            case .stopped:
+                startButton()
+            case .recording:
+                pauseButton()
+                exitButton()
+            case .paused:
+                resumeButton()
+                exitButton()
+            }
         }
     }
     
     // MARK: -Button View Builders
     
     func startButton() -> some View{
-        Button("Start Recording @ \(String(format: "%.1f", UserDefaults.standard.double(forKey: "timeMultiple")))x faster"){
+        Button("Start Recording"){
             viewModel.startRecording()
         }
         .keyboardShortcut("R")
@@ -59,7 +63,7 @@ struct ActionButton: View{
     }
     
     func exitButton() -> some View{
-        Button("Exit Recording"){
+        Button("Exit and Save Recording"){
             viewModel.stopRecording()
         }
         .keyboardShortcut("S")

@@ -24,6 +24,18 @@ final class TimeLapzeTests: XCTestCase {
             let writer = try? AVAssetWriter(url: url, fileType: config)
         }
     }
+    
+    func testIsInTemporaryFolder() throws {
+        let temporaryURL = URL(filePath: "test.txt", directoryHint: .notDirectory, relativeTo: .temporaryDirectory)
+        
+        XCTAssertTrue(temporaryURL.isInTemporaryFolder())
+    }
+    
+    func testIsNotInTemporaryFolder() throws {
+        let nonTemporaryURL = URL(filePath: "test.txt", directoryHint: .notDirectory, relativeTo: .desktopDirectory)
+        
+        XCTAssertFalse(nonTemporaryURL.isInTemporaryFolder())
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

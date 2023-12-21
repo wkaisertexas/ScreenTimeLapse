@@ -66,13 +66,13 @@ extension Recordable{
     }
     
     func getFileDestination(path: String) -> URL {
-        var url = URL(string: path, relativeTo: .temporaryDirectory)!
+        var url = URL(filePath: path, directoryHint: .notDirectory, relativeTo: .temporaryDirectory)
        
         if let location = UserDefaults.standard.url(forKey: "saveLocation"),
            FileManager.default.fileExists(atPath: location.path),
            FileManager.default.isWritableFile(atPath: location.path)
         {
-            url = URL(string: path, relativeTo: location)!
+            url = URL(filePath: path, directoryHint: .notDirectory, relativeTo: location)
         } else {
             logger.error("No camera save location present")
         }
@@ -116,6 +116,9 @@ extension Recordable{
     func appendBuffer(buffer: CMSampleBuffer) -> (CMSampleBuffer, CMTime){
         guard let input = input else { return (buffer, lastAppenedFrame) }
         
+        
+        print(writer?.overallDurationHint)
+        
         // Determines if we should append
         let currentPTS = buffer.presentationTimeStamp
         
@@ -143,10 +146,40 @@ extension Recordable{
         }
 
     }
+    
+    /// Returns a `String` representation of the current date, used by both `Camera` and `Screen`
+    ///  The intention is for this to be utiized
+    var dateExtension : String {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let formattedDate = formatter.string(from: currentDate)
+        
+        return formattedDate
+    }
+    
+    
+    /// Returns a valid file extension for recording formats
+    var fileExtension : String {
+        var fileType : AVFileType = baseConfig.validFormats.first!
+        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
+           let preferenceType = fileTypeValue as? AVFileType{
+            fileType = preferenceType
+        }
+        
+        return baseConfig.convertFormatToString(fileType)
+    }
+    
+    /// Returns the length of the recording
+    var time : CMTime {
+        guard let tmpFrameBuffer = tmpFrameBuffer else { return CMTime.zero }
+        
+        return CMTimeMultiplyByFloat64((tmpFrameBuffer.presentationTimeStamp - offset), multiplier: 1 / timeMultiple)        
+    }
 }
 
-// Allows timings offsets
 extension CMSampleBuffer {
+    /// Allows timing offsets
     func offsettingTiming(by offset: CMTime, multiplier: Float64) throws -> CMSampleBuffer {
         let newSampleTimingInfos: [CMSampleTimingInfo]
         
@@ -161,5 +194,12 @@ extension CMSampleBuffer {
         }
         let newSampleBuffer = try CMSampleBuffer(copying: self, withNewTiming: newSampleTimingInfos)
         return newSampleBuffer
+    }
+}
+
+extension URL {
+    /// Returns whether or not the url is in the `URL.temporaryDirectory`
+    func isInTemporaryFolder() -> Bool {
+        return self.absoluteString.starts(with: URL.temporaryDirectory.absoluteString)
     }
 }

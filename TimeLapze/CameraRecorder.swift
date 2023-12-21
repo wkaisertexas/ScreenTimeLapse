@@ -15,7 +15,7 @@ class RecordVideo: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     let callback: (CMSampleBuffer) -> Void
     
-    let captureQue = DispatchQueue(label: "com.myapp.captureQueue")
+    let captureQue = DispatchQueue(label: "com.smartservices.TimeLapze")
     
     init(device: AVCaptureDevice, callback: @escaping (CMSampleBuffer) -> Void){
         self.callback = callback
@@ -58,6 +58,7 @@ class RecordVideo: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         return self.captureSession?.isRunning ?? false
     }
     
+    /// Captures `CMSampleBuffers` with `captureQue` to ensure serialization of added information
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         captureQue.async {
             self.callback(sampleBuffer)

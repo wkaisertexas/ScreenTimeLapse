@@ -249,6 +249,25 @@ class RecorderViewModel: ObservableObject {
         return newCameras
     }
     
+    // MARK: -Timing
+    
+    /// Returns the current time (in output units) of the recording
+    var currentTime : CMTime {
+        for screen in screens {
+            if screen.enabled {
+                return screen.time
+            }
+        }
+        
+        for camera in cameras {
+            if camera.enabled {
+                return camera.time
+            }
+        }
+        
+        return CMTime.zero
+    }
+    
     // MARK: -Recorder Creation
     
     /// Converts a `SCDisplay` into a ``Screen``

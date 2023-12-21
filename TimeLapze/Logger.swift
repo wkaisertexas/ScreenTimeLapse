@@ -1,10 +1,3 @@
-//
-//  Logger.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 6/5/23.
-//
-
 import os
 
 /// `Logger` singleton for the class used to remove print statements and streamline debugging experience

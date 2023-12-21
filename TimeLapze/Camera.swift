@@ -13,7 +13,7 @@ class Camera: NSObject, Recordable {
     var inputDevice: AVCaptureDevice
     var recordVideo: RecordVideo?
     
-    // Offset
+    // Time Syncronization
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
@@ -126,7 +126,7 @@ class Camera: NSObject, Recordable {
         writer.finishWriting { [self] in
             if writer.status == .completed {
                 // Asset writing completed successfully
-                if UserDefaults.standard.bool(forKey: "showAfterSave"){
+                if UserDefaults.standard.bool(forKey: "showAfterSave") || writer.outputURL.isInTemporaryFolder() {
                     workspace.open(writer.outputURL)
                 }
                 
@@ -192,18 +192,7 @@ class Camera: NSObject, Recordable {
     
     /// Generates a random filename
     func getFilename() -> String {
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        let formattedDate = formatter.string(from: currentDate)
-        
-        var fileType : AVFileType = baseConfig.validFormats.first!
-        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
-           let preferenceType = fileTypeValue as? AVFileType{
-            fileType = preferenceType
-        }
-        
-        return "\(inputDevice.localizedName)\(formattedDate)\(baseConfig.convertFormatToString(fileType))"
+        return "\(inputDevice.localizedName)\(dateExtension)\(fileExtension)"
     }
 }
 

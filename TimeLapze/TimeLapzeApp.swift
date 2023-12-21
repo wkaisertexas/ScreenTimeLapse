@@ -12,6 +12,7 @@ struct TimeLapzeApp: App {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
+//            Text("\(String(recorderViewModel.currentTime.seconds)) fasdf")
             Image(systemName: recorderViewModel.state.description).accessibilityLabel("ScreenTimeLapse MenuBar")
         }
         .onChange(of: recorderViewModel.state) { _ in

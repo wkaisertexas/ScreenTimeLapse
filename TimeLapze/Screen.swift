@@ -81,7 +81,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             if writer.status == .completed {
                 // Asset writing completed successfully
                 
-                if UserDefaults.standard.bool(forKey: "showAfterSave"){
+                if UserDefaults.standard.bool(forKey: "showAfterSave") || writer.outputURL.isInTemporaryFolder() {
                     workspace.open(writer.outputURL)
                 }
                 
@@ -214,20 +214,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     /// Generates a filename specific to `SCDisplay` and `CMTime`
     func getFilename() -> String {
-        var fileType : AVFileType = baseConfig.validFormats.first!
-        if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
-           let preferenceType = fileTypeValue as? AVFileType{
-            fileType = preferenceType
-        }
-        
-        let typeDescription = baseConfig.convertFormatToString(fileType)
-        
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        let formattedDate = formatter.string(from: currentDate)
-        
-        return "\(screen.displayID)-\(formattedDate)\(typeDescription)"
+        return "display\(screen.displayID)-\(dateExtension)\(fileExtension)"
     }
     
     /// Saves each `CMSampleBuffer` from the screen

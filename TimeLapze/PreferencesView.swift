@@ -36,6 +36,7 @@ struct PreferencesView: View {
     func generalSettings() -> some View {
         Form {
             Text("TimeLapze General Settings")
+                .fontWeight(.bold)
 
             uiSettings()
         }
@@ -45,7 +46,8 @@ struct PreferencesView: View {
     @ViewBuilder
     func videoSettings() -> some View {
         Form {
-            Text("Video Settings")
+            Text("TimeLapze Video Settings")
+                .fontWeight(.bold)
 
             playbackVideoSettings()
             captureVideoSettings()
@@ -84,8 +86,10 @@ struct PreferencesView: View {
     
     @ViewBuilder
     func playbackVideoSettings() -> some View {
-        Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-            Text("Output FPS \(framesPerSecond)")
+        if #available(macOS 14.0, *){
+            Stepper(value: $framesPerSecond, in: 1...60, step: 1){
+                Text("Output FPS \(framesPerSecond)")
+            }.pickerStyle(.palette)
         }
 //        Slider(value: $framesPerSecond, in: 1...60)
 //        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
