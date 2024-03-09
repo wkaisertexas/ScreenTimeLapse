@@ -94,7 +94,7 @@ We love our contributors! Here's how you can contribute:
 
 ## License
 
- ScreenTimeLapse is open-source under the [MIT License](LICENSE).
+ ScreenTimeLapse is open-source under the [MIT License](LICENSE/LICENSE).
 
 > If you liked this project, consider giving the repository a star ⭐️! I am trying to get to 75 stars to be added to homebrew
 
