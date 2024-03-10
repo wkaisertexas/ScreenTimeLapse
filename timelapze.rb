@@ -1,4 +1,4 @@
-cask "TimeLapze" do
+cask "timelapze" do
   version "1.0.0"
   sha256 :no_check
 

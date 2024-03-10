@@ -47,7 +47,7 @@ Color accuracy is an important feature which prevents you from recording washed-
 The recommended way to install **TimeLapze** is through [Homebrew](https://brew.sh/) cask.
 
 ```bash
-brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/screentimelapse.rb 
+brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/timelapze.rb 
 ```
 
 > Note: once this repo gets **75 stars** and **30 watchers** you will be able to install the app using `brew install --cask screentimelapse`. Additionally, the application is **not signed** so Apple will give you a scary warning about how the app can not be checked for malware. You can go in system settings to launch it anyways.
