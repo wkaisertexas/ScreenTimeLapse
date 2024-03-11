@@ -59,7 +59,7 @@ struct PreferencesView: View {
     // MARK: Submenus
     @ViewBuilder
     func uiSettings() -> some View {
-        Toggle("Hide Icon In Dock", isOn: $hideIcon).onChange(of: hideIcon){ hide in
+        Toggle("Hide icon in dock", isOn: $hideIcon).onChange(of: hideIcon){ hide in
             if hide {
                 NSApp.setActivationPolicy(.accessory)
             } else {
@@ -88,7 +88,7 @@ struct PreferencesView: View {
     func playbackVideoSettings() -> some View {
         if #available(macOS 14.0, *){
             Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-                Text("Output FPS \(framesPerSecond)")
+                Text("Output FPS: \(framesPerSecond)")
             }.pickerStyle(.palette)
         }
 //        Slider(value: $framesPerSecond, in: 1...60)
@@ -141,14 +141,14 @@ struct PreferencesView: View {
             }
         }
         
-        Text("Save to \(saveLocation.path())")
+        Text("Save videos to \(saveLocation.path())")
     }
 }
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView()
-            .frame(width: 500, height: 300)
+            .frame(width: 700, height: 300)
     }
 }
 
