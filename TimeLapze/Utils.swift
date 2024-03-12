@@ -29,6 +29,7 @@ enum RecordingState : CustomStringConvertible{
     case paused
 }
 
+/// Wraps the `SCStreamConfiguration.captureResolution` for user interface
 enum QualitySettings: String, Codable, CaseIterable {
     case low
     case medium
@@ -46,6 +47,8 @@ enum QualitySettings: String, Codable, CaseIterable {
     }
 }
 
+/// Allows sorting by `bundleIdentifier` so the displayed order is consistent
+/// even when new `SCRunningApplication`s are added
 extension SCRunningApplication : Comparable {
     public static func < (lhs: SCRunningApplication, rhs: SCRunningApplication) -> Bool {
         lhs.bundleIdentifier < rhs.bundleIdentifier

@@ -36,11 +36,11 @@ extension Recordable{
     }
     
     /// Starts recording if ``enabled``
+    /// This does not actually get run because Screen and Camera need different arguments
+    /// However, I found it weird to have a `stopRecording`, but not a `startRecording`
     mutating func startRecording() {
         guard self.enabled else { return }
         guard self.state != .recording else { return }
-        
-        logger.log("This should not run")
         
         self.state = .recording
     }
@@ -65,6 +65,7 @@ extension Recordable{
         logger.log("Saving recorder")
     }
     
+    /// Turns a `String` into a valid file path (may be a temporary folder)
     func getFileDestination(path: String) -> URL {
         var url = URL(filePath: path, directoryHint: .notDirectory, relativeTo: .temporaryDirectory)
        
@@ -115,9 +116,6 @@ extension Recordable{
     /// Saves **30%** of space at only **2x** speed. Austensibly much higher for higher time multiples
     func appendBuffer(buffer: CMSampleBuffer) -> (CMSampleBuffer, CMTime){
         guard let input = input else { return (buffer, lastAppenedFrame) }
-        
-        
-        print(writer?.overallDurationHint)
         
         // Determines if we should append
         let currentPTS = buffer.presentationTimeStamp
@@ -179,7 +177,9 @@ extension Recordable{
 }
 
 extension CMSampleBuffer {
-    /// Allows timing offsets
+    /// Changes the speed of the sample buffer by `multiplier` in a recording with the `by` start time
+    ///
+    /// Does the work to create the time lapse
     func offsettingTiming(by offset: CMTime, multiplier: Float64) throws -> CMSampleBuffer {
         let newSampleTimingInfos: [CMSampleTimingInfo]
         

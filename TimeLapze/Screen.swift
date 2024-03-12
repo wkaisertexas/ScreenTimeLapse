@@ -35,6 +35,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     
     init(screen: SCDisplay, showCursor: Bool) {
         self.screen = screen
+        self.showCursor = showCursor
     }
     
     // MARK: -User Interaction
@@ -120,32 +121,26 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     ///
     /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
     func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
+        // creates a custom-defined config for the P3 color space
         let config : VideoSettings = .hevc_displayP3
         
+        // uses a settings recommender to get the video settings
         let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
-        
         settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(videoCodecType: .hevc, width: screen.width * 2, height: screen.height * 2)
         
         var settings = settingsAssistant.videoSettings!
-        
-        
         settings[AVVideoWidthKey] = screen.width * 2
         settings[AVVideoHeightKey] = screen.height * 2
         settings[AVVideoColorPropertiesKey] = config.colorProperties
-//        settings[kCVPixelBufferPixelFormatTypeKey as String] = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
-//        settings["SASdfasdf"] = 1231
-        print(settings)
-        
-        // TODO: check if the pixel buffer makes sense
-        
-        //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
-        
+
+        // Gets a valid file type, but replaces it if in preferences
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
            let preferenceType = fileTypeValue as? AVFileType{
             fileType = preferenceType
         }
         
+        // Creates a valid url path (may not be user-specified)
         let url = getFileDestination(path: path)
         let writer = try AVAssetWriter(url: url, fileType: fileType)
         
@@ -169,14 +164,20 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         )
         
         let config = SCStreamConfiguration()
-        config.queueDepth = 20 
-        config.width = screen.width * 2 // required to get colors to look right
-        config.height = screen.height * 2
+        config.queueDepth = 20
         config.showsCursor = showCursor
         config.capturesAudio = false
         config.backgroundColor = .white
         
+        // Set the width to twice the stated width (required for pixel ratio reasons)
+        // required to get colors to look right
+        // note: in the future, this **should not** be hard-coded
+        config.width = screen.width * 2
+        config.height = screen.height * 2
+        
         // color settings
+        // note: in display settings, you can set the color space. So, this should probably not be hard-coded either
+        // source: https://support.apple.com/guide/mac-help/displays-settings-on-mac-mh40768
         config.colorSpaceName = CGColorSpace.displayP3
         config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
         
@@ -192,7 +193,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             }
             
             config.streamName = "\(screen.displayID) Screen Recording"
-            config.shouldBeOpaque = true
+            config.shouldBeOpaque = true // Turns off transparency
         }
         
         stream = SCStream(
@@ -252,6 +253,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         guard let writer = self.writer else {return}
         
+        // Start the writer if not started and use the current buffer's timestamp as a start point
         if writer.status == .unknown {
             writer.startWriting()
             offset = buffer.presentationTimeStamp
@@ -266,6 +268,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         
         (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
         
+        // Logs the frames
         frameCount += 1
         if frameCount % baseConfig.logFrequency == 0 {
             logger.log("\(self) Appended buffers \(self.frameCount)")
@@ -281,7 +284,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
                 self.lastSavedFrame = maxTime
                 return true
             }
-            
             return false
         } else {
             self.lastSavedFrame = maxTime

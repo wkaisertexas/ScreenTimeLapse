@@ -1,5 +1,7 @@
 import AVFoundation
 
+/// Settings for color-accurate recording
+/// from: https://nonstrict.eu/blog/2023/recording-to-disk-with-screencapturekit/
 enum VideoSettings : String {
     case h264_sRGB
     case hevc_displayP3

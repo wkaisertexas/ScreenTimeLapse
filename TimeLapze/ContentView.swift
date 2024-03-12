@@ -15,7 +15,7 @@ struct ContentView: View {
     }
 }
 
-/// A pause / record button for the user
+/// A section which takes care of **start**, **pause**, **resume** and **exit**
 struct ActionButton: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
     
@@ -37,7 +37,6 @@ struct ActionButton: View{
     }
     
     // MARK: -Button View Builders
-    
     func startButton() -> some View{
         Button("Start Recording"){
             viewModel.startRecording()
@@ -75,9 +74,8 @@ struct InputDevices: View{
     @EnvironmentObject private var viewModel: RecorderViewModel
     
     var body: some View{
-        appsMenu().pickerStyle(.menu)
+        appsMenu()
         Divider()
-        
         screensMenu()
         camerasMenu()
     }
@@ -97,7 +95,7 @@ struct InputDevices: View{
             Section("Enabled"){
                 ForEach(viewModel.includedApps, id: \.self, content: app)
             }
-        }
+        }.pickerStyle(.menu)
     }
     
     /// Renders the `reset`, `invert` and `toggle` buttons
@@ -111,6 +109,7 @@ struct InputDevices: View{
             Text("Refresh")
         }
         
+        // Inverts enabled and disabled applications
         Button(action:{
             self.viewModel.invertApplications()
         }){
@@ -119,6 +118,7 @@ struct InputDevices: View{
             Text("Invert")
         }
         
+        // Makes all applications enabled
         Button(action: {
             self.viewModel.resetApps()
         }){
@@ -127,6 +127,7 @@ struct InputDevices: View{
             Text("Reset")
         }
         
+        // Whether to show or hide the user's cursor
         Button(action: {
             viewModel.showCursor.toggle()
             viewModel.objectWillChange.send()
@@ -174,6 +175,8 @@ struct InputDevices: View{
     }
     
     /// Renders  single `SCRunningApplication` as either enabled or disabled
+    ///
+    /// Gets the application's icon based on the process id
     @ViewBuilder
     func app(_ app: SCRunningApplication) -> some View{
         if let runningApp = NSRunningApplication(processIdentifier: app.processID), runningApp.activationPolicy == .regular, let appIcon = runningApp.icon {
@@ -187,7 +190,8 @@ struct InputDevices: View{
     }
 }
 
-/// Random info about the project
+/// Random `Info` about the project
+///  (About page, Help page, Quit Button)
 struct Info: View{
     @Environment(\.openURL) var openURL
     

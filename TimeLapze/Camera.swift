@@ -56,14 +56,11 @@ class Camera: NSObject, Recordable {
         let settingsAssistant = AVOutputSettingsAssistant(preset: videoSettings.preset)!
         var settings = settingsAssistant.videoSettings!
         
-        // getting and setting the frame rate
-        //        settings[AVVideoExpectedSourceFrameRateKey] = UserDefaults.standard.integer(forKey: "framesPerSecond")
-        
+        // Setting up the camera with correct color
         let dimensions = device.activeFormat.formatDescription.dimensions
         settings[AVVideoWidthKey] = dimensions.width
         settings[AVVideoHeightKey] = dimensions.height
         settings[AVVideoColorPropertiesKey] = videoSettings.colorProperties
-//        settings[kCVPixelBufferPixelFormatTypeKey] = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         
         var fileType : AVFileType = baseConfig.validFormats.first!
         if let fileTypeValue = UserDefaults.standard.object(forKey: "format"),
@@ -82,7 +79,7 @@ class Camera: NSObject, Recordable {
         }
         writer.add(input)
         
-        // timing offset
+        // how much faster or slower the recording show be
         timeMultiple = UserDefaults.standard.double(forKey: "timeMultiple")
         
         return (writer, input)
