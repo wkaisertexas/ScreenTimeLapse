@@ -47,10 +47,8 @@ Color accuracy is an important feature which prevents you from recording washed-
 The recommended way to install **TimeLapze** is through [Homebrew](https://brew.sh/) cask.
 
 ```bash
-brew install --cask https://raw.githubusercontent.com/wkaisertexas/ScreenTimeLapse/main/timelapze.rb 
+brew install timelapze
 ```
-
-> Note: once this repo gets **75 stars** and **30 watchers** you will be able to install the app using `brew install --cask screentimelapse`. Additionally, the application is **not signed** so Apple will give you a scary warning about how the app can not be checked for malware. You can go in system settings to launch it anyways.
 
 ## Direct Download
 
@@ -96,6 +94,6 @@ We love our contributors! Here's how you can contribute:
 
 TimeLapze is open-source under the [MIT License](LICENSE/LICENSE).
 
-> If you liked this project, consider giving the repository a star ⭐️! I am trying to get to 75 stars to be added to homebrew
+> If you liked this project, consider giving the repository a star ⭐️!
 
 [^1]: [Apple's screen recorder convert's the display's color space](https://community.adobe.com/t5/premiere-pro-discussions/inaccurate-colors-from-desktop-recording/m-p/12168181) from **DCI_P3** to **sRGB**. The error is typically subtle, but makes the tool unsuitable for color sensitive work. Color is difficult and even [HDR video have persistent issues with overexposure in screenshots](https://github.com/iina/iina/issues/3866). 
