@@ -233,7 +233,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         }
     }
     
-    /// Receives a list of `CMSampleBuffers` and uses `shouldSaveVideo` to determine whether or not to save a video
+    /// Receives a list of `CMSampleBuffers` and uses `appendBuffer` to save them
     func handleVideo(buffer: CMSampleBuffer){
         guard self.input != nil else { // both
             logger.error("No AVAssetWriter with the name `input` is present")
@@ -275,23 +275,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             logger.log("\(self) Appended buffers \(self.frameCount)")
         }
     }
-    
-    /// Uses the frame rate and duration to determine if the frame should be saved
-    func shouldSaveVideo(buffer: CMSampleBuffer) -> Bool{
-        let maxTime = buffer.presentationTimeStamp + buffer.duration
-        
-        if let last = self.lastSavedFrame {
-            if maxTime.seconds < last.seconds + Double(metaData.getFrameTime()){
-                self.lastSavedFrame = maxTime
-                return true
-            }
-            return false
-        } else {
-            self.lastSavedFrame = maxTime
-            return true
-        }
-    }
-    
+
     /// Provides a default way to deal with streams which do not work
     func handleStreamStartFailure(err: Error?){
         if let error = err{
