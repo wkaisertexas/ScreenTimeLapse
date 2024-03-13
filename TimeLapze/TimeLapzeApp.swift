@@ -12,7 +12,6 @@ struct TimeLapzeApp: App {
         MenuBarExtra{
             ContentView().environmentObject(recorderViewModel)
         } label: {
-//            Text("\(String(recorderViewModel.currentTime.seconds)) fasdf")
             Image(systemName: recorderViewModel.state.description).accessibilityLabel("ScreenTimeLapse MenuBar")
         }
         .onChange(of: recorderViewModel.state) { _ in
@@ -24,7 +23,6 @@ struct TimeLapzeApp: App {
         Settings{
             PreferencesView()
         }
-//        .windowResizability(.contentSize)
     }
 }
 
@@ -32,7 +30,7 @@ struct TimeLapzeApp: App {
 /// General purpose `NSApplicationDelegate` and `UNUserNotificationCenterDelegate`
 /// Abstracts away custom features unable to be set in `info.plist` or any other config files
 class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
-    /// Triggered when the application finished launcing and recieves a launch notification `Notification` on the event
+    /// Triggered when the application finished launching and receives a launch notification `Notification` on the event
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide the dock icon
         if UserDefaults.standard.bool(forKey: "hideIcon") {
@@ -56,7 +54,7 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotific
                     if granted {
                         logger.log("Permissions granted")
                     } else {
-                        logger.error("Permissions denined")
+                        logger.error("Permissions denied")
                     }
                 }
             @unknown default:
@@ -76,7 +74,7 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotific
             workspace.open(fileURL)
         }
         
-        // completion handler things: `nil` in thsi case
+        // completion handler things: `nil` in this case
         completionHandler()
     }
 }

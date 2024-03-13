@@ -13,13 +13,13 @@ class Camera: NSObject, Recordable {
     var inputDevice: AVCaptureDevice
     var recordVideo: RecordVideo?
     
-    // Time Syncronization
+    // Time Synchronization
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
     var frameChanged = true
     
-    var lastAppenedFrame: CMTime = .zero
+    var lastAppendedFrame: CMTime = .zero
     var tmpFrameBuffer: CMSampleBuffer?
     
     override var description: String {
@@ -178,7 +178,7 @@ class Camera: NSObject, Recordable {
             return
         }
         
-        (tmpFrameBuffer, lastAppenedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .camera)
+        (tmpFrameBuffer, lastAppendedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .camera)
         
         // log frame count
         frameCount += 1
@@ -188,7 +188,7 @@ class Camera: NSObject, Recordable {
         }
     }
     
-    /// Generates a random filename
+    /// Generates a filename with the device name and current date
     func getFilename() -> String {
         return "\(inputDevice.localizedName)\(dateExtension)\(fileExtension)"
     }

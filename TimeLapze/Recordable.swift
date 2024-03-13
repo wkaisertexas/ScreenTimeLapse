@@ -15,7 +15,7 @@ protocol Recordable : CustomStringConvertible {
     var offset: CMTime {get set}
     var frameCount: Int {get set}
     
-    var lastAppenedFrame: CMTime {get set}
+    var lastAppendedFrame: CMTime {get set}
     var tmpFrameBuffer: CMSampleBuffer? {get set}
     var frameChanged: Bool {get set}
     var frameRate: CMTimeScale {get}
@@ -87,7 +87,7 @@ extension Recordable{
     }
     
     /// Sends a notification using `UserNotifications` framework
-    /// Exists on `Recordable` because this can be modifyied is an **iOS** application is in the future
+    /// Exists on `Recordable` because this can be modified is an **iOS** application is in the future
     func sendNotification(title: String, body: String, url: URL?){
         guard UserDefaults.standard.bool(forKey: "showNotifications") else {return}
         
@@ -114,9 +114,9 @@ extension Recordable{
     
     /// Appends a buffer depending on a couple of factors
     /// The `tmpFrameBuffer` is used to keep track of deletable buffers
-    /// Saves **30%** of space at only **2x** speed. Austensibly much higher for higher time multiples
+    /// Saves **30%** of space at only **2x** speed. Ostensibly much higher for higher time multiples
     func appendBuffer(buffer: CMSampleBuffer, source: InputTypes) -> (CMSampleBuffer, CMTime, Bool){
-        guard let input = input else { return (buffer, lastAppenedFrame, true)}
+        guard let input = input else { return (buffer, lastAppendedFrame, true)}
         
         // Determines if we should append
         let currentPTS = buffer.presentationTimeStamp
@@ -128,7 +128,7 @@ extension Recordable{
         case .camera:
             changed = true // a camera is always changed
         case .screen:
-            // needs to get the attachements array
+            // needs to get the attachments array
             if !changed, let attachmentsArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
                                                                                  createIfNecessary: false) as? [[SCStreamFrameInfo: Any]],
                let attachments = attachmentsArray.first {
@@ -144,18 +144,18 @@ extension Recordable{
             logger.warning("Unrecognized input device")
         }
         
-        guard currentPTS > lastAppenedFrame + differenceTime || (source == .screen && !frameChanged) else {
+        guard currentPTS > lastAppendedFrame + differenceTime || (source == .screen && !frameChanged) else {
             // okay to replace the tmp buffer
-            return (buffer, lastAppenedFrame, changed)
+            return (buffer, lastAppendedFrame, changed)
         }
                 
         guard let newBuffer = try? tmpFrameBuffer?.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple) else {
-            return (buffer, lastAppenedFrame, true)
+            return (buffer, lastAppendedFrame, true)
         }
         
         guard input.append(newBuffer) else {
             logger.error("failed to append data")
-            return (buffer, lastAppenedFrame, true)
+            return (buffer, lastAppendedFrame, true)
         }
         
         if let tmpFrameBuffer = tmpFrameBuffer{
@@ -168,7 +168,7 @@ extension Recordable{
     }
     
     /// Returns a `String` representation of the current date, used by both `Camera` and `Screen`
-    ///  The intention is for this to be utiized
+    ///  The intention is for this to be utilized
     var dateExtension : String {
         let currentDate = Date()
         let formatter = DateFormatter()

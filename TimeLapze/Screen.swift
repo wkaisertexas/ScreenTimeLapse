@@ -27,7 +27,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     var frameCount: Int = 0
     var frameChanged = true
     
-    var lastAppenedFrame: CMTime = .zero
+    var lastAppendedFrame: CMTime = .zero
     var tmpFrameBuffer: CMSampleBuffer?
     
     override var description: String {
@@ -156,7 +156,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         return (writer, input)
     }
     
-    /// Creates an `SCStream` with correct `filter` and `configuration`. ``self`` is set to recieve this data
+    /// Creates an `SCStream` with correct `filter` and `configuration`. ``self`` is set to receive this data
     func setupStream(screen: SCDisplay, showCursor: Bool, excluding: [SCRunningApplication]) throws {
         let contentFilter = SCContentFilter(
             display: screen,
@@ -183,7 +183,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         config.pixelFormat = kCVPixelFormatType_ARGB2101010LEPacked
         
         if #available(macOS 14.0, *) {
-            // Gettings quality from user defaults
+            // Getting quality from user defaults
             if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
                let quality = qualityValue as? QualitySettings {
                 config.captureResolution = switch quality {
@@ -267,7 +267,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             return
         }
         
-        (tmpFrameBuffer, lastAppenedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .screen)
+        (tmpFrameBuffer, lastAppendedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .screen)
         
         // Logs the frames
         frameCount += 1
@@ -281,7 +281,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
         if let error = err{
             logger.log("Stream start failure \(String(describing: error))")
         } else{
-            logger.log("Stream started sucessfully")
+            logger.log("Stream started successfully")
         }
     }
 }

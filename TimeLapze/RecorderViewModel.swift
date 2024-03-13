@@ -1,7 +1,7 @@
 import ScreenCaptureKit
 import AVFoundation
 
-/// Represents a syncronized session of ``Recordable`` objects
+/// Represents a synchronized session of ``Recordable`` objects
 class RecorderViewModel: ObservableObject {
     @Published var apps: [SCRunningApplication : Bool] = [:]
     
@@ -11,7 +11,7 @@ class RecorderViewModel: ObservableObject {
     @Published var state: RecordingState = .stopped
     @Published var showCursor: Bool = false
     
-    /// Makes an asyncronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
+    /// Makes an asynchronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
     @MainActor
     func getDisplayInfo() async {
         do{
@@ -46,12 +46,12 @@ class RecorderViewModel: ObservableObject {
         }.map{elem in elem.key}
     }
     
-    /// Breaks aparts `apps` to what should be **included**
+    /// Breaks apart `apps` to what should be **included**
     var includedApps: [SCRunningApplication] {
         apps.keys.filter{apps[$0]!}.sorted(by: <)
     }
     
-    /// Breaks aparts `apps` to what should be **excluded**
+    /// Breaks apart `apps` to what should be **excluded**
     var excludedApps: [SCRunningApplication] {
         apps.keys.filter{!apps[$0]!}.sorted(by: <)
     }
@@ -92,7 +92,7 @@ class RecorderViewModel: ObservableObject {
             }
     }
     
-    /// Resumes recoriding ``screens`` and ``cameras``
+    /// Resumes recording ``screens`` and ``cameras``
     func resumeRecording(){
         self.state = .recording
         
@@ -180,7 +180,7 @@ class RecorderViewModel: ObservableObject {
         refreshApps()
     }
     
-    /// Refreshes ``apps`` to get new infromation
+    /// Refreshes ``apps`` to get new information
     ///
     /// Ideally, finding new apps would be done in a periodic manner
     func refreshApps() {
