@@ -25,6 +25,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
+    var frameChanged = true
     
     var lastAppenedFrame: CMTime = .zero
     var tmpFrameBuffer: CMSampleBuffer?
@@ -266,7 +267,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
             return
         }
         
-        (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
+        (tmpFrameBuffer, lastAppenedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .screen)
         
         // Logs the frames
         frameCount += 1

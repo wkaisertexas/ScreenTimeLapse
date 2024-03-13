@@ -17,6 +17,7 @@ class Camera: NSObject, Recordable {
     var offset: CMTime = CMTime(seconds: 0.0, preferredTimescale: 60)
     var timeMultiple: Double = 1 // offset set based on settings
     var frameCount: Int = 0
+    var frameChanged = true
     
     var lastAppenedFrame: CMTime = .zero
     var tmpFrameBuffer: CMSampleBuffer?
@@ -177,7 +178,7 @@ class Camera: NSObject, Recordable {
             return
         }
         
-        (tmpFrameBuffer, lastAppenedFrame) = appendBuffer(buffer: buffer)
+        (tmpFrameBuffer, lastAppenedFrame, frameChanged) = appendBuffer(buffer: buffer, source: .camera)
         
         // log frame count
         frameCount += 1

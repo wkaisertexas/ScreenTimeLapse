@@ -17,6 +17,7 @@ protocol Recordable : CustomStringConvertible {
     
     var lastAppenedFrame: CMTime {get set}
     var tmpFrameBuffer: CMSampleBuffer? {get set}
+    var frameChanged: Bool {get set}
     var frameRate: CMTimeScale {get}
     
     // MARK: -Intents
@@ -29,7 +30,7 @@ protocol Recordable : CustomStringConvertible {
     func getFilename() -> String
 }
 
-extension Recordable{    
+extension Recordable{        
     var frameRate: CMTimeScale {
         guard let writer = writer else {return .zero}
         return CMTimeScale(30.0)
@@ -114,33 +115,54 @@ extension Recordable{
     /// Appends a buffer depending on a couple of factors
     /// The `tmpFrameBuffer` is used to keep track of deletable buffers
     /// Saves **30%** of space at only **2x** speed. Austensibly much higher for higher time multiples
-    func appendBuffer(buffer: CMSampleBuffer) -> (CMSampleBuffer, CMTime){
-        guard let input = input else { return (buffer, lastAppenedFrame) }
+    func appendBuffer(buffer: CMSampleBuffer, source: InputTypes) -> (CMSampleBuffer, CMTime, Bool){
+        guard let input = input else { return (buffer, lastAppenedFrame, true)}
         
         // Determines if we should append
         let currentPTS = buffer.presentationTimeStamp
         
         let differenceTime =  CMTimeMultiplyByFloat64(CMTime(seconds: 1.0 / 30, preferredTimescale: 30), multiplier: timeMultiple)
         
-        guard currentPTS > lastAppenedFrame + differenceTime else {
+        var changed = frameChanged
+        switch source {
+        case .camera:
+            changed = true // a camera is always changed
+        case .screen:
+            // needs to get the attachements array
+            if !changed, let attachmentsArray = CMSampleBufferGetSampleAttachmentsArray(buffer,
+                                                                                 createIfNecessary: false) as? [[SCStreamFrameInfo: Any]],
+               let attachments = attachmentsArray.first {
+                // okay, so we have attachments
+                if let rects = attachments[.dirtyRects] as? NSArray, rects.count > 0 {
+                    changed = true // if we have dirty rects, something changed
+                }
+            } else {
+                // if we can not extract, then changed MUST be true
+                changed = true
+            }
+        default:
+            logger.warning("Unrecognized input device")
+        }
+        
+        guard currentPTS > lastAppenedFrame + differenceTime || (source == .screen && !frameChanged) else {
             // okay to replace the tmp buffer
-            return (buffer, lastAppenedFrame)
+            return (buffer, lastAppenedFrame, changed)
         }
                 
         guard let newBuffer = try? tmpFrameBuffer?.offsettingTiming(by: offset, multiplier: 1.0 / timeMultiple) else {
-            return (buffer, lastAppenedFrame)
+            return (buffer, lastAppenedFrame, true)
         }
         
         guard input.append(newBuffer) else {
             logger.error("failed to append data")
-            return (buffer, lastAppenedFrame)
+            return (buffer, lastAppenedFrame, true)
         }
         
         if let tmpFrameBuffer = tmpFrameBuffer{
-            return (buffer, tmpFrameBuffer.presentationTimeStamp)
+            return (buffer, tmpFrameBuffer.presentationTimeStamp, source != .screen) // we have not changed originally
         } else {
             // Initial condition
-            return (buffer, buffer.presentationTimeStamp)
+            return (buffer, buffer.presentationTimeStamp, source != .screen)
         }
 
     }
@@ -202,4 +224,11 @@ extension URL {
     func isInTemporaryFolder() -> Bool {
         return self.absoluteString.starts(with: URL.temporaryDirectory.absoluteString)
     }
+}
+
+/// Two-type input types
+/// Used to not record non-changing frames
+enum InputTypes {
+    case camera
+    case screen
 }
