@@ -59,7 +59,7 @@ class RecorderViewModel: ObservableObject {
     apps.keys.filter { !apps[$0]! }.sorted(by: <)
   }
 
-  // MARK: -Recording
+  // MARK: Recording
 
   /// Starts recording ``cameras`` and ``screens``
   func startRecording() {
@@ -135,10 +135,14 @@ class RecorderViewModel: ObservableObject {
       .forEach { index in
         screens[index].saveRecording()
       }
+      
+      // Logs a recording being saved
+      reviewManager.logCompletedRecordings()
   }
 
-  // MARK: -Toggles
-
+  // MARK: Toggles
+    
+  /// Inverts the ``Screen`` and sends an update to the user interface
   func toggleScreen(screen: Screen) {
     screen.enabled.toggle()
     objectWillChange.send()
@@ -165,7 +169,7 @@ class RecorderViewModel: ObservableObject {
     !(cameras.contains { $0.enabled } || screens.contains { $0.enabled })
   }
 
-  // MARK: -Applications Menu
+  // MARK: Applications Menu
 
   /// Flips the enabled and disabled app in ``apps``
   func invertApplications() {
@@ -258,7 +262,7 @@ class RecorderViewModel: ObservableObject {
     return newCameras
   }
 
-  // MARK: -Timing
+  // MARK: Timing
 
   /// Returns the current time (in output units) of the recording
   var currentTime: CMTime {
@@ -277,7 +281,7 @@ class RecorderViewModel: ObservableObject {
     return CMTime.zero
   }
 
-  // MARK: -Recorder Creation
+  // MARK: Recorder Creation
 
   /// Converts a `SCDisplay` into a ``Screen``
   private func getScreenRecorder(_ screen: SCDisplay) -> Screen {
