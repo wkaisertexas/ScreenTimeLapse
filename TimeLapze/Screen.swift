@@ -39,7 +39,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     self.showCursor = showCursor
   }
 
-  // MARK: -User Interaction
+  // MARK: User Interaction
   func startRecording(excluding: [SCRunningApplication], showCursor: Bool) {
     guard self.enabled else { return }
     guard self.state != .recording else { return }

@@ -1,6 +1,11 @@
 import AVFoundation
 import SwiftUI
 
+/// Represents a user's preferences or settings
+///
+/// Has two main tabs:
+/// - General Settings
+/// - Video Settings
 struct PreferencesView: View {
   @AppStorage("showNotifications") private var showNotifications = false
   @AppStorage("showAfterSave") private var showAfterSave = false
@@ -23,54 +28,62 @@ struct PreferencesView: View {
 
   var body: some View {
     TabView {
-      generalSettings().tabItem {
-        Label("General", systemImage: "gear")
-      }
+     generalSettings().tabItem {
+          Label("General", systemImage: "gear")
+     }.navigationTitle("TimeLapze Settings")
       videoSettings().tabItem {
-        Label("Video", systemImage: "video")
-      }
+          Label("Video", systemImage: "video")
+      }.navigationTitle("TimeLapze Settings")
+      
     }
-    .padding(20)
+    .frame(width: 400)
+    .fixedSize()
   }
 
   @ViewBuilder
   func generalSettings() -> some View {
     Form {
       Text("TimeLapze General Settings")
-        .fontWeight(.bold)
-
+        .fontWeight(.medium)
+        .font(.title)
+    
+        Divider()
+        
       uiSettings()
     }
-    .padding(20)
+    .padding(10)
   }
 
   @ViewBuilder
   func videoSettings() -> some View {
     Form {
       Text("TimeLapze Video Settings")
-        .fontWeight(.bold)
-
+        .fontWeight(.medium)
+        .font(.title)
+        
+    Divider()
       playbackVideoSettings()
       captureVideoSettings()
       outputVideoSettings()
     }
-    .padding(20)
+    .padding(.bottom, 20)
+    .padding(.top, 10)
+    .padding(.leading, 20)
+    .padding(.trailing, 20)
   }
 
   // MARK: Submenus
   @ViewBuilder
   func uiSettings() -> some View {
+
     Toggle("Hide icon in dock", isOn: $hideIcon).onChange(of: hideIcon) { hide in
-      if hide {
-        NSApp.setActivationPolicy(.accessory)
-      } else {
-        NSApp.setActivationPolicy(.regular)
-      }
+      
     }
     Toggle("Show notifications", isOn: $showNotifications)
     Toggle("Show video after saving", isOn: $showAfterSave)
 
     HStack {
+      Spacer()
       Button("About") {
         if let url = URL(string: baseConfig.ABOUT) {
           openURL(url)
@@ -87,14 +100,6 @@ struct PreferencesView: View {
 
   @ViewBuilder
   func playbackVideoSettings() -> some View {
-    if #available(macOS 14.0, *) {
-      Stepper(value: $framesPerSecond, in: 1...60, step: 1) {
-        Text("Output FPS: \(framesPerSecond)")
-      }.pickerStyle(.palette)
-    }
-    //        Slider(value: $framesPerSecond, in: 1...60)
-    //        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
-
     Text(
       "An hour long recording would be \(String(format: "%.1f", 60.0 / Double(timeMultiple))) minutes"
     )
@@ -102,6 +107,14 @@ struct PreferencesView: View {
     HStack {
       Text("\(String(format: "%.1f", timeMultiple))x faster")
       Slider(value: $timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+    }
+    
+    Divider()
+      
+    if #available(macOS 14.0, *) {
+        Stepper(value: $framesPerSecond, in: 1...60, step: 1) {
+          Text("Output FPS: \(framesPerSecond)")
+        }.pickerStyle(.palette)
     }
   }
 
@@ -130,27 +143,31 @@ struct PreferencesView: View {
       Label("Choose Output Folder", systemImage: "folder")
     }
     .disabled(showPicker)
-    .onChange(of: showPicker) { _ in
-      guard showPicker else { return }
-      let panel = NSOpenPanel()
-      panel.allowsMultipleSelection = false
-      panel.canChooseDirectories = true
-      panel.canChooseFiles = false
-      panel.begin { [self] res in
-        showPicker = false
-        guard res == .OK, let pickedURL = panel.url else { return }
-
-        saveLocation = pickedURL
+    .onChange(of: showPicker, perform: getDirectory)
+      
+      HStack{
+          Text("Save videos to:")
+          Text("\(saveLocation.path())").fontWeight(.medium)
       }
-    }
-
-    Text("Save videos to \(saveLocation.path())")
   }
+    
+ // MARK: Intents
+    func getDirectory(newVal: Bool) {
+        guard showPicker else { return }
+        let panel = NSOpenPanel()
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.begin { [self] res in
+          showPicker = false
+          guard res == .OK, let pickedURL = panel.url else { return }
+
+          saveLocation = pickedURL
+        }
+    }
 }
 
-struct PreferencesView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
     PreferencesView()
       .frame(width: 700, height: 300)
-  }
 }

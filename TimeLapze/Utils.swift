@@ -54,3 +54,17 @@ extension SCRunningApplication: Comparable {
     lhs.bundleIdentifier < rhs.bundleIdentifier
   }
 }
+
+/// Gets the App Version as a ``String``
+extension Bundle {
+    /// Fetches the current bundle version of the app.
+    static var currentAppVersion: String? {
+        #if os(macOS)
+        let infoDictionaryKey = "CFBundleShortVersionString"
+        #else
+        let infoDictionaryKey = "CFBundleVersion"
+        #endif
+        
+        return Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String
+    }
+}

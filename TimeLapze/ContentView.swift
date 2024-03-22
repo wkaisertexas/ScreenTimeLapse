@@ -2,6 +2,7 @@ import AVFoundation
 import CoreData
 import ScreenCaptureKit
 import SwiftUI
+import SettingsAccess
 
 struct ContentView: View {
   @EnvironmentObject private var viewModel: RecorderViewModel
@@ -36,7 +37,7 @@ struct ActionButton: View {
     }
   }
 
-  // MARK: -Button View Builders
+  // MARK: Button View Builders
   func startButton() -> some View {
     Button("Start Recording") {
       viewModel.startRecording()
@@ -80,7 +81,7 @@ struct InputDevices: View {
     camerasMenu()
   }
 
-  // MARK: -Sections
+  // MARK: Sections
 
   /// Renders all the `SCRunningApplications` which can either be enabled or disabled
   func appsMenu() -> some View {
@@ -155,7 +156,7 @@ struct InputDevices: View {
       }
   }
 
-  // MARK: -Components
+  // MARK: Components
   /// Renders a single `Screen` as a button with either an enabled or disabled checkmark
   func screen(_ screen: Screen) -> some View {
     Button(action: { viewModel.toggleScreen(screen: screen) }) {
@@ -203,8 +204,18 @@ struct Info: View {
     if #available(macOS 14.0, *) {
       SettingsLink()
         .keyboardShortcut(",")
-      Divider()
+    } else {
+        // SettingsLink from the orchetect/SettingsAccess package
+        SettingsLink {
+            Text("Settings..")
+        } preAction: {
+            // nothing for now
+        } postAction: {
+           // nothing for now
+        }.keyboardShortcut(",")
     }
+    Divider()
+      
     Button("About") {
       if let url = URL(string: baseConfig.ABOUT) {
         openURL(url)

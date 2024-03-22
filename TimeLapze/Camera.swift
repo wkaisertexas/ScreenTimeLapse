@@ -89,7 +89,7 @@ class Camera: NSObject, Recordable {
     return (writer, input)
   }
 
-  // MARK: -User Interaction
+  // MARK: User Interaction
   func startRecording() {
     guard self.enabled else { return }
     guard self.state != .recording else { return }
@@ -147,7 +147,7 @@ class Camera: NSObject, Recordable {
     }
   }
 
-  // MARK: -Streaming
+  // MARK: Streaming
   func handleVideo(buffer: CMSampleBuffer) {
     guard let input = self.input, let writer = self.writer else {
       print("Not video writer present")

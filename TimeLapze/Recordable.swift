@@ -20,7 +20,7 @@ protocol Recordable: CustomStringConvertible {
   var frameChanged: Bool { get set }
   var frameRate: CMTimeScale { get }
 
-  // MARK: -Intents
+  // MARK: Intents
   mutating func startRecording()
   mutating func stopRecording()
   mutating func resumeRecording()
