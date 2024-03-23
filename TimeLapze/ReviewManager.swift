@@ -12,6 +12,7 @@ struct ReviewManager {
     
     private let INITIAL_REVIEW_THRESHOLD = 5 // wait for 5 videos before asking
     private let FOLLOW_UP_REVIEW_THRESHOLD = 10 // wait for 10 videos before asking again
+    private let REVIEW_WAIT = 3 // wait time for a review
     
     /// Logging completed recordings
     func logCompletedRecordings() {
@@ -49,7 +50,14 @@ struct ReviewManager {
     /// Requests a review after a certain time
     private func waitAndAskForReview() {
         Task {
-            try await Task.sleep(for: .seconds(3))
+            try await Task.sleep(for: .seconds(REVIEW_WAIT))
+            await requestReview()
+        }
+    }
+    
+    /// Asks for a review if the user requests it
+    public func getReview(){
+        Task {
             await requestReview()
         }
     }

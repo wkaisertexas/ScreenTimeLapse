@@ -1,17 +1,30 @@
 import AVFoundation
 import SwiftUI
 import UserNotifications
+import SettingsAccess
 
 @main
 struct TimeLapzeApp: App {
-  @NSApplicationDelegateAdaptor(ScreenTimeLapseAppDelegate.self) var appDelegate
+  @NSApplicationDelegateAdaptor(TimeLapzeAppDelegate.self) var appDelegate
 
   @ObservedObject var recorderViewModel = RecorderViewModel()
+  @ObservedObject var onboardingViewModel = OnboardingViewModel()
 
   var body: some Scene {
-    MenuBarExtra {
-      ContentView().environmentObject(recorderViewModel)
-    } label: {
+    // onboarding view (order matters here)
+      WindowGroup(id: "onboarding"){
+          OnboardingView()
+              .environmentObject(onboardingViewModel).environmentObject(recorderViewModel)
+              .openSettingsAccess()
+      }.windowResizability(.contentSize)
+          .windowStyle(.hiddenTitleBar)
+          .windowToolbarStyle(.unifiedCompact)
+      
+    // main view
+      
+      MenuBarExtra {
+          ContentView().environmentObject(recorderViewModel).openSettingsAccess()
+      } label: {
       Image(systemName: recorderViewModel.state.description).accessibilityLabel(
         "ScreenTimeLapse MenuBar")
     }
@@ -22,14 +35,14 @@ struct TimeLapzeApp: App {
     }
 
     Settings {
-      PreferencesView()
+        PreferencesView()
     }
   }
 }
 
 /// General purpose `NSApplicationDelegate` and `UNUserNotificationCenterDelegate`
 /// Abstracts away custom features unable to be set in `info.plist` or any other config files
-class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate
+class TimeLapzeAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate
 {
   /// Triggered when the application finished launching and receives a launch notification `Notification` on the event
   func applicationDidFinishLaunching(_ notification: Notification) {
@@ -37,7 +50,8 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotific
     if UserDefaults.standard.bool(forKey: "hideIcon") {
       NSApp.setActivationPolicy(.accessory)
     }
-
+      print(NSApplication.shared)
+      
     // Notifications
     UNUserNotificationCenter.current().getNotificationSettings { settings in
       switch settings.authorizationStatus {
@@ -66,6 +80,23 @@ class ScreenTimeLapseAppDelegate: NSObject, NSApplicationDelegate, UNUserNotific
     // Setting the notification delegate
     UNUserNotificationCenter.current().delegate = self
   }
+    
+  /// Creates a custom dock menu with the `play`, `pause` and `settings` buttons in a Spotify-like manner
+@MainActor
+   func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
+      let menu = NSMenu()
+      
+      menu.addItem(
+        NSMenuItem(title: "Start Recording", action: nil, keyEquivalent: "testing")
+      )
+       
+       menu.addItem(
+         NSMenuItem(title: "Pause Recording", action: nil, keyEquivalent: "testing")
+       )
+        
+       
+        return menu
+    }
 
   /// Handles when a user clicks on a notification uses the `response.notification.request.content.userInfo` to read attached data to open the `fileURL` key
   func userNotificationCenter(

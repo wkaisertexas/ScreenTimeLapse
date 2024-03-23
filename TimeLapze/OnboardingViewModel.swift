@@ -62,7 +62,7 @@ class OnboardingViewModel: ObservableObject {
         let secondApp = windows.last!
         
         let statusItem = secondApp.value(forKey: "statusItem") as? NSStatusItem
-        statusItem!.button!.performClick(nil)
+        statusItem?.button?.performClick(nil)
     }
 }
 
