@@ -14,6 +14,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   var enabled: Bool = false
   var writer: AVAssetWriter?
   var input: AVAssetWriterInput?
+  var pixelPointScale: Int = 2
 
   // ScreenCaptureKit-Specific Functionality
   var screen: SCDisplay
@@ -110,10 +111,12 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   func setup(path: String, excluding: [SCRunningApplication]) {
     Task(priority: .userInitiated) {
       do {
+        try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
+        
         (self.writer, self.input) = try setupWriter(screen: screen, path: path)
 
-        try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
-
+        try await stream!.startCapture()
+          
         logger.debug("Setup stream")
       } catch {
         logger.error("Failed to setup stream")
@@ -131,11 +134,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     // uses a settings recommender to get the video settings
     let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
     settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(
-      videoCodecType: .hevc, width: screen.width * 2, height: screen.height * 2)
+      videoCodecType: .hevc, width: screen.width * pixelPointScale, height: screen.height * pixelPointScale)
 
     var settings = settingsAssistant.videoSettings!
-    settings[AVVideoWidthKey] = screen.width * 2
-    settings[AVVideoHeightKey] = screen.height * 2
+    settings[AVVideoWidthKey] = screen.width * pixelPointScale
+    settings[AVVideoHeightKey] = screen.height * pixelPointScale
     settings[AVVideoColorPropertiesKey] = config.colorProperties
 
     // Gets a valid file type, but replaces it if in preferences
@@ -168,6 +171,10 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       excludingApplications: excluding,
       exceptingWindows: []
     )
+    
+      
+      let pixelPointScale = Int(contentFilter.pointPixelScale)
+      print(pixelPointScale)
 
     let config = SCStreamConfiguration()
     config.queueDepth = 20
@@ -178,8 +185,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     // Set the width to twice the stated width (required for pixel ratio reasons)
     // required to get colors to look right
     // note: in the future, this **should not** be hard-coded
-    config.width = screen.width * 2
-    config.height = screen.height * 2
+    config.width = screen.width * pixelPointScale
+    config.height = screen.height * pixelPointScale
 
     // color settings
     // note: in display settings, you can set the color space. So, this should probably not be hard-coded either
@@ -217,8 +224,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       type: .screen,
       sampleHandlerQueue: .global(qos: .userInitiated)
     )
-
-    stream.startCapture(completionHandler: handleStreamStartFailure)
   }
 
   /// Generates a filename specific to `SCDisplay` and `CMTime`
@@ -286,15 +291,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     frameCount += 1
     if frameCount % baseConfig.logFrequency == 0 {
       logger.log("\(self) Appended buffers \(self.frameCount)")
-    }
-  }
-
-  /// Provides a default way to deal with streams which do not work
-  func handleStreamStartFailure(err: Error?) {
-    if let error = err {
-      logger.log("Stream start failure \(String(describing: error))")
-    } else {
-      logger.log("Stream started successfully")
     }
   }
 }
