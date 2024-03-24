@@ -4942,6 +4942,7 @@
       }
     },
     "Output FPS : %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5130,6 +5131,9 @@
           }
         }
       }
+    },
+    "Output FPS: %lld" : {
+
     },
     "Pause Recording" : {
       "localizations" : {
