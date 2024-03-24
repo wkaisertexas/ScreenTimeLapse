@@ -16,10 +16,11 @@
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
 		3E75E34E2AF17A870016EB52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LICENSE */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
+		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
-		3EAB1AFB2BA89E6800BEC597 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3EAB1AFA2BA89E6800BEC597 /* SettingsAccess */; };
+		3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA255A52BADF2B70018FF63 /* SettingsAccess */; };
 		3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */; };
 		3EE5FE0D296232C700768BF7 /* TimeLapzeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
@@ -51,6 +52,7 @@
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 		3E75E34D2AF17A870016EB52 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LICENSE; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -76,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EAB1AFB2BA89E6800BEC597 /* SettingsAccess in Frameworks */,
+				3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +142,7 @@
 				3E5130DF2BA34FE500A628EB /* OnboardingView.swift */,
 				3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */,
 				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
+				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -169,6 +172,8 @@
 				3E23A0202B2FC65A0016DE8C /* PBXTargetDependency */,
 			);
 			name = TimeLapzeTests;
+			packageProductDependencies = (
+			);
 			productName = TimeLapzeTests;
 			productReference = 3E23A01B2B2FC65A0016DE8C /* TimeLapzeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -187,7 +192,7 @@
 			);
 			name = TimeLapze;
 			packageProductDependencies = (
-				3EAB1AFA2BA89E6800BEC597 /* SettingsAccess */,
+				3EA255A52BADF2B70018FF63 /* SettingsAccess */,
 			);
 			productName = ScreenTimeLapse;
 			productReference = 3EE5FE09296232C700768BF7 /* TimeLapze.app */;
@@ -268,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */,
+				3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */,
 				3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */,
 				3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */,
 				3E0DCD742BAB2A5800DB969A /* ReviewManager.swift in Sources */,
@@ -579,7 +585,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3EAB1AFA2BA89E6800BEC597 /* SettingsAccess */ = {
+		3EA255A52BADF2B70018FF63 /* SettingsAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3EAB1AF92BA89E6800BEC597 /* XCRemoteSwiftPackageReference "SettingsAccess" */;
 			productName = SettingsAccess;

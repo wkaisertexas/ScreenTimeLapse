@@ -76,33 +76,29 @@ struct OnboardingView: View {
    
     // Opens the settings (requires injection)
     @Environment(\.openSettings) private var openSettings
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack{
             switch viewModel.onWindow {
             case .introPage:
-                introduction()
+                card(title: "Welcome to TimeLapze", subtitle: "TimeLapze is a tool for creating screen and camera time lapses", image: "OnboardingIntro")
             case .menuBarPage:
-                menubar()
+                    card(title: "TimeLapze lives in the menu bar", subtitle: "Start, pause, resume, and save all of your recordings through the menu bar interface", image: "OnboardingMenuBar")
             case .timeMultiplePage:
-                timeMultiple()
+                card(title: "Define Your Time Multiple", subtitle: "Your time multiple is how much faster your output video is than real life", image: "OnboardingTimeMultiple")
             case .filteringPage:
-                filtering()
+                card(title: "Filter out unwanted apps", subtitle: "Edit the enabled and disabled list to avoid recording unwanted apps", image: "OnboardingFilterApps")
             case .cameraPage:
-                recordCamera()
+                card(title: "Record many screens and cameras", subtitle: "Click any camera or screen to record it", image: "OnboardingMultipleDevices")
             case .getStarted:
-                startRecording()
+                card(title: "Get started creating TimeLapzes", subtitle: "Recording are always color-accurate and crazy performant", image: "OnboardingGetStarted")
             }
-            
-            Spacer()
-            
-            bottomNav(viewModel.onWindow)
-                .padding(5)
-        }.frame(width: 350, height: 500, alignment: .topLeading)
-            .ignoresSafeArea(.all)
+        }.frame(width: 466, height: 483, alignment: .leading)
     }
     
     // MARK: Intents
+    
     /// Shows the `settings` in accordance with the tutorial
     func showSettings(){
         if !viewModel.settingsShown {
@@ -111,126 +107,35 @@ struct OnboardingView: View {
         
         viewModel.settingsShown = true
     }
-    
-    
-    // MARK: Pages
-    
-    /// Represents the first screen the user will see
-    func introduction() -> some View {
-        VStack{
-            Image("IntroScreen")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack{
-                Text("Welcome to TimeLapze")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("TimeLapze is a tool for creating screen and camera time lapses")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
    
-    /// Explains how ``TimeLapze`` is a menu-bar application
-    func menubar() -> some View {
-        VStack {
-            Image("menubar")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                Text("TimeLapze lives in the menu bar")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("Start, pause, resume, and save all of your recordings through the menu bar interface")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
-  
-    /// Explains how a time multiple works
-    func timeMultiple() -> some View {
-        VStack {
-            Image("timeMultiple")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                Text("Define Your Time Multiple")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("Your time multiple is how much faster your output video than real life")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
-    
-    /// Explains how filtering works
-    func filtering() -> some View {
-        VStack {
-            Image("filtering")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                Text("Filter out unwanted apps")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("Edit the enabled and disabled list to not record unwanted apps")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
-    
-    
-    /// Record your camera too
-    func recordCamera() -> some View {
-         VStack {
-            Image("recordCamera")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                Text("Record many screens and cameras")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("Click any camera or screen to record it")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
-    
-    /// Final CTA screen
-    func startRecording() -> some View {
-         VStack {
-            Image("startRecording")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                Text("Get started creating TimeLapzes")
-                    .fontWeight(.medium)
-                    .fontWidth(.compressed)
-                    .font(.title)
-                Text("Recording are always color-accurate and crazy performant")
-                    .fontWidth(.expanded)
-                    .font(.subheadline)
-            }
-        }
-    }
-    
     // MARK: Components
+
+    /// Standard onboarding card template every slide will use
+    func card(title: LocalizedStringKey, subtitle: LocalizedStringKey, image: String) -> some View {
+        ZStack{
+            Image(image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
+                .overlay(DrawingConstants.overlayGradient)
+            VStack (alignment: .leading){
+                VStack(alignment: .leading, spacing: 8){
+                    Text(title)
+                        .fontWeight(.bold)
+                        .fontWidth(.compressed)
+                        .font(.title)
+                    Text(subtitle)
+                        .fontWeight(.medium)
+                        .fontWidth(.expanded)
+                        .font(.subheadline)
+                }
+                
+                Spacer()
+                
+                bottomNav(viewModel.onWindow)
+            }.padding(40)
+        }
+    }
     
     func bottomNav(_ window: OnboardingWindows) -> some View {
         HStack{
@@ -241,7 +146,7 @@ struct OnboardingView: View {
             Spacer()
             
             Button("Skip"){
-                viewModel.skipOnboarding()
+                dismiss()
             }.buttonStyle(.borderless).focusable(false)
             
             viewModel.hasNext ? Button("Next", systemImage: "chevron.right"){
@@ -258,6 +163,12 @@ struct OnboardingView: View {
         }
     }
     
+    
+    // MARK: Drawing constants
+    struct DrawingConstants{
+        static let overlayGradient = LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.8), Color.clear]),
+                                             startPoint: .top, endPoint: .bottom)
+    }
 }
 
 #Preview {

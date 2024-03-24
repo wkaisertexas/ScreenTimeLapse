@@ -37,7 +37,7 @@ struct ActionButton: View {
     }
   }
 
-  // MARK: Button View Builders
+  // MARK: Buttons
   func startButton() -> some View {
     Button("Start Recording") {
       viewModel.startRecording()

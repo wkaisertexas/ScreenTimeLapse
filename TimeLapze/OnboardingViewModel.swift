@@ -6,7 +6,6 @@ import SwiftUI
 class OnboardingViewModel: ObservableObject {
     // Environments
     @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismiss) var dismiss
     
     // App Storage
     @AppStorage("shown") var onboarding: Bool = false
@@ -21,7 +20,6 @@ class OnboardingViewModel: ObservableObject {
     // MARK: Intents
     func skipOnboarding() {
         onboarded = true
-        dismiss() // dismisses the view
     }
     
     /// Skips to the next window and updates ``onWindow``

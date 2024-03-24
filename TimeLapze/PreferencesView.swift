@@ -7,27 +7,7 @@ import SwiftUI
 /// - General Settings
 /// - Video Settings
 struct PreferencesView: View {
-    @AppStorage("showNotifications") private var showNotifications = false
-    @AppStorage("showAfterSave") private var showAfterSave = false
-    
-    @AppStorage("framesPerSecond") private var framesPerSecond = 30
-    // Valid frames per second
-    private let validFPS = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
-    
-    @AppStorage("FPS") private var fps: Double = 30.0
-    @AppStorage("timeMultiple") private var timeMultiple: Double = 5.0
-    
-    @AppStorage("quality") var quality: QualitySettings = .medium
-    
-    @AppStorage("format") private var format: AVFileType = baseConfig.validFormats.first!
-    
-    @AppStorage("saveLocation") private var saveLocation: URL = FileManager.default
-        .homeDirectoryForCurrentUser
-    @State private var showPicker = false
-    @State private var FPSDropdown = 4
-    @State private var FPSInput = ""
-    
-    @Environment(\.openURL) var openURL
+    @EnvironmentObject private var preferencesViewModel : PreferencesViewModel
     
     var body: some View {
         TabView {
@@ -49,11 +29,11 @@ struct PreferencesView: View {
                 .fontWeight(.semibold)
                 .font(.headline)
             
-            Divider()
+            Spacer()
             
             uiSettings()
         }
-        .padding(20)
+        .padding(30)
     }
     
     @ViewBuilder
@@ -63,7 +43,6 @@ struct PreferencesView: View {
                 .fontWeight(.semibold)
                 .font(.headline)
             
-            Divider()
             playbackVideoSettings()
             captureVideoSettings()
             outputVideoSettings()
@@ -74,22 +53,18 @@ struct PreferencesView: View {
     // MARK: Submenus
     @ViewBuilder
     func uiSettings() -> some View {
-        Toggle("Show notifications", isOn: $showNotifications)
-        Toggle("Show video after saving", isOn: $showAfterSave)
+        Toggle("Show notifications", isOn: $preferencesViewModel.showNotifications)
+        Toggle("Show video after saving", isOn: $preferencesViewModel.showAfterSave)
         
-        Divider()
+        Spacer()
         
         HStack {
             Button("About") {
-                if let url = URL(string: baseConfig.ABOUT) {
-                    openURL(url)
-                }
+                preferencesViewModel.getAbout()
             }
             
             Button("Help") {
-                if let url = URL(string: baseConfig.HELP) {
-                    openURL(url)
-                }
+                preferencesViewModel.getHelp()
             }
             
             Spacer()
@@ -103,44 +78,30 @@ struct PreferencesView: View {
     @ViewBuilder
     func playbackVideoSettings() -> some View {
         Text(
-            "An hour long recording would be \(String(format: "%.1f", 60.0 / Double(timeMultiple))) minutes"
+            "An hour long recording would be \(String(format: "%.1f", 60.0 / Double(preferencesViewModel.timeMultiple))) minutes"
         )
         
         HStack {
-            Text("\(String(format: "%.1f", timeMultiple))x faster")
-            Slider(value: $timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+            Text("\(String(format: "%.1f", preferencesViewModel.timeMultiple))x faster")
+            Slider(value: $preferencesViewModel.timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
         }
         
-        Divider()
-        
         if #available(macOS 14.0, *) {
-            
-            Picker("Output FPS", selection: $FPSDropdown) {
-                ForEach(0..<validFPS.count) { index  in
-                    Text("\(validFPS[index]) fps")
+            Picker("Output FPS", selection: $preferencesViewModel.FPSDropdown) {
+                ForEach(0..<preferencesViewModel.validFPS.count) { index  in
+                    Text("\(preferencesViewModel.validFPS[index]) fps")
                 }
-            }.onChange(of: FPSDropdown, { oldValue, newValue in
-                framesPerSecond = validFPS[newValue]
+            }.onChange(of: preferencesViewModel.FPSDropdown, { oldValue, newValue in
+                preferencesViewModel.framesPerSecond = preferencesViewModel.validFPS[newValue]
             })
             .pickerStyle(MenuPickerStyle()) // Style the picker as a dropdown menu
             .padding()
             
-            if FPSDropdown == validFPS.count - 1 {
+            if preferencesViewModel.FPSDropdown == preferencesViewModel.validFPS.count - 1 {
                 Text("Want an even higher frame rate?")
-                Stepper(value: $framesPerSecond, in: 1...240, step: 1) {
-                    Text("Output FPS: \(framesPerSecond)")
+                Stepper(value: $preferencesViewModel.framesPerSecond, in: 1...240, step: 1) {
+                    Text("Output FPS: \(preferencesViewModel.framesPerSecond)")
                 }.pickerStyle(.segmented)
-                
-//                TextField("Enter your FPS", value: $FPSInput, formatter: NumberFormatter())
-//                                .padding()
-//                                .textFieldStyle(RoundedBorderTextFieldStyle())
-//                                .onChange(of: FPSInput) { oldValue, newValue in
-//                                    if let number = Int(newValue) {
-//                                        if (1...240).contains(number) {
-//                                            framesPerSecond = number
-//                                        }
-//                                    }
-//                                }
             }
         }
     }
@@ -148,14 +109,14 @@ struct PreferencesView: View {
     @ViewBuilder
     func captureVideoSettings() -> some View {
         if #available(macOS 14.0, *) {
-            Picker("Quality", selection: $quality) {
+            Picker("Quality", selection: $preferencesViewModel.quality) {
                 ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
                     Text(qualitySetting.description)
                 }
             }.pickerStyle(SegmentedPickerStyle())
         }
         
-        Picker("Format", selection: $format) {
+        Picker("Format", selection: $preferencesViewModel.format) {
             ForEach(baseConfig.validFormats, id: \.self) { format in
                 Text(baseConfig.convertFormatToString(format))
             }
@@ -165,37 +126,22 @@ struct PreferencesView: View {
     @ViewBuilder
     func outputVideoSettings() -> some View {
         let chooseFolder = Button(action: {
-            showPicker.toggle()
+            preferencesViewModel.showPicker.toggle()
         }) {
             Label("Choose Output Folder", systemImage: "folder")
         }
-        .disabled(showPicker)
-        .onChange(of: showPicker, perform: getDirectory)
+            .disabled(preferencesViewModel.showPicker)
+            .onChange(of: preferencesViewModel.showPicker, perform: preferencesViewModel.getDirectory)
         
         // Subtle thing, but using bordered prominent to call attention to something when a default has not been set
-        if saveLocation.hasDirectoryPath {
+        if preferencesViewModel.saveLocation.hasDirectoryPath {
             chooseFolder
             HStack{
                 Text("Save videos to:")
-                Text("\(saveLocation.path())").fontWeight(.medium)
+                Text("\(preferencesViewModel.saveLocation.path())").fontWeight(.medium)
             }
         } else {
             chooseFolder.buttonStyle(.borderedProminent)
-        }
-    }
-    
-    // MARK: Intents
-    func getDirectory(newVal: Bool) {
-        guard showPicker else { return }
-        let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.begin { [self] res in
-            showPicker = false
-            guard res == .OK, let pickedURL = panel.url else { return }
-            
-            saveLocation = pickedURL
         }
     }
 }
