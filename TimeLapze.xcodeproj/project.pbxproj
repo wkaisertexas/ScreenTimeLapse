@@ -17,6 +17,7 @@
 		3E75E34E2AF17A870016EB52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LICENSE */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
+		3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
@@ -53,6 +54,7 @@
 		3E75E34D2AF17A870016EB52 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LICENSE; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
+		3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */,
 				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
 				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
+				3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = 3EE5FE00296232C700768BF7;
 			packageReferences = (
@@ -253,6 +257,7 @@
 			files = (
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
 				3E75E34E2AF17A870016EB52 /* LICENSE in Resources */,
+				3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
