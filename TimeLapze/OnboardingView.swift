@@ -80,19 +80,21 @@ struct OnboardingView: View {
     
     var body: some View {
         VStack{
-            switch viewModel.onWindow {
-            case .introPage:
-                card(title: "Welcome to TimeLapze", subtitle: "TimeLapze is a tool for creating screen and camera time lapses", image: "OnboardingIntro")
-            case .menuBarPage:
-                    card(title: "TimeLapze lives in the menu bar", subtitle: "Start, pause, resume, and save all of your recordings through the menu bar interface", image: "OnboardingMenuBar")
-            case .timeMultiplePage:
-                card(title: "Define Your Time Multiple", subtitle: "Your time multiple is how much faster your output video is than real life", image: "OnboardingTimeMultiple")
-            case .filteringPage:
-                card(title: "Filter out unwanted apps", subtitle: "Edit the enabled and disabled list to avoid recording unwanted apps", image: "OnboardingFilterApps")
-            case .cameraPage:
-                card(title: "Record many screens and cameras", subtitle: "Click any camera or screen to record it", image: "OnboardingMultipleDevices")
-            case .getStarted:
-                card(title: "Get started creating TimeLapzes", subtitle: "Recording are always color-accurate and crazy performant", image: "OnboardingGetStarted")
+            Group{
+                switch viewModel.onWindow {
+                case .introPage:
+                    card(title: "Welcome to TimeLapze", subtitle: "TimeLapze is a tool for creating screen and camera time lapses", image: "OnboardingIntro", index: 0)
+                case .menuBarPage:
+                    card(title: "TimeLapze lives in the menu bar", subtitle: "Start, pause, resume, and save all of your recordings through the menu bar interface", image: "OnboardingMenuBar", index: 1)
+                case .timeMultiplePage:
+                    card(title: "Define Your Time Multiple", subtitle: "Your time multiple is how much faster your output video is than real life", image: "OnboardingTimeMultiple", index: 2)
+                case .filteringPage:
+                    card(title: "Filter out unwanted apps", subtitle: "Edit the enabled and disabled list to avoid recording unwanted apps", image: "OnboardingFilterApps", index: 3)
+                case .cameraPage:
+                    card(title: "Record many screens and cameras", subtitle: "Click any camera or screen to record it", image: "OnboardingMultipleDevices", index: 4)
+                case .getStarted:
+                    card(title: "Get started creating TimeLapzes", subtitle: "Recording are always color-accurate and crazy performant", image: "OnboardingGetStarted", index: 5)
+                }
             }
         }.frame(width: 466, height: 483, alignment: .leading)
     }
@@ -111,29 +113,46 @@ struct OnboardingView: View {
     // MARK: Components
 
     /// Standard onboarding card template every slide will use
-    func card(title: LocalizedStringKey, subtitle: LocalizedStringKey, image: String) -> some View {
+    func card(title: LocalizedStringKey, subtitle: LocalizedStringKey, image: String, index: Int) -> some View {
         ZStack{
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
                 .overlay(DrawingConstants.overlayGradient)
+                .transition(.push(from: .leading))
+                .accessibilityIdentifier("feature_background")
             VStack (alignment: .leading){
                 VStack(alignment: .leading, spacing: 8){
                     Text(title)
                         .fontWeight(.bold)
-                        .fontWidth(.compressed)
+                        .fontWidth(.condensed)
                         .font(.title)
+                        .accessibilityIdentifier("feature_title")
+
                     Text(subtitle)
-                        .fontWeight(.medium)
-                        .fontWidth(.expanded)
-                        .font(.subheadline)
-                }
+                            .fontWeight(.medium)
+                            .fontWidth(.expanded)
+                            .font(.subheadline)
+                            .frame(maxWidth: (466 - 80) / 3 * 2, alignment: .leading)
+                            .accessibilityIdentifier("feature_subtitle")
+                }.transition(.move(edge: .leading))
                 
                 Spacer()
                 
+                let baseCircle = Circle().stroke(lineWidth: 2).fill(.gray).frame(width: 9, height: 9).opacity(0.2)
+                HStack{
+                    ForEach(0..<6, id: \.self) { id in
+                        if id == index {
+                            baseCircle.background(Circle().fill(.blue))
+                        } else {
+                            baseCircle
+                        }
+                    }
+                }
                 bottomNav(viewModel.onWindow)
             }.padding(40)
+                .transition(.slide)
         }
     }
     
@@ -150,11 +169,14 @@ struct OnboardingView: View {
             }.buttonStyle(.borderless).focusable(false)
             
             viewModel.hasNext ? Button("Next", systemImage: "chevron.right"){
-                viewModel.nextWindow()
+                withAnimation {
+                    viewModel.nextWindow()
+                }
             }.buttonStyle(.borderedProminent) : nil
             
             !viewModel.hasNext ? Button(action: {
                 viewModel.skipOnboarding()
+                dismiss()
             },
                                        label: {
                 Text("Get Started")
