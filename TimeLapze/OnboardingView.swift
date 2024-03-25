@@ -96,7 +96,7 @@ struct OnboardingView: View {
                     card(title: "Get started creating TimeLapzes", subtitle: "Recording are always color-accurate and crazy performant", image: "OnboardingGetStarted", index: 5)
                 }
             }
-        }.frame(width: 466, height: 483, alignment: .leading)
+        }.frame(width: DrawingConstants.width, height: DrawingConstants.height, alignment: .leading)
     }
     
     // MARK: Intents
@@ -123,7 +123,7 @@ struct OnboardingView: View {
                 .transition(.push(from: .leading))
                 .accessibilityIdentifier("feature_background")
             VStack (alignment: .leading){
-                VStack(alignment: .leading, spacing: 8){
+                VStack(alignment: .leading, spacing: DrawingConstants.spacing){
                     Text(title)
                         .fontWeight(.bold)
                         .fontWidth(.condensed)
@@ -134,24 +134,32 @@ struct OnboardingView: View {
                             .fontWeight(.medium)
                             .fontWidth(.expanded)
                             .font(.subheadline)
-                            .frame(maxWidth: (466 - 80) / 3 * 2, alignment: .leading)
+                            .frame(maxWidth: (DrawingConstants.width - 2 * DrawingConstants.padding) * DrawingConstants.two_thirds, alignment: .leading)
                             .accessibilityIdentifier("feature_subtitle")
                 }.transition(.move(edge: .leading))
                 
                 Spacer()
                 
-                let baseCircle = Circle().stroke(lineWidth: 2).fill(.gray).frame(width: 9, height: 9).opacity(0.2)
                 HStack{
                     ForEach(0..<6, id: \.self) { id in
                         if id == index {
-                            baseCircle.background(Circle().fill(.blue))
+                            Circle()
+                                .stroke(lineWidth: 2)
+                                .fill(.blue)
+                                .frame(width: 9, height: 9)
+                                .opacity(0.5)
+                                .background(Circle().fill(.blue).opacity(1))
                         } else {
-                            baseCircle
+                            Circle()
+                                .stroke(lineWidth: 2)
+                                .fill(.gray)
+                                .frame(width: 9, height: 9)
+                                .opacity(0.5)
                         }
                     }
                 }
                 bottomNav(viewModel.onWindow)
-            }.padding(40)
+            }.padding(DrawingConstants.padding)
                 .transition(.slide)
         }
     }
@@ -190,6 +198,13 @@ struct OnboardingView: View {
     struct DrawingConstants{
         static let overlayGradient = LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.8), Color.clear]),
                                              startPoint: .top, endPoint: .bottom)
+    
+        static let width = 466.0
+        static let height = 483.0
+        static let padding = 40.0
+        static let spacing = 8.0
+        
+        static let two_thirds = 2.0 / 3.0
     }
 }
 

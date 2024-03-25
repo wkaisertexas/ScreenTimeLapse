@@ -78,7 +78,7 @@ class Camera: NSObject, Recordable {
     input.expectsMediaDataInRealTime = true
 
     guard writer.canAdd(input) else {
-      print("Can't add input")
+      logger.error("Can't add input")
       return (writer, input)
     }
     writer.add(input)
@@ -109,7 +109,7 @@ class Camera: NSObject, Recordable {
 
     if let recorder = recordVideo, recorder.isRecording() {
       recorder.stopSession()
-      print("Stopped running")
+      logger.error("Stopped running")
     }
 
     guard let input = input, let writer = writer else {
@@ -119,7 +119,7 @@ class Camera: NSObject, Recordable {
 
     // Same as screen
     while !input.isReadyForMoreMediaData {
-      logger.log("Not able to mark the stream as finished")
+      logger.error("Not able to mark the stream as finished")
       sleep(1)  // sleeping for a second
     }
 
@@ -150,17 +150,17 @@ class Camera: NSObject, Recordable {
   // MARK: Streaming
   func handleVideo(buffer: CMSampleBuffer) {
     guard let input = self.input, let writer = self.writer else {
-      print("Not video writer present")
+      logger.error("Not video writer present")
       return
     }
 
     guard writer.status != .failed else {
-      print("Writer has failed")
+      logger.error("Writer has failed")
       return
     }
 
     guard buffer.isValid else {
-      logger.log("Invalid Camera Buffer")
+      logger.error("Invalid Camera Buffer")
       return
     }
 
@@ -175,12 +175,12 @@ class Camera: NSObject, Recordable {
     }
 
     guard writer.status == .writing else {
-      print("The writer has failed \(String(describing: writer.error!))")
+      logger.error("The writer has failed \(String(describing: writer.error!))")
       return
     }
 
     guard input.isReadyForMoreMediaData else {
-      print("Is not ready for more data")
+      logger.error("Is not ready for more data")
       return
     }
 
