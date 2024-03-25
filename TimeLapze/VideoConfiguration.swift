@@ -47,7 +47,7 @@ enum VideoSettings: String {
 
 struct VideoConfiguration {
   let validFormats: [AVFileType] = [
-    .mov, .mp4, .m4v,
+    .mov, .mp4,
   ]
 
   let HELP = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
@@ -61,8 +61,6 @@ struct VideoConfiguration {
       return ".mov"
     case .mp4:
       return ".mp4"
-    case .m4v:
-      return ".m4v"
     default:
       return "Unsupported format"
     }
