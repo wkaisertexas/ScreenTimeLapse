@@ -1,10 +1,3 @@
-//
-//  PersistenceManager.swift
-//  ScreenTimeLapse
-//
-//  Created by William Kaiser on 11/1/23.
-//
-
 import AVFoundation
 import SwiftUI
 
