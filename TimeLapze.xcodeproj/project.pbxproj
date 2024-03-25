@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0DCD742BAB2A5800DB969A /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */; };
 		3E23A01E2B2FC65A0016DE8C /* TimeLapzeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23A01D2B2FC65A0016DE8C /* TimeLapzeTests.swift */; };
 		3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C629AD741800D3EC7B /* Screen.swift */; };
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
+		3E5130E02BA34FE500A628EB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5130DF2BA34FE500A628EB /* OnboardingView.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
 		3E75E34E2AF17A870016EB52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LICENSE */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
+		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
+		3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
+		3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA255A52BADF2B70018FF63 /* SettingsAccess */; };
+		3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */; };
 		3EE5FE0D296232C700768BF7 /* TimeLapzeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
@@ -35,19 +41,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		3E23A01B2B2FC65A0016DE8C /* TimeLapzeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E23A01D2B2FC65A0016DE8C /* TimeLapzeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeTests.swift; sourceTree = "<group>"; };
 		3E2EB6A429AD5A4C006F4F2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E4D87C629AD741800D3EC7B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		3E4D87C829AD744C00D3EC7B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		3E5130DF2BA34FE500A628EB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 		3E75E34D2AF17A870016EB52 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LICENSE; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
+		3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* TimeLapze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLapze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +141,11 @@
 				3E9894D02A2ED44600C25059 /* Logger.swift */,
 				3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */,
 				3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */,
+				3E5130DF2BA34FE500A628EB /* OnboardingView.swift */,
+				3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */,
+				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
+				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
+				3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -158,6 +175,8 @@
 				3E23A0202B2FC65A0016DE8C /* PBXTargetDependency */,
 			);
 			name = TimeLapzeTests;
+			packageProductDependencies = (
+			);
 			productName = TimeLapzeTests;
 			productReference = 3E23A01B2B2FC65A0016DE8C /* TimeLapzeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -175,6 +194,9 @@
 			dependencies = (
 			);
 			name = TimeLapze;
+			packageProductDependencies = (
+				3EA255A52BADF2B70018FF63 /* SettingsAccess */,
+			);
 			productName = ScreenTimeLapse;
 			productReference = 3EE5FE09296232C700768BF7 /* TimeLapze.app */;
 			productType = "com.apple.product-type.application";
@@ -205,8 +227,12 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = 3EE5FE00296232C700768BF7;
+			packageReferences = (
+				3EAB1AF92BA89E6800BEC597 /* XCRemoteSwiftPackageReference "SettingsAccess" */,
+			);
 			productRefGroup = 3EE5FE0A296232C700768BF7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,6 +257,7 @@
 			files = (
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
 				3E75E34E2AF17A870016EB52 /* LICENSE in Resources */,
+				3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,14 +278,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */,
+				3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */,
 				3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */,
 				3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */,
+				3E0DCD742BAB2A5800DB969A /* ReviewManager.swift in Sources */,
 				3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */,
 				3EEFFBB929A9B662002D0040 /* Utils.swift in Sources */,
 				3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */,
+				3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */,
 				3E9894D12A2ED44600C25059 /* Logger.swift in Sources */,
 				3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */,
 				3EE5FE0D296232C700768BF7 /* TimeLapzeApp.swift in Sources */,
+				3E5130E02BA34FE500A628EB /* OnboardingView.swift in Sources */,
 				3E4D87C729AD741800D3EC7B /* Screen.swift in Sources */,
 				3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */,
 			);
@@ -546,6 +577,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3EAB1AF92BA89E6800BEC597 /* XCRemoteSwiftPackageReference "SettingsAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/SettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3EA255A52BADF2B70018FF63 /* SettingsAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EAB1AF92BA89E6800BEC597 /* XCRemoteSwiftPackageReference "SettingsAccess" */;
+			productName = SettingsAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3EE5FE01296232C700768BF7 /* Project object */;
 }

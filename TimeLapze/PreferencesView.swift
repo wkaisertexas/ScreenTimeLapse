@@ -1,154 +1,152 @@
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
+/// Represents a user's preferences or settings
+///
+/// Has two main tabs:
+/// - General Settings
+/// - Video Settings
 struct PreferencesView: View {
-    @AppStorage("showNotifications") private var showNotifications = false
-    @AppStorage("showAfterSave") private var showAfterSave = false
-    
-    @AppStorage("framesPerSecond") private var framesPerSecond = 30
-    @AppStorage("FPS") private var fps : Double = 30.0
-    @AppStorage("timeMultiple") private var timeMultiple : Double = 5.0
-    
-    @AppStorage("quality") var quality : QualitySettings = .medium
-    
-    @AppStorage("format") private var format : AVFileType = baseConfig.validFormats.first!
-    
-    @AppStorage("hideIcon") private var hideIcon : Bool = false
-    
-    @AppStorage("saveLocation") private var saveLocation : URL = FileManager.default.homeDirectoryForCurrentUser
-    @State private var showPicker = false
-    
-    @Environment(\.openURL) var openURL
+    @EnvironmentObject private var preferencesViewModel : PreferencesViewModel
     
     var body: some View {
-        TabView{
-            generalSettings().tabItem{
+        TabView {
+            generalSettings().tabItem {
                 Label("General", systemImage: "gear")
-            }
-            videoSettings().tabItem{
+            }.navigationTitle("TimeLapze Settings")
+            videoSettings().tabItem {
                 Label("Video", systemImage: "video")
-            }
+            }.navigationTitle("TimeLapze Settings")
         }
-        .padding(20)
+        .frame(width: 450)
+        .fixedSize()
     }
     
     @ViewBuilder
     func generalSettings() -> some View {
         Form {
             Text("TimeLapze General Settings")
-                .fontWeight(.bold)
-
+                .fontWeight(.semibold)
+                .font(.headline)
+            
+            Spacer()
+            
             uiSettings()
         }
-        .padding(20)
+        .padding(30)
     }
     
     @ViewBuilder
     func videoSettings() -> some View {
         Form {
             Text("TimeLapze Video Settings")
-                .fontWeight(.bold)
-
+                .fontWeight(.semibold)
+                .font(.headline)
+            
             playbackVideoSettings()
             captureVideoSettings()
             outputVideoSettings()
         }
-        .padding(20)
+        .padding(30)
     }
     
     // MARK: Submenus
     @ViewBuilder
     func uiSettings() -> some View {
-        Toggle("Hide icon in dock", isOn: $hideIcon).onChange(of: hideIcon){ hide in
-            if hide {
-                NSApp.setActivationPolicy(.accessory)
-            } else {
-                NSApp.setActivationPolicy(.regular)
-            }
-        }
-        Toggle("Show notifications", isOn: $showNotifications)
-        Toggle("Show video after saving", isOn: $showAfterSave)
+        Toggle("Show notifications", isOn: $preferencesViewModel.showNotifications)
+        Toggle("Show video after saving", isOn: $preferencesViewModel.showAfterSave)
+        
+        Spacer()
         
         HStack {
-            Button("About"){
-                if let url = URL(string: baseConfig.ABOUT) {
-                    openURL(url)
-                }
+            Button("About") {
+                preferencesViewModel.getAbout()
             }
             
-            Button("Help"){
-                if let url = URL(string: baseConfig.HELP) {
-                    openURL(url)
-                }
+            Button("Help") {
+                preferencesViewModel.getHelp()
             }
+            
+            Spacer()
+
+            Button("Write Review") {
+                reviewManager.getReview()
+            }.buttonStyle(.borderedProminent)
         }
     }
     
     @ViewBuilder
     func playbackVideoSettings() -> some View {
-        if #available(macOS 14.0, *){
-            Stepper(value: $framesPerSecond, in: 1...60, step: 1){
-                Text("Output FPS: \(framesPerSecond)")
-            }.pickerStyle(.palette)
+        Text(
+            "An hour long recording would be \(String(format: "%.1f", 60.0 / Double(preferencesViewModel.timeMultiple))) minutes"
+        )
+        
+        HStack {
+            Text("\(String(format: "%.1f", preferencesViewModel.timeMultiple))x faster")
+            Slider(value: $preferencesViewModel.timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
         }
-//        Slider(value: $framesPerSecond, in: 1...60)
-//        Slider(value: $fps, in: .init(uncheckedBounds: (1.0, 60.0)))
         
-        Text("An hour long recording would be \(String(format: "%.1f", 60.0 / Double(timeMultiple))) minutes")
-        
-        HStack{
-            Text("\(String(format: "%.1f", timeMultiple))x faster")
-            Slider(value: $timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+        if #available(macOS 14.0, *) {
+            Picker("Output FPS", selection: $preferencesViewModel.FPSDropdown) {
+                ForEach(0..<preferencesViewModel.validFPS.count) { index  in
+                    Text("\(preferencesViewModel.validFPS[index]) fps")
+                }
+            }.onChange(of: preferencesViewModel.FPSDropdown, { oldValue, newValue in
+                preferencesViewModel.framesPerSecond = preferencesViewModel.validFPS[newValue]
+            })
+            .pickerStyle(MenuPickerStyle()) // Style the picker as a dropdown menu
+            .padding()
+            
+            if preferencesViewModel.FPSDropdown == preferencesViewModel.validFPS.count - 1 {
+                Text("Want an even higher frame rate?")
+                Stepper(value: $preferencesViewModel.framesPerSecond, in: 1...240, step: 1) {
+                    Text("Output FPS: \(preferencesViewModel.framesPerSecond)")
+                }.pickerStyle(.segmented)
+            }
         }
     }
     
     @ViewBuilder
-    func captureVideoSettings() -> some View{
-         if #available(macOS 14.0, *){
-            Picker("Quality", selection: $quality){
+    func captureVideoSettings() -> some View {
+        if #available(macOS 14.0, *) {
+            Picker("Quality", selection: $preferencesViewModel.quality) {
                 ForEach(QualitySettings.allCases, id: \.self) { qualitySetting in
                     Text(qualitySetting.description)
                 }
             }.pickerStyle(SegmentedPickerStyle())
         }
         
-        Picker("Format", selection: $format){
-            ForEach(baseConfig.validFormats, id: \.self){ format in
+        Picker("Format", selection: $preferencesViewModel.format) {
+            ForEach(baseConfig.validFormats, id: \.self) { format in
                 Text(baseConfig.convertFormatToString(format))
             }
         }
     }
-   
+    
     @ViewBuilder
-    func outputVideoSettings() -> some View{
-        Button(action: {
-            showPicker.toggle()
-        }){
+    func outputVideoSettings() -> some View {
+        let chooseFolder = Button(action: {
+            preferencesViewModel.showPicker.toggle()
+        }) {
             Label("Choose Output Folder", systemImage: "folder")
         }
-        .disabled(showPicker)
-        .onChange(of: showPicker){ _ in
-            guard showPicker else { return }
-            let panel = NSOpenPanel()
-            panel.allowsMultipleSelection = false
-            panel.canChooseDirectories = true
-            panel.canChooseFiles = false
-            panel.begin { [ self ] res in
-                showPicker = false
-                guard res == .OK, let pickedURL = panel.url else { return }
-                
-                saveLocation = pickedURL
-            }
-        }
+            .disabled(preferencesViewModel.showPicker)
+            .onChange(of: preferencesViewModel.showPicker, perform: preferencesViewModel.getDirectory)
         
-        Text("Save videos to \(saveLocation.path())")
+        // Subtle thing, but using bordered prominent to call attention to something when a default has not been set
+        if preferencesViewModel.saveLocation.hasDirectoryPath {
+            chooseFolder
+            HStack{
+                Text("Save videos to:")
+                Text("\(preferencesViewModel.saveLocation.path())").fontWeight(.medium)
+            }
+        } else {
+            chooseFolder.buttonStyle(.borderedProminent)
+        }
     }
 }
 
-struct PreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferencesView()
-            .frame(width: 700, height: 300)
-    }
+#Preview {
+    PreferencesView()
+        .frame(width: 700, height: 300)
 }
-
