@@ -20,9 +20,9 @@ class PreferencesViewModel: ObservableObject {
     
     @AppStorage("saveLocation") var saveLocation: URL = FileManager.default
         .homeDirectoryForCurrentUser
-    @State var showPicker = false
-    @State var FPSDropdown = 4
-    @State var FPSInput = ""
+    @Published var showPicker = false
+    @Published var FPSDropdown = 4
+    @Published var FPSInput = ""
     
     @Environment(\.openURL) var openURL
     
