@@ -234,7 +234,7 @@ extension CMSampleBuffer {
 extension URL {
   /// Returns whether or not the url is in the `URL.temporaryDirectory`
   func isInTemporaryFolder() -> Bool {
-    return self.absoluteString.starts(with: URL.temporaryDirectory.absoluteString)
+      return self.absoluteString.hasPrefix(URL.temporaryDirectory.absoluteString)
   }
 }
 

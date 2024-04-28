@@ -134,14 +134,14 @@ struct PreferencesView: View {
             .onChange(of: preferencesViewModel.showPicker, perform: preferencesViewModel.getDirectory)
         
         // Subtle thing, but using bordered prominent to call attention to something when a default has not been set
-        if preferencesViewModel.saveLocation.hasDirectoryPath {
+        if preferencesViewModel.saveLocation.isInTemporaryFolder() {
+            chooseFolder.buttonStyle(.borderedProminent)
+        } else {
             chooseFolder
             HStack{
                 Text("Save videos to:")
                 Text("\(preferencesViewModel.saveLocation.path())").fontWeight(.medium)
             }
-        } else {
-            chooseFolder.buttonStyle(.borderedProminent)
         }
     }
 }

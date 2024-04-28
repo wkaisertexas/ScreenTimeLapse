@@ -26,7 +26,6 @@ class PreferencesViewModel: ObservableObject {
     
     @Environment(\.openURL) var openURL
     
-    
     // MARK: Intents
     func getAbout() {
         if let url = URL(string: baseConfig.ABOUT) {
