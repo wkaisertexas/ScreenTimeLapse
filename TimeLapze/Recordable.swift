@@ -81,7 +81,7 @@ extension Recordable {
 
     do {  // delete old video
       try FileManager.default.removeItem(at: url)
-    } catch { print("Failed to delete file \(error.localizedDescription)") }
+    } catch { logger.error("Failed to delete file \(error.localizedDescription)") }
 
     return url
   }
