@@ -59,13 +59,8 @@ struct PreferencesView: View {
         Spacer()
         
         HStack {
-            Button("About") {
-                preferencesViewModel.getAbout()
-            }
-            
-            Button("Help") {
-                preferencesViewModel.getHelp()
-            }
+          Link("About", destination: baseConfig.ABOUT)
+          Link("Help", destination: baseConfig.HELP)
             
             Spacer()
 

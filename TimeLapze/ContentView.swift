@@ -215,18 +215,12 @@ struct Info: View {
         }.keyboardShortcut(",")
     }
     Divider()
-      
-    Button("About") {
-      if let url = URL(string: baseConfig.ABOUT) {
-        openURL(url)
-      }
-    }
-    Button("Help") {
-      if let url = URL(string: baseConfig.HELP) {
-        openURL(url)
-      }
-    }
+
+    Link("About", destination: baseConfig.ABOUT)
+    Link("Help", destination: baseConfig.HELP)
+
     Divider()
+
     Button("Quit") {
       NSApplication.shared.terminate(nil)
     }.keyboardShortcut("q")
