@@ -36,11 +36,27 @@ class RecorderViewModel: ObservableObject {
       await getDisplayInfo()
     }
   }
+  
+  deinit {
+    cleanUpMonitoring()
+  }
+  
   /// Gets new cameras every time a new camera is added or removed
   private func setupCameraMonitoring() {
     NotificationCenter.default.addObserver(self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(screenParametersChanged), name: NSApplication.didChangeScreenParametersNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(newApplicationLaunched), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(applicationClosed), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+  }
+  
+  /// Tears down all of the ``NotificationCenter`` observers added
+  private func cleanUpMonitoring() {
+    NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasConnected, object: nil)
+    NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasDisconnected, object: nil)
+    NotificationCenter.default.removeObserver(self, name: NSApplication.didChangeScreenParametersNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: NSWorkspace.didTerminateApplicationNotification, object: nil)
   }
   
   @objc private func deviceConnected(notification: Notification) {
@@ -53,6 +69,18 @@ class RecorderViewModel: ObservableObject {
   
   @objc private func screenParametersChanged(notification: Notification){
     Task(priority: .background) {
+      await getDisplayInfo()
+    }
+  }
+  
+  @objc private func newApplicationLaunched(notification: Notification){
+    Task(priority: .background){
+      await getDisplayInfo()
+    }
+  }
+  
+  @objc private func applicationClosed(notification: Notification){
+    Task(priority: .background){
       await getDisplayInfo()
     }
   }
