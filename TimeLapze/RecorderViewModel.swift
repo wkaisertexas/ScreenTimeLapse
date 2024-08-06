@@ -11,6 +11,8 @@ class RecorderViewModel: ObservableObject {
   @Published var state: RecordingState = .stopped
   @Published var showCursor: Bool = false
 
+  private var timer: DispatchSourceTimer?
+
   /// Makes an asynchronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
   @MainActor
   func getDisplayInfo() async {
@@ -27,9 +29,42 @@ class RecorderViewModel: ObservableObject {
 
   init() {
     getCameras()
+    startRefreshingDevices()
+    setupCameraMonitoring()
     Task(priority: .userInitiated) {
       await getDisplayInfo()
     }
+  }
+  /// Gets new cameras every time a new camera is added or removed
+  private func setupCameraMonitoring() {
+    NotificationCenter.default.addObserver(self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
+  }
+  
+  @objc private func deviceConnected(notification: Notification) {
+      getCameras()
+  }
+  
+  @objc private func deviceDisconnected(notification: Notification) {
+    getCameras()
+  }
+    
+  /// Starts refreshing devices present
+  func startRefreshingDevices(){
+    timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+    guard let timer = timer else { return }
+    
+    timer.schedule(deadline: .now(), repeating: .seconds(30))
+    timer.setEventHandler { [weak self] in
+      self?.getCameras()
+      
+      if self != nil {
+        Task(priority: .background){ [weak self] in
+          await self?.getDisplayInfo()
+        }
+      }
+    }
+    timer.resume()
   }
 
   /// Gets all cameras attached to the computer and creates ``MyRecordingCamera``s for them
@@ -38,7 +73,9 @@ class RecorderViewModel: ObservableObject {
       deviceTypes: [.builtInWideAngleCamera, .externalUnknown], mediaType: .video,
       position: .unspecified)
 
-    self.cameras = convertCameras(camera: discovery.devices)
+    DispatchQueue.main.async {
+        self.cameras = self.convertCameras(camera: discovery.devices)
+    }
   }
 
   /// This functions inverts the ``self.apps`` list from include to exclude
