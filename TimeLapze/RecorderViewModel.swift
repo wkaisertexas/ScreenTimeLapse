@@ -1,5 +1,6 @@
 import AVFoundation
 import ScreenCaptureKit
+import IOKit
 
 /// Represents a synchronized session of ``Recordable`` objects
 class RecorderViewModel: ObservableObject {
@@ -39,6 +40,7 @@ class RecorderViewModel: ObservableObject {
   private func setupCameraMonitoring() {
     NotificationCenter.default.addObserver(self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(screenParametersChanged), name: NSApplication.didChangeScreenParametersNotification, object: nil)
   }
   
   @objc private func deviceConnected(notification: Notification) {
@@ -47,6 +49,12 @@ class RecorderViewModel: ObservableObject {
   
   @objc private func deviceDisconnected(notification: Notification) {
     getCameras()
+  }
+  
+  @objc private func screenParametersChanged(notification: Notification){
+    Task(priority: .background) {
+      await getDisplayInfo()
+    }
   }
     
   /// Starts refreshing devices present
