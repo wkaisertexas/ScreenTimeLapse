@@ -39,6 +39,9 @@ struct TimeLapzeApp: App {
         
         Settings {
             PreferencesView().environmentObject(preferencesViewModel)
+            .onAppear{
+              NSApplication.shared.windows.forEach({$0.makeKeyAndOrderFront(nil)})
+            }
         }
     }
 }
