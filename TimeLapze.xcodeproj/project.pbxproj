@@ -23,6 +23,7 @@
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
 		3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA255A52BADF2B70018FF63 /* SettingsAccess */; };
 		3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */; };
+		3EC6507D2C61E292004FA3B2 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */; };
 		3EE5FE0D296232C700768BF7 /* TimeLapzeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
@@ -59,6 +60,8 @@
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		3EC6507A2C61D8DA004FA3B2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* TimeLapze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLapze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
 				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
 				3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */,
+				3EC6507A2C61D8DA004FA3B2 /* InfoPlist.xcstrings */,
+				3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -255,7 +260,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EC6507D2C61E292004FA3B2 /* InfoPlist.xcstrings in Resources */,
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
+				3EC6507B2C61D8DA004FA3B2 /* InfoPlist.xcstrings in Resources */,
 				3E75E34E2AF17A870016EB52 /* LICENSE in Resources */,
 				3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,

@@ -37,9 +37,9 @@ struct TimeLapzeApp: App {
             }
         }
         
-        Settings {
-            PreferencesView().environmentObject(preferencesViewModel)
-        }
+      Settings {
+        PreferencesView().environmentObject(preferencesViewModel)
+      }
     }
 }
 
@@ -94,10 +94,9 @@ class TimeLapzeAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationC
         )
         
         menu.addItem(
-            NSMenuItem(title: "Pause Recording", action: nil, keyEquivalent: "testing")
+          NSMenuItem(title: "Pause Recording", action: nil, keyEquivalent: "testing")
         )
-        
-        
+      
         return menu
     }
     

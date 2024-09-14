@@ -1,4 +1,5 @@
 import AVFoundation
+import Foundation
 import ScreenCaptureKit
 
 /// Output information consists of details about each stream designed to be shared by a recorder view model
@@ -34,15 +35,15 @@ enum QualitySettings: String, Codable, CaseIterable {
   case low
   case medium
   case high
-
-  var description: String {
+  
+  var description: LocalizedStringResource {
     switch self {
     case .low:
-      return "Low"
+      return LocalizedStringResource("Low", comment: "low in terms of recording quality")
     case .medium:
-      return "Medium"
+      return LocalizedStringResource("Medium", comment: "medium in terms of recording quality")
     case .high:
-      return "High"
+      return LocalizedStringResource("High", comment: "high in terms of recording quality")
     }
   }
 }
