@@ -27,18 +27,7 @@ class PreferencesViewModel: ObservableObject {
     @Environment(\.openURL) var openURL
     
     // MARK: Intents
-    func getAbout() {
-        if let url = URL(string: baseConfig.ABOUT) {
-            openURL(url)
-        }
-    }
-    
-    func getHelp() {
-        if let url = URL(string: baseConfig.HELP) {
-            openURL(url)
-        }
-    }
-  
+
     /// Gets the user to specify where they want to save output videos
     func getDirectory(newVal: Bool) {
         guard showPicker else { return }

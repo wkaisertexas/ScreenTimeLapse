@@ -21,7 +21,7 @@ class RecorderViewModel: ObservableObject {
       self.apps = convertApps(apps: content.applications)
       self.screens = convertDisplays(displays: content.displays)
     } catch {
-      print(error.localizedDescription)
+      logger.error("\(error.localizedDescription)")
     }
   }
 

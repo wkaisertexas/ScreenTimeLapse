@@ -172,9 +172,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       exceptingWindows: []
     )
     
-      
-      let pixelPointScale = Int(contentFilter.pointPixelScale)
-      print(pixelPointScale)
+    let pixelPointScale = Int(contentFilter.pointPixelScale)
 
     let config = SCStreamConfiguration()
     config.queueDepth = 20
@@ -239,9 +237,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     case .screen:
       handleVideo(buffer: didOutputSampleBuffer)
     case .audio:
-      print("Audio should not be captured")
+      logger.debug("Audio should not be captured")
     default:
-      print("Unknown future case")
+      logger.error("Unknown future case")
     }
   }
 

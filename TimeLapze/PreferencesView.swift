@@ -1,5 +1,6 @@
 import AVFoundation
 import SwiftUI
+import AppKit
 
 /// Represents a user's preferences or settings
 ///
@@ -20,9 +21,9 @@ struct PreferencesView: View {
         }
         .frame(width: 450)
         .fixedSize()
+        .background(VisualEffectView().ignoresSafeArea())
     }
     
-    @ViewBuilder
     func generalSettings() -> some View {
         Form {
             Text("TimeLapze General Settings")
@@ -36,7 +37,6 @@ struct PreferencesView: View {
         .padding(30)
     }
     
-    @ViewBuilder
     func videoSettings() -> some View {
         Form {
             Text("TimeLapze Video Settings")
@@ -59,13 +59,8 @@ struct PreferencesView: View {
         Spacer()
         
         HStack {
-            Button("About") {
-                preferencesViewModel.getAbout()
-            }
-            
-            Button("Help") {
-                preferencesViewModel.getHelp()
-            }
+          Link("About", destination: baseConfig.ABOUT)
+          Link("Help", destination: baseConfig.HELP)
             
             Spacer()
 
@@ -143,6 +138,19 @@ struct PreferencesView: View {
                 Text("\(preferencesViewModel.saveLocation.path())").fontWeight(.medium)
             }
         }
+    }
+}
+
+/// The use of a ``VisualEffectView`` comes from Jack Waugh's [Creating a blurred window background with SwiftUI on macOS](https://zachwaugh.com/posts/swiftui-blurred-window-background-macos)
+/// and is something that I think makes the preferences view look better
+struct VisualEffectView: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let effectView = NSVisualEffectView()
+        effectView.state = .active
+        return effectView
+    }
+
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
     }
 }
 

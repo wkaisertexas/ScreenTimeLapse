@@ -50,8 +50,8 @@ struct VideoConfiguration {
     .mov, .mp4,
   ]
 
-  let HELP = "https://github.com/wkaisertexas/ScreenTimeLapse/issues"
-  let ABOUT = "https://github.com/wkaisertexas/ScreenTimeLapse"
+  let HELP = URL(string: "https://github.com/wkaisertexas/ScreenTimeLapse/issues")!
+  let ABOUT = URL(string: "https://github.com/wkaisertexas/ScreenTimeLapse")!
 
   let logFrequency = 200
 
