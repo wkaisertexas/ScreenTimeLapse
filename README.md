@@ -52,7 +52,7 @@ brew install timelapze
 
 ## Direct Download
 
-If you wish, you can go directly to the [releases page](https://github.com/wkaisertexas/ScreenTimeLapse/releases) and download `TimeLapze.zip`. Both Chrome and Safari give a warning about downloading suspicious files. Ignore then, extract the archive and you should get a `ScreenTimeLapse.app` file. Move that file into your `Applications` directory. 
+If you wish, you can go directly to the [releases page](https://github.com/wkaisertexas/ScreenTimeLapse/releases) and download `TimeLapze.zip`. Both Chrome and Safari give a warning about downloading suspicious files. Ignore this warning, extract the archive and you should get a `ScreenTimeLapse.app` file. Move that file into your `Applications` directory. 
 
 ## Local Development
 
@@ -94,6 +94,7 @@ We love our contributors! Here's how you can contribute:
 
 TimeLapze is open-source under the [MIT License](LICENSE/LICENSE).
 
+> [!IMPORTANT]
 > If you liked this project, consider giving the repository a star ⭐️!
 
 [^1]: [Apple's screen recorder convert's the display's color space](https://community.adobe.com/t5/premiere-pro-discussions/inaccurate-colors-from-desktop-recording/m-p/12168181) from **DCI_P3** to **sRGB**. The error is typically subtle, but makes the tool unsuitable for color sensitive work. Color is difficult and even [HDR video have persistent issues with overexposure in screenshots](https://github.com/iina/iina/issues/3866). 
