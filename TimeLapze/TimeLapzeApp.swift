@@ -30,17 +30,16 @@ struct TimeLapzeApp: App {
         } label: {
             Image(systemName: recorderViewModel.state.description).accessibilityLabel(
                 "ScreenTimeLapse MenuBar")
-        }
-        .onChange(of: recorderViewModel.state) { _ in
+        }.onChange(of: recorderViewModel.state, initial: false){
             Task {
                 await recorderViewModel.getDisplayInfo()
             }
         }
-        
+
         Settings {
             PreferencesView().environmentObject(preferencesViewModel)
             .onAppear{
-              NSApplication.shared.windows.forEach({$0.makeKeyAndOrderFront(nil)})
+              NSApplication.shared.activate(ignoringOtherApps: true)
             }
         }
     }
