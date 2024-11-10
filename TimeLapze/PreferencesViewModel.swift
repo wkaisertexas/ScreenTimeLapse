@@ -1,7 +1,6 @@
 import AVFoundation
 import SwiftUI
 
-
 /// Manages data for the ``PreferencesView``
 class PreferencesViewModel: ObservableObject {
     @AppStorage("showNotifications") var showNotifications = false

@@ -104,7 +104,7 @@ struct OnboardingView: View {
     /// Shows the `settings` in accordance with the tutorial
     func showSettings(){
         if !viewModel.settingsShown {
-            try? openSettings()
+            openSettings()
         }
         
         viewModel.settingsShown = true
@@ -128,6 +128,7 @@ struct OnboardingView: View {
                         .fontWeight(.bold)
                         .fontWidth(.condensed)
                         .font(.title)
+                        .foregroundStyle(.white)
                         .accessibilityIdentifier("feature_title")
 
                     Text(subtitle)
@@ -135,6 +136,7 @@ struct OnboardingView: View {
                             .fontWidth(.expanded)
                             .font(.subheadline)
                             .frame(maxWidth: (DrawingConstants.width - 2 * DrawingConstants.padding) * DrawingConstants.two_thirds, alignment: .leading)
+                            .foregroundStyle(.white)
                             .accessibilityIdentifier("feature_subtitle")
                 }.transition(.move(edge: .leading))
                 
