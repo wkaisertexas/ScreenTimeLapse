@@ -117,7 +117,7 @@ struct InputDevices: View {
     }) {
       Image(systemName: "clear")
 
-      Text("Reset")
+      Text("Enable All") // Calling it enable all instead of reset makes things a bit more clear
     }
 
     // Whether to show or hide the user's cursor
@@ -161,7 +161,7 @@ struct InputDevices: View {
   /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
   func camera(_ camera: Camera) -> some View {
     Button(action: {
-      viewModel.toggleCameras(camera: camera)
+      viewModel.toggleCamera(camera: camera)
     }) {
       camera.enabled ? Image(systemName: "checkmark") : nil
 

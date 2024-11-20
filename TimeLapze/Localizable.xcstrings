@@ -3411,6 +3411,9 @@
         }
       }
     },
+    "Enable All" : {
+
+    },
     "Enabled" : {
       "localizations" : {
         "ar" : {
@@ -9032,6 +9035,7 @@
       }
     },
     "Reset" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
