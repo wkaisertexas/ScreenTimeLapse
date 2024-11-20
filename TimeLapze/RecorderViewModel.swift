@@ -46,8 +46,8 @@ class RecorderViewModel: ObservableObject {
     NotificationCenter.default.addObserver(self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(screenParametersChanged), name: NSApplication.didChangeScreenParametersNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(newApplicationLaunched), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(applicationClosed), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(newApplicationLaunched), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationClosed), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
   }
   
   /// Tears down all of the ``NotificationCenter`` observers added
@@ -55,8 +55,8 @@ class RecorderViewModel: ObservableObject {
     NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasConnected, object: nil)
     NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasDisconnected, object: nil)
     NotificationCenter.default.removeObserver(self, name: NSApplication.didChangeScreenParametersNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: NSWorkspace.didLaunchApplicationNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.removeObserver(self, name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.removeObserver(self, name: NSWorkspace.didTerminateApplicationNotification, object: nil)
   }
   
   @objc private func deviceConnected(notification: Notification) {
