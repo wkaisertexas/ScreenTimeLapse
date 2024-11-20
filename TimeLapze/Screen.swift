@@ -162,6 +162,13 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     settings[AVVideoWidthKey] = width
     settings[AVVideoHeightKey] = height
     settings[AVVideoColorPropertiesKey] = config.colorProperties
+    
+    // more entropy in the video -> the higher the bitrate
+    if var compressionProperties = settings[AVVideoCompressionPropertiesKey] as? [String: Any] {
+        compressionProperties.removeValue(forKey: AVVideoAverageBitRateKey)
+        compressionProperties[AVVideoQualityKey] = baseConfig.quality
+        settings[AVVideoCompressionPropertiesKey] = compressionProperties
+    }
 
     // Gets a valid file type, but replaces it if in preferences
     var fileType: AVFileType = baseConfig.validFormats.first!
@@ -219,12 +226,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
         let quality = qualityValue as? QualitySettings
       {
-        config.captureResolution =
-          switch quality {
-          case .high: SCCaptureResolutionType.best
-          case .medium: SCCaptureResolutionType.automatic
-          case .low: SCCaptureResolutionType.nominal
-          }
+        config.captureResolution = .nominal
       }
 
       config.streamName = "\(screen.displayID) Screen Recording"

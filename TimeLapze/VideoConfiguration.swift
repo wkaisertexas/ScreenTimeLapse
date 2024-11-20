@@ -45,6 +45,9 @@ enum VideoSettings: String {
   }
 }
 
+/// General configuration struct for the user interface
+///
+/// Putting this in VideoConfiguration is a little strange and this code should probably be refactored
 struct VideoConfiguration {
   let validFormats: [AVFileType] = [
     .mov, .mp4,
@@ -52,6 +55,9 @@ struct VideoConfiguration {
 
   let HELP = URL(string: "https://github.com/wkaisertexas/ScreenTimeLapse/issues")!
   let ABOUT = URL(string: "https://github.com/wkaisertexas/ScreenTimeLapse")!
+  
+  /// Constant quality threshold for recording video
+  let quality = 0.85
 
   let logFrequency = 200
 
