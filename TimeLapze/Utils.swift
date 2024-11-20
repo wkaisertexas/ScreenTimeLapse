@@ -50,7 +50,7 @@ enum QualitySettings: String, Codable, CaseIterable {
 
 /// Allows sorting by `bundleIdentifier` so the displayed order is consistent
 /// even when new `SCRunningApplication`s are added
-extension SCRunningApplication: Comparable {
+extension SCRunningApplication: @retroactive Comparable {
   public static func < (lhs: SCRunningApplication, rhs: SCRunningApplication) -> Bool {
     lhs.bundleIdentifier < rhs.bundleIdentifier
   }
