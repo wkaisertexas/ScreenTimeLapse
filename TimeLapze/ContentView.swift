@@ -4,6 +4,7 @@ import ScreenCaptureKit
 import SwiftUI
 import SettingsAccess
 
+/// Main menu-bar view of the application
 struct ContentView: View {
   @EnvironmentObject private var viewModel: RecorderViewModel
 
@@ -188,7 +189,7 @@ struct InputDevices: View {
 }
 
 /// Random `Info` about the project
-///  (About page, Help page, Quit Button)
+/// (Settings and Quit Button)
 struct Info: View {
   @Environment(\.openURL) var openURL
 
@@ -206,11 +207,6 @@ struct Info: View {
            // nothing for now
         }.keyboardShortcut(",")
     }
-    Divider()
-
-    Link("About", destination: baseConfig.ABOUT)
-    Link("Help", destination: baseConfig.HELP)
-
     Divider()
 
     Button("Quit") {
