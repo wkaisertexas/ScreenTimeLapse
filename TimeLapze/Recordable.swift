@@ -32,7 +32,7 @@ protocol Recordable: CustomStringConvertible {
 
 extension Recordable {
   var frameRate: CMTimeScale {
-    guard let writer = writer else { return .zero }
+    guard writer != nil else { return .zero }
     return CMTimeScale(30.0)
   }
 
@@ -180,8 +180,10 @@ extension Recordable {
   ///  The intention is for this to be utilized
   var dateExtension: String {
     let currentDate = Date()
+
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+
     let formattedDate = formatter.string(from: currentDate)
 
     return formattedDate
