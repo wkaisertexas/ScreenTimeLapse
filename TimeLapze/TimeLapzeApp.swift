@@ -8,7 +8,7 @@ struct TimeLapzeApp: App {
     @NSApplicationDelegateAdaptor(TimeLapzeAppDelegate.self) var appDelegate
     
     // Top-Level View Model
-    @ObservedObject var recorderViewModel = RecorderViewModel()
+    @ObservedObject var recorderViewModel = RecorderViewModel.shared
     @ObservedObject var preferencesViewModel = PreferencesViewModel()
     @ObservedObject var onboardingViewModel = OnboardingViewModel()
     
@@ -89,19 +89,54 @@ class TimeLapzeAppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationC
     /// Not used.
     @MainActor
     func applicationDockMenu(_ sender: NSApplication) -> NSMenu? {
-        let menu = NSMenu()
-        
-        menu.addItem(
-            NSMenuItem(title: "Start Recording", action: nil, keyEquivalent: "testing")
-        )
-        
-        menu.addItem(
-          NSMenuItem(title: "Pause Recording", action: nil, keyEquivalent: "testing")
-        )
+      let menu = NSMenu()
+     
+      let recorderViewModel = RecorderViewModel.shared
+      let disabled = recorderViewModel.recordersDisabled()
+
+      if recorderViewModel.state == .stopped {
+        let startItem = NSMenuItem(title: String(localized: "Start Recording"), action: disabled ? nil : #selector(startRecording), keyEquivalent: "")
+        startItem.target = self
+        menu.addItem(startItem)
+      }
+     
+      if recorderViewModel.state == .recording {
+        let pauseItem = NSMenuItem(title: String(localized: "Pause Recording"), action: disabled ? nil : #selector(pauseRecording), keyEquivalent: "")
+        pauseItem.target = self
+        menu.addItem(pauseItem)
+      }
+
+      if recorderViewModel.state == .paused {
+        let pauseItem = NSMenuItem(title: String(localized: "Resume Recording"), action: disabled ? nil : #selector(resumeRecording), keyEquivalent: "")
+        pauseItem.target = self
+        menu.addItem(pauseItem)
+      }
       
-        return menu
+      if recorderViewModel.state == .recording || recorderViewModel.state == .paused {
+        let stopAndSave = NSMenuItem(title: String(localized: "Exit and Save Recording"), action: disabled ? nil : #selector(pauseRecording), keyEquivalent: "")
+        stopAndSave.target = self
+        menu.addItem(stopAndSave)
+      }
+      
+      return menu
+    }
+
+    @objc func startRecording() {
+        RecorderViewModel.shared.startRecording()
     }
     
+    @objc func pauseRecording() {
+        RecorderViewModel.shared.pauseRecording()
+    }
+  
+    @objc func resumeRecording() {
+      RecorderViewModel.shared.resumeRecording()
+    }
+  
+    @objc func stopRecording() {
+      RecorderViewModel.shared.saveRecordings()
+    }
+
     /// Handles when a user clicks on a notification uses the `response.notification.request.content.userInfo` to read attached data to open the `fileURL` key
     func userNotificationCenter(
         _ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,

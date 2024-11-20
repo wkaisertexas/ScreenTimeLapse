@@ -5,6 +5,8 @@ import IOKit
 
 /// Represents a synchronized session of ``Recordable`` objects
 class RecorderViewModel: ObservableObject {
+  static let shared = RecorderViewModel()
+
   @Published var apps: [SCRunningApplication: Bool] = [:]
 
   @Published var cameras: [Camera] = []
