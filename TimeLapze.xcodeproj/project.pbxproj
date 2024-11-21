@@ -13,6 +13,7 @@
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
 		3E5130E02BA34FE500A628EB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5130DF2BA34FE500A628EB /* OnboardingView.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
+		3E7461022CEE8A9700F8511D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
@@ -49,6 +50,7 @@
 		3E5130DF2BA34FE500A628EB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
+		3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
 				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
 				3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */,
+				3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			files = (
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
 				3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */,
+				3E7461022CEE8A9700F8511D /* InfoPlist.xcstrings in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +401,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TESTING = "";
 			};
@@ -454,6 +459,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TESTING = "";
 			};
