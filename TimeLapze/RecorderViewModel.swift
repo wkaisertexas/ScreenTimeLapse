@@ -178,12 +178,12 @@ class RecorderViewModel: ObservableObject {
   func pauseRecording() {
     self.state = .paused
 
-    for camera in cameras {
-      camera.pauseRecording()
+    for idx in cameras.indices {
+      cameras[idx].pauseRecording()
     }
 
-    for screen in screens {
-      screen.pauseRecording()
+    for idx in screens.indices {
+      screens[idx].pauseRecording()
     }
   }
 
@@ -191,24 +191,24 @@ class RecorderViewModel: ObservableObject {
   func resumeRecording() {
     self.state = .recording
 
-    for camera in cameras {
-      camera.resumeRecording()
+    for idx in cameras.indices {
+      cameras[idx].resumeRecording()
     }
 
-    for screen in screens {
-      screen.resumeRecording()
+    for idx in screens.indices {
+      screens[idx].resumeRecording()
     }
   }
 
   func stopRecording() {
     self.state = .stopped
 
-    for camera in cameras {
-      camera.stopRecording()
+    for idx in cameras.indices {
+      cameras[idx].stopRecording()
     }
 
-    for screen in screens {
-      screen.stopRecording()
+    for idx in screens.indices {
+      screens[idx].stopRecording()
     }
   }
 
@@ -216,12 +216,12 @@ class RecorderViewModel: ObservableObject {
   func saveRecordings() {
     self.state = .stopped
 
-    for camera in cameras {
-      camera.saveRecording()
+    for idx in cameras.indices {
+      cameras[idx].saveRecording()
     }
 
-    for screen in screens {
-      screen.saveRecording()
+    for idx in screens.indices {
+      screens[idx].saveRecording()
     }
 
     // Logs a recording being saved

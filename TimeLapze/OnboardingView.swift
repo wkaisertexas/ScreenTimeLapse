@@ -158,7 +158,7 @@ struct OnboardingView: View {
             .font(.subheadline)
             .frame(
               maxWidth: (DrawingConstants.width - 2 * DrawingConstants.padding)
-                * DrawingConstants.two_thirds, alignment: .leading
+                * DrawingConstants.twoThirds, alignment: .leading
             )
             .foregroundStyle(.white)
             .accessibilityIdentifier("feature_subtitle")

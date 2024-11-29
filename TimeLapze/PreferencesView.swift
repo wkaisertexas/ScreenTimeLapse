@@ -59,8 +59,8 @@ struct PreferencesView: View {
     Spacer()
 
     HStack {
-      Link("About", destination: baseConfig.ABOUT)
-      Link("Help", destination: baseConfig.HELP)
+      Link("About", destination: baseConfig.about)
+      Link("Help", destination: baseConfig.help)
 
       Spacer()
 
@@ -82,12 +82,12 @@ struct PreferencesView: View {
     }
 
     if #available(macOS 14.0, *) {
-      Picker("Output FPS", selection: $preferencesViewModel.FPSDropdown) {
+      Picker("Output FPS", selection: $preferencesViewModel.fpsDropdown) {
         ForEach(0..<preferencesViewModel.validFPS.count) { index in
           Text("\(preferencesViewModel.validFPS[index]) fps")
         }
       }.onChange(
-        of: preferencesViewModel.FPSDropdown,
+        of: preferencesViewModel.fpsDropdown,
         { oldValue, newValue in
           preferencesViewModel.framesPerSecond = preferencesViewModel.validFPS[newValue]
         }
@@ -95,7 +95,7 @@ struct PreferencesView: View {
       .pickerStyle(MenuPickerStyle())  // Style the picker as a dropdown menu
       .padding()
 
-      if preferencesViewModel.FPSDropdown == preferencesViewModel.validFPS.count - 1 {
+      if preferencesViewModel.fpsDropdown == preferencesViewModel.validFPS.count - 1 {
         Text("Want an even higher frame rate?")
         Stepper(value: $preferencesViewModel.framesPerSecond, in: 1...240, step: 1) {
           Text("Output FPS: \(preferencesViewModel.framesPerSecond)")

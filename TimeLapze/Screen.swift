@@ -146,7 +146,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     // https://developer.apple.com/documentation/coregraphics/1454190-cgdisplaycopycolorspace
 
     // creates a custom-defined config for the P3 color space
-    let config: VideoSettings = .hevc_displayP3
+    let config: VideoSettings = .hevcDisplayP3
 
     // uses a settings recommender to get the video settings
     let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
