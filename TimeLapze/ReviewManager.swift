@@ -10,9 +10,9 @@ struct ReviewManager {
   @AppStorage("lastBundleAsked") private var lastBundleAsked: String = ""
   @AppStorage("timesVideoSaved") private var timesSaved = 0
 
-  private let INITIAL_REVIEW_THRESHOLD = 5  // wait for 5 videos before asking
-  private let FOLLOW_UP_REVIEW_THRESHOLD = 10  // wait for 10 videos before asking again
-  private let REVIEW_WAIT = 3  // wait time for a review
+  private let initialReviewThreshold = 5  // wait for 5 videos before asking
+  private let followUpReviewThreshold = 10  // wait for 10 videos before asking again
+  private let reviewWait = 3  // wait time for a review
 
   /// Logging completed recordings
   func logCompletedRecordings() {
@@ -30,7 +30,7 @@ struct ReviewManager {
 
     if lastBundleAsked.count == 0 {
       // Never asked before
-      if timesSaved < INITIAL_REVIEW_THRESHOLD { return false }
+      if timesSaved < initialReviewThreshold { return false }
       if let bundle = Bundle.currentAppVersion {
         lastBundleAsked = bundle
       }
@@ -38,7 +38,7 @@ struct ReviewManager {
       return true
     } else {
       // Already asked once
-      if timesSaved < FOLLOW_UP_REVIEW_THRESHOLD { return false }
+      if timesSaved < followUpReviewThreshold { return false }
       if let bundle = Bundle.currentAppVersion {
         lastBundleAsked = bundle
       }
@@ -50,7 +50,7 @@ struct ReviewManager {
   /// Requests a review after a certain time
   private func waitAndAskForReview() {
     Task {
-      try await Task.sleep(for: .seconds(REVIEW_WAIT))
+      try await Task.sleep(for: .seconds(reviewWait))
       await requestReview()
     }
   }

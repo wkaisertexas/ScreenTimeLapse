@@ -235,7 +235,7 @@ struct OnboardingView: View {
     static let padding = 40.0
     static let spacing = 8.0
 
-    static let two_thirds = 2.0 / 3.0
+    static let twoThirds = 2.0 / 3.0
   }
 }
 

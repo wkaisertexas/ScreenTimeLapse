@@ -168,7 +168,8 @@ extension Recordable {
     }
 
     if let tmpFrameBuffer = tmpFrameBuffer {
-      return (buffer, tmpFrameBuffer.presentationTimeStamp, source != .screen)  // we have not changed originally
+      // we have not changed originally
+      return (buffer, tmpFrameBuffer.presentationTimeStamp, source != .screen)
     } else {
       // Initial condition
       return (buffer, buffer.presentationTimeStamp, source != .screen)

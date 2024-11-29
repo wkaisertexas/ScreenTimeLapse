@@ -165,74 +165,64 @@ class RecorderViewModel: ObservableObject {
 
     let excludedApps = apps.filter { !$0.value }.map { $0.key }
 
-    self.cameras.indices
-      .forEach { index in
-        cameras[index].startRecording()
-      }
+    for camera in cameras {
+      camera.startRecording()
+    }
 
-    self.screens.indices
-      .forEach { index in
-        screens[index].startRecording(excluding: excludedApps, showCursor: showCursor)
-      }
+    for screen in screens {
+      screen.startRecording(excluding: excludedApps, showCursor: showCursor)
+    }
   }
 
   /// Pauses recording ``screens`` and ``cameras``
   func pauseRecording() {
     self.state = .paused
 
-    self.cameras.indices
-      .forEach { index in
-        cameras[index].pauseRecording()
-      }
+    for camera in cameras {
+      camera.pauseRecording()
+    }
 
-    self.screens.indices
-      .forEach { index in
-        screens[index].pauseRecording()
-      }
+    for screen in screens {
+      screen.pauseRecording()
+    }
   }
 
   /// Resumes recording ``screens`` and ``cameras``
   func resumeRecording() {
     self.state = .recording
 
-    self.cameras.indices
-      .forEach { index in
-        cameras[index].resumeRecording()
-      }
+    for camera in cameras {
+      camera.resumeRecording()
+    }
 
-    self.screens.indices
-      .forEach { index in
-        screens[index].resumeRecording()
-      }
+    for screen in screens {
+      screen.resumeRecording()
+    }
   }
 
   func stopRecording() {
     self.state = .stopped
 
-    self.cameras.indices
-      .forEach { index in
-        cameras[index].stopRecording()
-      }
+    for camera in cameras {
+      camera.stopRecording()
+    }
 
-    self.screens.indices
-      .forEach { index in
-        screens[index].stopRecording()
-      }
+    for screen in screens {
+      screen.stopRecording()
+    }
   }
 
   /// Saves the ``cameras`` and ``screens``
   func saveRecordings() {
     self.state = .stopped
 
-    self.cameras.indices
-      .forEach { index in
-        cameras[index].saveRecording()
-      }
+    for camera in cameras {
+      camera.saveRecording()
+    }
 
-    self.screens.indices
-      .forEach { index in
-        screens[index].saveRecording()
-      }
+    for screen in screens {
+      screen.saveRecording()
+    }
 
     // Logs a recording being saved
     reviewManager.logCompletedRecordings()
