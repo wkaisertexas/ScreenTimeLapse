@@ -1,7 +1,7 @@
 import AVFoundation
+import IOKit
 import ScreenCaptureKit
 import SwiftUI
-import IOKit
 
 /// Represents a synchronized session of ``Recordable`` objects
 class RecorderViewModel: ObservableObject {
@@ -14,7 +14,7 @@ class RecorderViewModel: ObservableObject {
 
   @Published var state: RecordingState = .stopped
   @AppStorage("showCursor") var showCursor: Bool = false
-  
+
   /// Timer which allows for asyncronous refreshing of enabled displays
   private var timer: DispatchSourceTimer?
 
@@ -40,72 +40,85 @@ class RecorderViewModel: ObservableObject {
       await getDisplayInfo()
     }
   }
-  
+
   deinit {
     cleanUpMonitoring()
   }
-  
+
   // MARK: Monitoring Recording Changes
-  
+
   /// Gets new cameras every time a new camera is added or removed
   private func setupCameraMonitoring() {
-    NotificationCenter.default.addObserver(self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(screenParametersChanged), name: NSApplication.didChangeScreenParametersNotification, object: nil)
-    
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(deviceConnected), name: .AVCaptureDeviceWasConnected, object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(deviceDisconnected), name: .AVCaptureDeviceWasDisconnected,
+      object: nil)
+    NotificationCenter.default.addObserver(
+      self, selector: #selector(screenParametersChanged),
+      name: NSApplication.didChangeScreenParametersNotification, object: nil)
+
     // Required to get the event handler to actually work
-    NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(newApplicationLaunched), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
-    NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(applicationClosed), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.addObserver(
+      self, selector: #selector(newApplicationLaunched),
+      name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.addObserver(
+      self, selector: #selector(applicationClosed),
+      name: NSWorkspace.didTerminateApplicationNotification, object: nil)
   }
-  
+
   /// Tears down all of the ``NotificationCenter`` observers added
   private func cleanUpMonitoring() {
     NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasConnected, object: nil)
-    NotificationCenter.default.removeObserver(self, name: .AVCaptureDeviceWasDisconnected, object: nil)
-    NotificationCenter.default.removeObserver(self, name: NSApplication.didChangeScreenParametersNotification, object: nil)
-    
+    NotificationCenter.default.removeObserver(
+      self, name: .AVCaptureDeviceWasDisconnected, object: nil)
+    NotificationCenter.default.removeObserver(
+      self, name: NSApplication.didChangeScreenParametersNotification, object: nil)
+
     // Required to get the event handler to actually work
-    NSWorkspace.shared.notificationCenter.removeObserver(self, name: NSWorkspace.didLaunchApplicationNotification, object: nil)
-    NSWorkspace.shared.notificationCenter.removeObserver(self, name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.removeObserver(
+      self, name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+    NSWorkspace.shared.notificationCenter.removeObserver(
+      self, name: NSWorkspace.didTerminateApplicationNotification, object: nil)
   }
-  
+
   @objc private func deviceConnected(notification: Notification) {
     getCameras()
   }
-  
+
   @objc private func deviceDisconnected(notification: Notification) {
     getCameras()
   }
-  
-  @objc private func screenParametersChanged(notification: Notification){
+
+  @objc private func screenParametersChanged(notification: Notification) {
     Task(priority: .background) {
       await getDisplayInfo()
     }
   }
-  
-  @objc private func newApplicationLaunched(notification: Notification){
-    Task(priority: .background){
+
+  @objc private func newApplicationLaunched(notification: Notification) {
+    Task(priority: .background) {
       await getDisplayInfo()
     }
   }
-  
-  @objc private func applicationClosed(notification: Notification){
-    Task(priority: .background){
+
+  @objc private func applicationClosed(notification: Notification) {
+    Task(priority: .background) {
       await getDisplayInfo()
     }
   }
-    
+
   /// Starts a timer which refreshes connected devices
-  func startRefreshingDevices(){
+  func startRefreshingDevices() {
     timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
     guard let timer = timer else { return }
-    
+
     timer.schedule(deadline: .now(), repeating: .seconds(30))
     timer.setEventHandler { [weak self] in
       self?.getCameras()
-      
+
       if self != nil {
-        Task(priority: .background){ [weak self] in
+        Task(priority: .background) { [weak self] in
           await self?.getDisplayInfo()
         }
       }
@@ -120,7 +133,7 @@ class RecorderViewModel: ObservableObject {
       position: .unspecified)
 
     DispatchQueue.main.async {
-        self.cameras = self.convertCameras(camera: discovery.devices)
+      self.cameras = self.convertCameras(camera: discovery.devices)
     }
   }
 
@@ -209,6 +222,8 @@ class RecorderViewModel: ObservableObject {
 
   /// Saves the ``cameras`` and ``screens``
   func saveRecordings() {
+    self.state = .stopped
+
     self.cameras.indices
       .forEach { index in
         cameras[index].saveRecording()
@@ -218,13 +233,13 @@ class RecorderViewModel: ObservableObject {
       .forEach { index in
         screens[index].saveRecording()
       }
-      
-      // Logs a recording being saved
-      reviewManager.logCompletedRecordings()
+
+    // Logs a recording being saved
+    reviewManager.logCompletedRecordings()
   }
 
   // MARK: Toggles
-    
+
   /// Inverts the ``Screen`` and sends an update to the user interface
   func toggleScreen(screen: Screen) {
     screen.enabled.toggle()
@@ -262,29 +277,29 @@ class RecorderViewModel: ObservableObject {
   /// Flips the enabled and disabled app in ``apps``
   func invertApplications() {
     var localBundleIDs = enabledBundleIdentifiers
-    
+
     for appName in self.apps.keys {
       let enabled = !self.apps[appName]!
 
       self.apps[appName] = enabled
       localBundleIDs[appName.bundleIdentifier] = enabled
     }
-    
+
     enabledBundleIdentifiers = localBundleIDs
   }
 
   /// Resets ``apps`` by setting each `value` to `true`
   func resetApps() {
     var localBundleIDs = enabledBundleIdentifiers
-    
+
     for appName in self.apps.keys {
       // enabled by default
       self.apps[appName]! = true
       localBundleIDs[appName.bundleIdentifier] = true
     }
-    
+
     enabledBundleIdentifiers = localBundleIDs
-    
+
     /// Refreshing apps by default
     refreshApps()
   }
@@ -301,7 +316,7 @@ class RecorderViewModel: ObservableObject {
   /// Generates an dictionary with `SCRunningApplication` keys and `Bool` value
   private func convertApps(apps input: [SCRunningApplication]) -> [SCRunningApplication: Bool] {
     let enabledBundleIdentifiers = enabledBundleIdentifiers
-    
+
     let returnApps =
       input
       .filter { app in
@@ -325,10 +340,10 @@ class RecorderViewModel: ObservableObject {
         }
       }
       .map(getScreenRecorder)
-    
+
     // setting displays enabled based on stored app state
     let enabledDisplays = enabledScreens
-    
+
     for display in newScreens {
       display.enabled = enabledDisplays[String(display.screen.displayID)] ?? display.enabled
     }
@@ -342,7 +357,7 @@ class RecorderViewModel: ObservableObject {
       .sorted { (first, second) in
         first.screen.displayID < second.screen.displayID
       }
-    
+
     // Enabling the first screen
     if self.screens.isEmpty, !newScreens.isEmpty {
       newScreens.first!.enabled = true
@@ -360,10 +375,10 @@ class RecorderViewModel: ObservableObject {
           recorder.inputDevice == camera
         }
       }.map(getCameraRecorder)
-    
+
     // setting cameras enabled based on stored app state
     let enabledCameras = enabledCameras
-    
+
     for camera in newCameras {
       camera.enabled = enabledCameras[camera.inputDevice.uniqueID] ?? camera.enabled
     }
@@ -371,7 +386,7 @@ class RecorderViewModel: ObservableObject {
     for camera in self.cameras {
       newCameras.append(camera)
     }
-    
+
     // Applying some consistent sorting order
     newCameras =
       newCameras
@@ -381,19 +396,20 @@ class RecorderViewModel: ObservableObject {
 
     return newCameras
   }
-  
+
   // MARK: Persistence
-    
+
   /// Enabled bundle identifiers work like a normal dictionary
   private var enabledBundleIdentifiers: [String: Bool] {
-      get {
-          return UserDefaults.standard.object(forKey: "enabledBundleIdentifiers") as? [String: Bool] ?? [:]
-      }
-      set {
-          UserDefaults.standard.set(newValue, forKey: "enabledBundleIdentifiers")
-      }
+    get {
+      return UserDefaults.standard.object(forKey: "enabledBundleIdentifiers") as? [String: Bool]
+        ?? [:]
+    }
+    set {
+      UserDefaults.standard.set(newValue, forKey: "enabledBundleIdentifiers")
+    }
   }
-  
+
   /// Cameras being enabled or disabled
   ///
   /// Uses the ``AVFoundation.AVCaptureDevice.uniqueID`` property to enable or disable cameras
@@ -405,10 +421,10 @@ class RecorderViewModel: ObservableObject {
       return UserDefaults.standard.set(newValue, forKey: "enabledCameras")
     }
   }
-  
+
   /// Screens being recorded
   ///
-  /// Uses the ``SCDisplay.displayID`` which is a 
+  /// Uses the ``SCDisplay.displayID`` which is a
   private var enabledScreens: [String: Bool] {
     get {
       return UserDefaults.standard.object(forKey: "enabledScreens") as? [String: Bool] ?? [:]

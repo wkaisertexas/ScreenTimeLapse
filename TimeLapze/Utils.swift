@@ -35,7 +35,7 @@ enum QualitySettings: String, Codable, CaseIterable {
   case low
   case medium
   case high
-  
+
   var description: LocalizedStringResource {
     switch self {
     case .low:
@@ -58,14 +58,14 @@ extension SCRunningApplication: @retroactive Comparable {
 
 /// Gets the App Version as a ``String``
 extension Bundle {
-    /// Fetches the current bundle version of the app.
-    static var currentAppVersion: String? {
-        #if os(macOS)
-        let infoDictionaryKey = "CFBundleShortVersionString"
-        #else
-        let infoDictionaryKey = "CFBundleVersion"
-        #endif
-        
-        return Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String
-    }
+  /// Fetches the current bundle version of the app.
+  static var currentAppVersion: String? {
+    #if os(macOS)
+      let infoDictionaryKey = "CFBundleShortVersionString"
+    #else
+      let infoDictionaryKey = "CFBundleVersion"
+    #endif
+
+    return Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String
+  }
 }

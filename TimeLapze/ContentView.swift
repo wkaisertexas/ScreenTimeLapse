@@ -1,8 +1,8 @@
 import AVFoundation
 import CoreData
 import ScreenCaptureKit
-import SwiftUI
 import SettingsAccess
+import SwiftUI
 
 /// Main menu-bar view of the application
 struct ContentView: View {
@@ -118,7 +118,7 @@ struct InputDevices: View {
     }) {
       Image(systemName: "clear")
 
-      Text("Enable All") // Calling it enable all instead of reset makes things a bit more clear
+      Text("Enable All")  // Calling it enable all instead of reset makes things a bit more clear
     }
 
     // Whether to show or hide the user's cursor
@@ -198,14 +198,14 @@ struct Info: View {
       SettingsLink()
         .keyboardShortcut(",")
     } else {
-        // SettingsLink from the orchetect/SettingsAccess package
-        SettingsLink {
-            Text("Settings..")
-        } preAction: {
-            // nothing for now
-        } postAction: {
-           // nothing for now
-        }.keyboardShortcut(",")
+      // SettingsLink from the orchetect/SettingsAccess package
+      SettingsLink {
+        Text("Settings..")
+      } preAction: {
+        // nothing for now
+      } postAction: {
+        // nothing for now
+      }.keyboardShortcut(",")
     }
     Divider()
 

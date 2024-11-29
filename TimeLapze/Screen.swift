@@ -1,7 +1,7 @@
 import AVFoundation
+import Cocoa
 import ScreenCaptureKit
 import SwiftUI
-import Cocoa
 
 let workspace = NSWorkspace.shared
 
@@ -30,18 +30,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
   var lastAppendedFrame: CMTime = .zero
   var tmpFrameBuffer: CMSampleBuffer?
-  
-  var height : Int?
-  var width : Int?
+
+  var height: Int?
+  var width: Int?
 
   override var description: String {
     if height == nil || width == nil {
       let pixelRatio = getPixelRatio(for: screen.displayID) ?? 1.0
-      
+
       self.width = Int(CGFloat(screen.width) * pixelRatio)
       self.height = Int(CGFloat(screen.height) * pixelRatio)
     }
-    
+
     return "[\(width ?? 0) x \(height ?? 0)] - Display \(screen.displayID)"
   }
 
@@ -122,11 +122,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     Task(priority: .userInitiated) {
       do {
         try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
-        
+
         (self.writer, self.input) = try setupWriter(screen: screen, path: path)
 
         try await stream!.startCapture()
-          
+
         logger.debug("Setup stream")
       } catch {
         logger.error("Failed to setup stream")
@@ -154,7 +154,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     let pixelRatio = getPixelRatio(for: screen.displayID) ?? 1.0
     let width = Int(CGFloat(screen.width) * pixelRatio)
     let height = Int(CGFloat(screen.height) * pixelRatio)
-    
+
     settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(
       videoCodecType: .hevc, width: width, height: height)
 
@@ -162,12 +162,12 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     settings[AVVideoWidthKey] = width
     settings[AVVideoHeightKey] = height
     settings[AVVideoColorPropertiesKey] = config.colorProperties
-    
+
     // more entropy in the video -> the higher the bitrate
     if var compressionProperties = settings[AVVideoCompressionPropertiesKey] as? [String: Any] {
-        compressionProperties.removeValue(forKey: AVVideoAverageBitRateKey)
-        compressionProperties[AVVideoQualityKey] = baseConfig.quality
-        settings[AVVideoCompressionPropertiesKey] = compressionProperties
+      compressionProperties.removeValue(forKey: AVVideoAverageBitRateKey)
+      compressionProperties[AVVideoQualityKey] = baseConfig.quality
+      settings[AVVideoCompressionPropertiesKey] = compressionProperties
     }
 
     // Gets a valid file type, but replaces it if in preferences
@@ -200,7 +200,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       excludingApplications: excluding,
       exceptingWindows: []
     )
-    
+
     let pixelPointScale = Int(contentFilter.pointPixelScale)
 
     let config = SCStreamConfiguration()
@@ -331,14 +331,19 @@ class StreamDelegate: NSObject, SCStreamDelegate {
 /// This is important because while Apple displays use a pixel ratio of 2.0, this may not be the case for
 /// external monitors
 func getPixelRatio(for displayID: CGDirectDisplayID) -> CGFloat? {
-    guard let screens = NSScreen.screens.first(where: {
-        guard let screenID = $0.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID else {
-            return false
-        }
-        return screenID == displayID
-    }) else {
-        return nil
-    }
-    
-    return screens.backingScaleFactor
+  guard
+    let screens = NSScreen.screens.first(where: {
+      guard
+        let screenID = $0.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")]
+          as? CGDirectDisplayID
+      else {
+        return false
+      }
+      return screenID == displayID
+    })
+  else {
+    return nil
+  }
+
+  return screens.backingScaleFactor
 }
