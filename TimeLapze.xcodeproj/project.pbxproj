@@ -21,6 +21,7 @@
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
 		3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */; };
+		3E8497A52CFCF8F7003CFA6E /* ReviewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
@@ -69,6 +70,7 @@
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManagerTests.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		3E23A01C2B2FC65A0016DE8C /* TimeLapzeTests */ = {
 			isa = PBXGroup;
 			children = (
+				3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */,
 				3E7461032CEFC08B00F8511D /* RecorderViewModelTests.swift */,
 				3E23A01D2B2FC65A0016DE8C /* TimeLapzeTests.swift */,
 			);
@@ -326,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E8497A52CFCF8F7003CFA6E /* ReviewManagerTests.swift in Sources */,
 				3E7461042CEFC09400F8511D /* RecorderViewModelTests.swift in Sources */,
 				3E23A01E2B2FC65A0016DE8C /* TimeLapzeTests.swift in Sources */,
 			);

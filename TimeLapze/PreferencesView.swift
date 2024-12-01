@@ -65,7 +65,7 @@ struct PreferencesView: View {
       Spacer()
 
       Button("Write Review") {
-        reviewManager.getReview()
+        ReviewManager.shared.getReview()
       }.buttonStyle(.borderedProminent)
     }
   }

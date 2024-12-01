@@ -225,7 +225,7 @@ class RecorderViewModel: ObservableObject {
     }
 
     // Logs a recording being saved
-    reviewManager.logCompletedRecordings()
+    ReviewManager.shared.logCompletedRecordings()
   }
 
   // MARK: Toggles

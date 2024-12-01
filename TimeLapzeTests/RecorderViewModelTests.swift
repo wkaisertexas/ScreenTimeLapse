@@ -1,16 +1,24 @@
 import AVFoundation
 import XCTest
+import ScreenCaptureKit
 
 @testable import TimeLapze
 
+/// Testing the ``RecorderViewModel``
 final class RecorderViewModelTests: XCTestCase {
-
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+  // If a device is connected, then cameras should empty
+  func testDeviceConnectedNotification() throws {
+      let viewModel = RecorderViewModel()
+      let expectation = XCTestExpectation(description: "Device connected should refresh camera list.")
+      
+      NotificationCenter.default.post(name: .AVCaptureDeviceWasConnected, object: nil)
+      
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+          XCTAssertFalse(viewModel.cameras.isEmpty, "Cameras should not be empty after device connection notification.")
+          expectation.fulfill()
+      }
+      
+      wait(for: [expectation], timeout: 1)
   }
 
   /// Tests to make sure the view model transitions are logical
@@ -60,5 +68,4 @@ final class RecorderViewModelTests: XCTestCase {
 
     XCTAssertFalse(nonTemporaryURL.isInTemporaryFolder())
   }
-
 }
