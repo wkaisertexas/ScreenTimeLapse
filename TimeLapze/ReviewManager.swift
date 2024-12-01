@@ -6,21 +6,20 @@ import SwiftUI
 /// A logging singleton to log whenever reviews complete. Called by the ``RecorderViewModel``
 class ReviewManager {
   static let shared = ReviewManager()
-  
+
   @Environment(\.requestReview) private var requestReview
 
-  
   @AppStorage("lastBundleAsked") private var lastBundleAsked: String = ""
-  
+
   /// Videos saved by the user
   @AppStorage("timesVideoSaved") private var timesSaved: Int = 0
-  
+
   /// Initial video ask threshold
   let initialReviewThreshold: Int = 5
-  
+
   /// Second video ask threshold only when the bundle ID changes
   let followUpReviewThreshold: Int = 10
-  
+
   /// Sleep time after a recording finishes to ask
   let reviewWait = 3.0
 
@@ -56,7 +55,7 @@ class ReviewManager {
       return true
     }
   }
-  
+
   func getCurrentAppVersion() -> String? {
     Bundle.currentAppVersion
   }
