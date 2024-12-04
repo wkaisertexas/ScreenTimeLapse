@@ -54,7 +54,7 @@ class Camera: NSObject, Recordable {
   ) {
     let url = getFileDestination(path: path)
 
-    let videoSettings = VideoSettings.hevc_displayP3
+    let videoSettings = VideoSettings.hevcDisplayP3
 
     let settingsAssistant = AVOutputSettingsAssistant(preset: videoSettings.preset)!
     var settings = settingsAssistant.videoSettings!

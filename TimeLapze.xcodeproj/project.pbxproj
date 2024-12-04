@@ -13,17 +13,20 @@
 		3E4D87C929AD744C00D3EC7B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4D87C829AD744C00D3EC7B /* Camera.swift */; };
 		3E5130E02BA34FE500A628EB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5130DF2BA34FE500A628EB /* OnboardingView.swift */; };
 		3E61935B2A2EC12200333918 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61935A2A2EC12200333918 /* VideoConfiguration.swift */; };
+		3E650BE52CEFC5F500AE9F6C /* TimeLapzeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E650BE42CEFC5F500AE9F6C /* TimeLapzeUITests.swift */; };
+		3E650BE72CEFC5F500AE9F6C /* TimeLapzeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E650BE62CEFC5F500AE9F6C /* TimeLapzeUITestsLaunchTests.swift */; };
+		3E7461022CEE8A9700F8511D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */; };
+		3E7461042CEFC09400F8511D /* RecorderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7461032CEFC08B00F8511D /* RecorderViewModelTests.swift */; };
 		3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */; };
-		3E75E34E2AF17A870016EB52 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3E75E34D2AF17A870016EB52 /* LICENSE */; };
 		3E75E3502AF2005A0016EB52 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */; };
 		3E8144662BAFC8F300F3E90F /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */; };
 		3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */; };
+		3E8497A52CFCF8F7003CFA6E /* ReviewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */; };
 		3E87A932299EBDFF00714AFC /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */; };
 		3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87A933299EBE0D00714AFC /* Recordable.swift */; };
 		3E9894D12A2ED44600C25059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9894D02A2ED44600C25059 /* Logger.swift */; };
 		3EA255A62BADF2B70018FF63 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA255A52BADF2B70018FF63 /* SettingsAccess */; };
 		3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */; };
-		3EC6507D2C61E292004FA3B2 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */; };
 		3EE5FE0D296232C700768BF7 /* TimeLapzeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */; };
 		3EE5FE0F296232C700768BF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE5FE0E296232C700768BF7 /* ContentView.swift */; };
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
@@ -33,6 +36,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		3E23A01F2B2FC65A0016DE8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EE5FE01296232C700768BF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EE5FE08296232C700768BF7;
+			remoteInfo = TimeLapze;
+		};
+		3E650BE82CEFC5F500AE9F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3EE5FE01296232C700768BF7 /* Project object */;
 			proxyType = 1;
@@ -51,17 +61,20 @@
 		3E5130DF2BA34FE500A628EB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3E571FDF29AF248500AD153D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E61935A2A2EC12200333918 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
+		3E650BE22CEFC5F500AE9F6C /* TimeLapzeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLapzeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E650BE42CEFC5F500AE9F6C /* TimeLapzeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeUITests.swift; sourceTree = "<group>"; };
+		3E650BE62CEFC5F500AE9F6C /* TimeLapzeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		3E7461032CEFC08B00F8511D /* RecorderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModelTests.swift; sourceTree = "<group>"; };
 		3E75E34B2AED6EC90016EB52 /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
-		3E75E34D2AF17A870016EB52 /* LICENSE */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = LICENSE; sourceTree = "<group>"; };
 		3E75E34F2AF2005A0016EB52 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManagerTests.swift; sourceTree = "<group>"; };
 		3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		3E87A933299EBE0D00714AFC /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 		3E9894D02A2ED44600C25059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3EAB1AFC2BA8A33300BEC597 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		3EC6507A2C61D8DA004FA3B2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
-		3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		3EE5FE09296232C700768BF7 /* TimeLapze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLapze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EE5FE0C296232C700768BF7 /* TimeLapzeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLapzeApp.swift; sourceTree = "<group>"; };
 		3EE5FE0E296232C700768BF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +86,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		3E23A0182B2FC65A0016DE8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E650BDF2CEFC5F500AE9F6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -93,23 +113,26 @@
 		3E23A01C2B2FC65A0016DE8C /* TimeLapzeTests */ = {
 			isa = PBXGroup;
 			children = (
+				3E8497A42CFCF8E9003CFA6E /* ReviewManagerTests.swift */,
+				3E7461032CEFC08B00F8511D /* RecorderViewModelTests.swift */,
 				3E23A01D2B2FC65A0016DE8C /* TimeLapzeTests.swift */,
 			);
 			path = TimeLapzeTests;
 			sourceTree = "<group>";
 		};
-		3EA0DF982AF9DD9E001D409B /* LICENSE */ = {
+		3E650BDD2CEFC5A800AE9F6C /* TimeLapzeUITests */ = {
 			isa = PBXGroup;
 			children = (
-				3E75E34D2AF17A870016EB52 /* LICENSE */,
+				3E650BE42CEFC5F500AE9F6C /* TimeLapzeUITests.swift */,
+				3E650BE62CEFC5F500AE9F6C /* TimeLapzeUITestsLaunchTests.swift */,
 			);
-			path = LICENSE;
+			path = TimeLapzeUITests;
 			sourceTree = "<group>";
 		};
 		3EE5FE00296232C700768BF7 = {
 			isa = PBXGroup;
 			children = (
-				3EA0DF982AF9DD9E001D409B /* LICENSE */,
+				3E650BDD2CEFC5A800AE9F6C /* TimeLapzeUITests */,
 				3E571FDF29AF248500AD153D /* README.md */,
 				3EE5FE0B296232C700768BF7 /* TimeLapze */,
 				3E23A01C2B2FC65A0016DE8C /* TimeLapzeTests */,
@@ -122,6 +145,7 @@
 			children = (
 				3EE5FE09296232C700768BF7 /* TimeLapze.app */,
 				3E23A01B2B2FC65A0016DE8C /* TimeLapzeTests.xctest */,
+				3E650BE22CEFC5F500AE9F6C /* TimeLapzeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,8 +173,7 @@
 				3E0DCD732BAB2A5800DB969A /* ReviewManager.swift */,
 				3E8144652BAFC8F300F3E90F /* PreferencesViewModel.swift */,
 				3E8144672BAFD77C00F3E90F /* Localizable.xcstrings */,
-				3EC6507A2C61D8DA004FA3B2 /* InfoPlist.xcstrings */,
-				3EC6507C2C61E292004FA3B2 /* InfoPlist.xcstrings */,
+				3E7461012CEE8A9700F8511D /* InfoPlist.xcstrings */,
 			);
 			path = TimeLapze;
 			sourceTree = "<group>";
@@ -186,6 +209,26 @@
 			productReference = 3E23A01B2B2FC65A0016DE8C /* TimeLapzeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		3E650BE12CEFC5F500AE9F6C /* TimeLapzeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E650BEA2CEFC5F500AE9F6C /* Build configuration list for PBXNativeTarget "TimeLapzeUITests" */;
+			buildPhases = (
+				3E650BDE2CEFC5F500AE9F6C /* Sources */,
+				3E650BDF2CEFC5F500AE9F6C /* Frameworks */,
+				3E650BE02CEFC5F500AE9F6C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E650BE92CEFC5F500AE9F6C /* PBXTargetDependency */,
+			);
+			name = TimeLapzeUITests;
+			packageProductDependencies = (
+			);
+			productName = TimeLapzeUITests;
+			productReference = 3E650BE22CEFC5F500AE9F6C /* TimeLapzeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		3EE5FE08296232C700768BF7 /* TimeLapze */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EE5FE33296232C800768BF7 /* Build configuration list for PBXNativeTarget "TimeLapze" */;
@@ -213,11 +256,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					3E23A01A2B2FC65A0016DE8C = {
 						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 3EE5FE08296232C700768BF7;
+					};
+					3E650BE12CEFC5F500AE9F6C = {
+						CreatedOnToolsVersion = 16.1;
 						TestTargetID = 3EE5FE08296232C700768BF7;
 					};
 					3EE5FE08296232C700768BF7 = {
@@ -244,6 +291,7 @@
 			targets = (
 				3EE5FE08296232C700768BF7 /* TimeLapze */,
 				3E23A01A2B2FC65A0016DE8C /* TimeLapzeTests */,
+				3E650BE12CEFC5F500AE9F6C /* TimeLapzeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -256,15 +304,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3E650BE02CEFC5F500AE9F6C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EE5FE07296232C700768BF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EC6507D2C61E292004FA3B2 /* InfoPlist.xcstrings in Resources */,
 				3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */,
-				3EC6507B2C61D8DA004FA3B2 /* InfoPlist.xcstrings in Resources */,
-				3E75E34E2AF17A870016EB52 /* LICENSE in Resources */,
 				3E8144682BAFD77C00F3E90F /* Localizable.xcstrings in Resources */,
+				3E7461022CEE8A9700F8511D /* InfoPlist.xcstrings in Resources */,
 				3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +329,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E8497A52CFCF8F7003CFA6E /* ReviewManagerTests.swift in Sources */,
+				3E7461042CEFC09400F8511D /* RecorderViewModelTests.swift in Sources */,
 				3E23A01E2B2FC65A0016DE8C /* TimeLapzeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E650BDE2CEFC5F500AE9F6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E650BE72CEFC5F500AE9F6C /* TimeLapzeUITestsLaunchTests.swift in Sources */,
+				3E650BE52CEFC5F500AE9F6C /* TimeLapzeUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +373,11 @@
 			isa = PBXTargetDependency;
 			target = 3EE5FE08296232C700768BF7 /* TimeLapze */;
 			targetProxy = 3E23A01F2B2FC65A0016DE8C /* PBXContainerItemProxy */;
+		};
+		3E650BE92CEFC5F500AE9F6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EE5FE08296232C700768BF7 /* TimeLapze */;
+			targetProxy = 3E650BE82CEFC5F500AE9F6C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -353,6 +422,47 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeLapze.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeLapze";
+			};
+			name = Release;
+		};
+		3E650BEB2CEFC5F500AE9F6C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PPA4LZZXUN;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapzeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = TimeLapze;
+			};
+			name = Debug;
+		};
+		3E650BEC2CEFC5F500AE9F6C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PPA4LZZXUN;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapzeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = TimeLapze;
 			};
 			name = Release;
 		};
@@ -416,6 +526,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TESTING = "";
 			};
@@ -473,6 +584,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TESTING = "";
 			};
@@ -505,7 +617,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -543,7 +655,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartservices.TimeLapze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -561,6 +673,15 @@
 			buildConfigurations = (
 				3E23A0222B2FC65A0016DE8C /* Debug */,
 				3E23A0232B2FC65A0016DE8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E650BEA2CEFC5F500AE9F6C /* Build configuration list for PBXNativeTarget "TimeLapzeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E650BEB2CEFC5F500AE9F6C /* Debug */,
+				3E650BEC2CEFC5F500AE9F6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

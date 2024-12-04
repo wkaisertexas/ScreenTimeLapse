@@ -1,9 +1,10 @@
 import AVFoundation
 import CoreData
 import ScreenCaptureKit
-import SwiftUI
 import SettingsAccess
+import SwiftUI
 
+/// Main menu-bar view of the application
 struct ContentView: View {
   @EnvironmentObject private var viewModel: RecorderViewModel
 
@@ -103,31 +104,37 @@ struct InputDevices: View {
   @ViewBuilder
   func actionsMenu() -> some View {
     // Inverts enabled and disabled applications
-    Button(action: {
-      self.viewModel.invertApplications()
-    }) {
-      Image(systemName: "rectangle.2.swap")
+    Button(
+      action: {
+        self.viewModel.invertApplications()
+      },
+      label: {
+        Image(systemName: "rectangle.2.swap")
 
-      Text("Invert")
-    }
+        Text("Invert")
+      })
 
     // Makes all applications enabled
-    Button(action: {
-      self.viewModel.resetApps()
-    }) {
-      Image(systemName: "clear")
+    Button(
+      action: {
+        self.viewModel.resetApps()
+      },
+      label: {
+        Image(systemName: "clear")
 
-      Text("Reset")
-    }
+        Text("Enable All")  // Calling it enable all instead of reset makes things a bit more clear
+      })
 
     // Whether to show or hide the user's cursor
-    Button(action: {
-      viewModel.showCursor.toggle()
-      viewModel.objectWillChange.send()
-    }) {
-      Image(systemName: viewModel.showCursor ? "cursorarrow.rays" : "cursorarrow")
-      Text(viewModel.showCursor ? "Hide Cursor" : "Show Cursor")
-    }
+    Button(
+      action: {
+        viewModel.showCursor.toggle()
+        viewModel.objectWillChange.send()
+      },
+      label: {
+        Image(systemName: viewModel.showCursor ? "cursorarrow.rays" : "cursorarrow")
+        Text(viewModel.showCursor ? "Hide Cursor" : "Show Cursor")
+      })
   }
 
   /// Renders all available `Screen` objects as an interactable list
@@ -151,22 +158,27 @@ struct InputDevices: View {
   // MARK: Components
   /// Renders a single `Screen` as a button with either an enabled or disabled checkmark
   func screen(_ screen: Screen) -> some View {
-    Button(action: { viewModel.toggleScreen(screen: screen) }) {
-      screen.enabled ? Image(systemName: "checkmark") : nil
 
-      Text(screen.description)
-    }
+    Button(
+      action: { viewModel.toggleScreen(screen: screen) },
+      label: {
+        screen.enabled ? Image(systemName: "checkmark") : nil
+
+        Text(screen.description)
+      })
   }
 
   /// Renders a single `Camera` as a button with either an enabled or disabled checkmark
   func camera(_ camera: Camera) -> some View {
-    Button(action: {
-      viewModel.toggleCameras(camera: camera)
-    }) {
-      camera.enabled ? Image(systemName: "checkmark") : nil
+    Button(
+      action: {
+        viewModel.toggleCamera(camera: camera)
+      },
+      label: {
+        camera.enabled ? Image(systemName: "checkmark") : nil
 
-      Text(camera.description)
-    }
+        Text(camera.description)
+      })
   }
 
   /// Renders  single `SCRunningApplication` as either enabled or disabled
@@ -177,18 +189,20 @@ struct InputDevices: View {
     if let runningApp = NSRunningApplication(processIdentifier: app.processID),
       runningApp.activationPolicy == .regular, let appIcon = runningApp.icon
     {
-      Button(action: {
-        viewModel.toggleApp(app: app)
-      }) {
-        Image(nsImage: appIcon)
-        Text(app.applicationName)
-      }
+      Button(
+        action: {
+          viewModel.toggleApp(app: app)
+        },
+        label: {
+          Image(nsImage: appIcon)
+          Text(app.applicationName)
+        })
     }
   }
 }
 
 /// Random `Info` about the project
-///  (About page, Help page, Quit Button)
+/// (Settings and Quit Button)
 struct Info: View {
   @Environment(\.openURL) var openURL
 
@@ -197,20 +211,15 @@ struct Info: View {
       SettingsLink()
         .keyboardShortcut(",")
     } else {
-        // SettingsLink from the orchetect/SettingsAccess package
-        SettingsLink {
-            Text("Settings..")
-        } preAction: {
-            // nothing for now
-        } postAction: {
-           // nothing for now
-        }.keyboardShortcut(",")
+      // SettingsLink from the orchetect/SettingsAccess package
+      SettingsLink {
+        Text("Settings..")
+      } preAction: {
+        // nothing for now
+      } postAction: {
+        // nothing for now
+      }.keyboardShortcut(",")
     }
-    Divider()
-
-    Link("About", destination: baseConfig.ABOUT)
-    Link("Help", destination: baseConfig.HELP)
-
     Divider()
 
     Button("Quit") {

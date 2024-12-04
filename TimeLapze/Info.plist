@@ -11,7 +11,7 @@
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Save recordings to Downloads</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Recording a timelapse of selected camera</string>
+	<string>Used to record a timelapse of the selected camera</string>
 	<key>CFBundleURLTypes</key>
 	<array/>
 </dict>

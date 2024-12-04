@@ -7,241 +7,241 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إسم العرض لحزمة التطبيق"
+            "value" : "تايم لابز"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nom de visualització del paquet"
+            "value" : "TimeLapze"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zobrazovaný název balíčku"
+            "value" : "Časosběr"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle visningsnavn"
+            "value" : "Tidsforløb"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anzeigename des Bundles"
+            "value" : "Zeitraffer"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Όνομα εμφάνισης πακέτου"
+            "value" : "Χρονοδιάγραμμα"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle Display Name"
+            "value" : "TimeLapze"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle Display Name"
+            "value" : "TimeLapze"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle Display Name"
+            "value" : "TimeLapze"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle Display Name"
+            "value" : "TimeLapze"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bundle Display Name"
+            "value" : "TimeLapze"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nombre de visualización del paquete"
+            "value" : "TimeLapze"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nombre de visualización del paquete"
+            "value" : "TimeLapze"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pakettinimi"
+            "value" : "Aikajänne"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nom d’affichage du paquet"
+            "value" : "TimeLapze"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nom d’affichage du paquet"
+            "value" : "TimeLapze"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שם תצוגה של החבילה"
+            "value" : "זמן חלופי"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "बंडल प्रदर्शन नाम"
+            "value" : "समय लैप्स"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prikaz imena paketa"
+            "value" : "Vremenski raspon"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Csomag megjelenítési név"
+            "value" : "Időtartam"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nama Tampilan Bundle"
+            "value" : "WaktuLapze"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nome visualizzato del pacchetto"
+            "value" : "TimeLapze"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "バンドル表示名"
+            "value" : "タイムラプス"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "번들 표시 이름"
+            "value" : "타임랩스"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nama Paparan Bundle"
+            "value" : "MasaLapze"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visningsnavn for pakkebunt"
+            "value" : "Tidsløp"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Weergavenaam pakket"
+            "value" : "TijdVerloop"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wyświetlana nazwa pakietu"
+            "value" : "Czasoprzestrzeń"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nome de Exibição do Pacote"
+            "value" : "TimeLapze"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nome de Exibição do Pacote"
+            "value" : "TimeLapze"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nume afișat pachet"
+            "value" : "Interval de timp"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отображаемое имя пакета"
+            "value" : "Таймлапс"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zobrazený názov balíčka"
+            "value" : "Časosběr"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paketvisningsnamn"
+            "value" : "Tidsförlopp"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ชื่อที่แสดงของชุดรวม"
+            "value" : "ไทม์แลปส์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paket Görünen Adı"
+            "value" : "Zaman Atlayışı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відображуване ім'я пакета"
+            "value" : "Таймлапс"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tên Hiển Thị Gói"
+            "value" : "Thời gian chuyển đổi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捆绑包显示名称"
+            "value" : "时间流逝"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捆綁包顯示名稱"
+            "value" : "時間流逝"
           }
         }
       }
@@ -252,241 +252,241 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "تايم لابز"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Časosběr"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Zeitraffer"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Χρονολάψη"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Aikajana"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "זמן חלופי"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "समय लैप्स"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Vremenski raspon"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Időugrás"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "タイムラプス"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "타임랩스"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Tidsforløp"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TijdVerloop"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Таймлапс"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Časosběr"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "TimeLapze"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "ไทม์แลปส์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Zaman Atlayışı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Таймлапс"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "Thời gian chuyển đổi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "时间推移"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CFBundleName"
+            "value" : "時間推移"
           }
         }
       }
@@ -497,241 +497,241 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "وصف استخدام الكاميرا"
+            "value" : "يستخدم لتسجيل التسريع الزمني للكاميرا المحددة"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripció de l'ús de la càmera"
+            "value" : "S'utilitza per enregistrar un timelapse de la càmera seleccionada"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Popis použití kamery"
+            "value" : "Používá se k nahrávání časosběrného záznamu vybrané kamery"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse af kameraanvendelse"
+            "value" : "Bruges til at optage en timelapse af det valgte kamera"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschreibung der Kameranutzung"
+            "value" : "Wird verwendet, um eine Zeitrafferaufnahme der ausgewählten Kamera aufzuzeichnen"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Περιγραφή χρήσης κάμερας"
+            "value" : "Χρησιμοποιείται για την καταγραφή ενός timelapse της επιλεγμένης κάμερας"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Camera Usage Description"
+            "value" : "Used to record a timelapse of the selected camera"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Camera Usage Description"
+            "value" : "Used to record a timelapse of the selected camera"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Camera Usage Description"
+            "value" : "Used to record a timelapse of the selected camera"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Camera Usage Description"
+            "value" : "Used to record a timelapse of the selected camera"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Camera Usage Description"
+            "value" : "Used to record a timelapse of the selected camera"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la cámara"
+            "value" : "Se utiliza para grabar un timelapse de la cámara seleccionada"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la cámara"
+            "value" : "Se utiliza para grabar un timelapse de la cámara seleccionada"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kameran käytön kuvaus"
+            "value" : "Käytetään valitun kameran aikajänteisen tallennuksen tallentamiseen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation de l'appareil photo"
+            "value" : "Utilisé pour enregistrer un timelapse de la caméra sélectionnée"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation de la caméra"
+            "value" : "Utilisé pour enregistrer un timelapse de la caméra sélectionnée"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "תיאור השימוש במצלמה"
+            "value" : "משמש להקלטת טיים-לאפס של המצלמה הנבחרת"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "कैमरा उपयोग विवरण"
+            "value" : "चयनित कैमरा का टाइमलैप्स रिकॉर्ड करने के लिए उपयोग किया जाता है"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis korištenja kamere"
+            "value" : "Koristi se za snimanje vremenskog ubrzanja odabrane kamere"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamera használatának leírása"
+            "value" : "A kiválasztott kamera időtartamának rögzítésére szolgál"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deskripsi Penggunaan Kamera"
+            "value" : "Digunakan untuk merekam timelapse dari kamera yang dipilih"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrizione dell'uso della fotocamera"
+            "value" : "Usato per registrare un timelapse della fotocamera selezionata"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "カメラ使用説明"
+            "value" : "選択したカメラのタイムラプスを記録するために使用されます"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "카메라 사용 설명"
+            "value" : "선택한 카메라의 타임랩스를 기록하는 데 사용됩니다"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penerangan Penggunaan Kamera"
+            "value" : "Digunakan untuk merakam timelapse kamera yang dipilih"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse av kameraportefølje"
+            "value" : "Brukes til å registrere en tidslinje for det valgte kameraet"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschrijving van cameragebruik"
+            "value" : "Wordt gebruikt om een timelapse van de geselecteerde camera op te nemen"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis użycia kamery"
+            "value" : "Służy do nagrywania przyspieszenia czasu wybranej kamery"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição do uso da câmera"
+            "value" : "Usado para gravar um timelapse da câmera selecionada"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição do uso da câmera"
+            "value" : "Usado para gravar um timelapse da câmera selecionada"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrierea utilizării camerei"
+            "value" : "Folosit pentru a înregistra un timelapse al camerei selectate"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Описание использования камеры"
+            "value" : "Используется для записи таймлапса с выбранной камеры"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Popis používania kamery"
+            "value" : "Používa sa na nahrávanie časosběrného záznamu z vybranej kamery"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivning av kameranvändning"
+            "value" : "Används för att spela in en tidslaps av den valda kameran"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คำอธิบายการใช้กล้อง"
+            "value" : "ใช้สำหรับการบันทึก timelapse ของกล้องที่เลือก"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamera Kullanım Açıklaması"
+            "value" : "Seçilen kameranın zaman atlamalı kaydını yapmak için kullanılır"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опис використання камери"
+            "value" : "Використовується для запису таймлапсу з обраної камери"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mô tả việc sử dụng camera"
+            "value" : "Được sử dụng để ghi lại timelapse của máy ảnh đã chọn"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "相机使用说明"
+            "value" : "用于记录所选摄像头的延时摄影"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "相機使用說明"
+            "value" : "用於記錄所選攝像頭的延時攝影"
           }
         }
       }
@@ -742,241 +742,241 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "وصف استخدام مجلد سطح المكتب"
+            "value" : "حفظ التسجيلات على سطح المكتب"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripció de l'ús de la carpeta d'escriptori"
+            "value" : "Desa les gravacions a l'escriptori"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Popis použití složky Plocha"
+            "value" : "Uložit nahrávky na plochu"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse af brug af skrivebordsmappe"
+            "value" : "Gem optagelser til skrivebordet"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschreibung der Verwendung des Desktopordners"
+            "value" : "Aufnahmen auf dem Desktop speichern"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Περιγραφή χρήσης φακέλου επιφάνειας εργασίας"
+            "value" : "Αποθήκευση εγγραφών στην επιφάνεια εργασίας"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desktop Folder Usage Description"
+            "value" : "Save recordings to Desktop"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desktop Folder Usage Description"
+            "value" : "Save recordings to Desktop"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desktop Folder Usage Description"
+            "value" : "Save recordings to Desktop"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desktop Folder Usage Description"
+            "value" : "Save recordings to Desktop"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desktop Folder Usage Description"
+            "value" : "Save recordings to Desktop"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la carpeta Escritorio"
+            "value" : "Guardar las grabaciones en el escritorio"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la carpeta Escritorio"
+            "value" : "Guardar las grabaciones en el escritorio"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Työpöydän kansion käytön kuvaus"
+            "value" : "Tallenna nauhoitukset työpöydälle"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation du dossier Bureau"
+            "value" : "Enregistrer les enregistrements sur le bureau"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation du dossier Bureau"
+            "value" : "Enregistrer les enregistrements sur le bureau"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "תיאור שימוש בתיקיית שולחן עבודה"
+            "value" : "שמור הקלטות לשולחן העבודה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "डेस्कटॉप फ़ोल्डर उपयोग विवरण"
+            "value" : "रिकॉर्डिंग्स को डेस्कटॉप पर सहेजें"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis uporabe mape Desktop"
+            "value" : "Spremi snimke na radnu površinu"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asztali mappa használatának leírása"
+            "value" : "Felvételek mentése az asztalra"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deskripsi Penggunaan Folder Desktop"
+            "value" : "Simpan rekaman ke Desktop"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrizione dell'uso della cartella Scrivania"
+            "value" : "Salva le registrazioni sul desktop"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デスクトップフォルダーの使用説明"
+            "value" : "録音をデスクトップに保存する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "데스크탑 폴더 사용 설명"
+            "value" : "녹음을 데스크톱에 저장"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penerangan Penggunaan Folder Desktop"
+            "value" : "Simpan rakaman ke Desktop"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse av bruk av skrivebordsmappe"
+            "value" : "Lagre opptak til skrivebordet"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschrijving van het gebruik van Desktop-map"
+            "value" : "Opnames opslaan op bureaublad"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis użycia folderu Pulpit"
+            "value" : "Zapisz nagrania na pulpicie"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição do uso da Pasta Desktop"
+            "value" : "Salvar gravações para a área de trabalho"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição de uso da Pasta Desktop"
+            "value" : "Guardar gravações no ambiente de trabalho"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrierea utilizării folderului Desktop"
+            "value" : "Salvați înregistrările pe desktop"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Описание использования папки рабочего стола"
+            "value" : "Сохранить записи на рабочий стол"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis použitia priečinka Desktop"
+            "value" : "Uložiť nahrávky na plochu"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivning av skrivbordsmappens användning"
+            "value" : "Spara inspelningar till skrivbordet"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คำอธิบายการใช้งานโฟลเดอร์เดสก์ท็อป"
+            "value" : "บันทึกการบันทึกไปยังเดสก์ท็อป"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Masaüstü Klasörü Kullanım Açıklaması"
+            "value" : "Kayıtları Masaüstü'ne kaydet"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опис використання папки Робочий стіл"
+            "value" : "Зберегти записи на робочий стіл"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mô tả Sử dụng Thư mục Desktop"
+            "value" : "Lưu các bản ghi vào Màn hình"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "桌面文件夹使用说明"
+            "value" : "将录音保存到桌面"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "桌面資料夾使用說明"
+            "value" : "將錄音保存到桌面"
           }
         }
       }
@@ -987,241 +987,241 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "استخدام مجلد المستندات"
+            "value" : "حفظ التسجيلات في المستندات"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripció de l'ús de la carpeta de documents"
+            "value" : "Desa les gravacions a Documents"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Popis použití složky Dokumenty"
+            "value" : "Uložit nahrávky do složky Dokumenty"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse af brug af dokumentmappe"
+            "value" : "Gem optagelser i Dokumenter"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutzungsbeschreibung des Dokumentenordners"
+            "value" : "Aufnahmen in Dokumente speichern"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Περιγραφή χρήσης φακέλου εγγράφων"
+            "value" : "Αποθήκευση εγγραφών στα Έγγραφα"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Documents Folder Usage Description"
+            "value" : "Save recordings to Documents"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Documents Folder Usage Description"
+            "value" : "Save recordings to Documents"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Documents Folder Usage Description"
+            "value" : "Save recordings to Documents"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Documents Folder Usage Description"
+            "value" : "Save recordings to Documents"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Documents Folder Usage Description"
+            "value" : "Save recordings to Documents"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la carpeta de documentos"
+            "value" : "Guardar las grabaciones en Documentos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción del uso de la carpeta de documentos"
+            "value" : "Guardar las grabaciones en Documentos"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dokumentit-kansion käyttötarkoitus"
+            "value" : "Tallenna nauhoitukset Asiakirjoihin"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation du dossier de documents"
+            "value" : "Enregistrer les enregistrements dans Documents"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description de l'utilisation du dossier de documents"
+            "value" : "Enregistrer les enregistrements dans Documents"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "תיאור השימוש בתיקיית המסמכים"
+            "value" : "שמור הקלטות למסמכים"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "दस्तावेज़ फ़ोल्डर उपयोग विवरण"
+            "value" : "रिकॉर्डिंग्स को दस्तावेज़ों में सहेजें"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis korištenja mape dokumenata"
+            "value" : "Spremi snimke u Dokumente"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dokumentumok mappa használatának leírása"
+            "value" : "Mentse a felvételeket a Dokumentumokba"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deskripsi Penggunaan Folder Dokumen"
+            "value" : "Simpan rekaman ke Dokumen"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrizione dell'uso della cartella Documenti"
+            "value" : "Salva le registrazioni in Documenti"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ドキュメントフォルダー使用説明"
+            "value" : "録音をドキュメントに保存する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "문서 폴더 사용 설명"
+            "value" : "녹음을 문서에 저장"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penerangan Penggunaan Folder Dokumen"
+            "value" : "Simpan rakaman ke Dokumen"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivelse av bruk av dokumentmappe"
+            "value" : "Lagre opptak til Dokumenter"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschrijving voor gebruik van documentenmap"
+            "value" : "Opnames opslaan in Documenten"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opis użytkowania folderu Dokumenty"
+            "value" : "Zapisz nagrania do Dokumentów"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição do uso da pasta Documentos"
+            "value" : "Salvar gravações em Documentos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrição do uso da pasta Documentos"
+            "value" : "Guardar gravações em Documentos"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descrierea utilizării folderului Documente"
+            "value" : "Salvați înregistrările în Documente"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Описание использования папки Документы"
+            "value" : "Сохранить записи в Документы"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Popis použitia priečinka Dokumenty"
+            "value" : "Uložiť nahrávky do Dokumentov"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskrivning för användning av dokumentmappen"
+            "value" : "Spara inspelningar till Dokument"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คำอธิบายการใช้งานโฟลเดอร์เอกสาร"
+            "value" : "บันทึกการบันทึกไปยังเอกสาร"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Belgeler Klasörü Kullanım Açıklaması"
+            "value" : "Kayıtları Belgelere Kaydet"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опис використання папки Документи"
+            "value" : "Зберегти записи до Документів"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mô tả Sử dụng Thư mục Tài liệu"
+            "value" : "Lưu các bản ghi vào Tài liệu"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文档文件夹使用描述"
+            "value" : "将录音保存到文档"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文檔文件夾使用描述"
+            "value" : "將錄音保存到文檔"
           }
         }
       }
@@ -1232,486 +1232,253 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الخصوصية - وصف استخدام مجلد التنزيلات"
+            "value" : "حفظ التسجيلات في مجلد التنزيلات"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacitat : Descripció de l'ús de la carpeta de descàrregues"
+            "value" : "Desa les gravacions a Descàrregues"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Soukromí - Popis použití složky Stažené soubory"
+            "value" : "Uložit nahrávky do složky Stahování"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privatliv - Beskrivelse af brug af Downloads-mappe"
+            "value" : "Gem optagelser i Downloads"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Datenschutz - Beschreibung der Verwendung des Download-Ordners"
+            "value" : "Aufnahmen in Downloads speichern"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Απόρρητο - Περιγραφή χρήσης του φακέλου Λήψεις"
+            "value" : "Αποθήκευση εγγραφών στο φάκελο Λήψεις"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Downloads Folder Usage Description"
+            "value" : "Save recordings to Downloads"
           }
         },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Downloads Folder Usage Description"
+            "value" : "Save recordings to Downloads"
           }
         },
         "en-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Downloads Folder Usage Description"
+            "value" : "Save recordings to Downloads"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Downloads Folder Usage Description"
+            "value" : "Save recordings to Downloads"
           }
         },
         "en-US" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Downloads Folder Usage Description"
+            "value" : "Save recordings to Downloads"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacidad - Descripción del uso de la carpeta de descargas"
+            "value" : "Guardar grabaciones en Descargas"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacidad - Descripción del uso de la carpeta de descargas"
+            "value" : "Guardar grabaciones en Descargas"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yksityisyys - Latauskansion käyttökuvaus"
+            "value" : "Tallenna nauhoitukset Lataukset-kansioon"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confidentialité - Description de l'utilisation du dossier Téléchargements"
+            "value" : "Enregistrer les enregistrements dans Téléchargements"
           }
         },
         "fr-CA" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confidentialité - Description de l'utilisation du dossier Téléchargements"
+            "value" : "Enregistrer les enregistrements dans Téléchargements"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "פרטיות - תיאור השימוש בתיקיית ההורדות"
+            "value" : "שמור הקלטות לתיקיית הורדות"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "गोपनीयता - डाउनलोड फ़ोल्डर उपयोग विवरण"
+            "value" : "रिकॉर्डिंग्स को डाउनलोड्स में सहेजें"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privatnost - Opis upotrebe mape preuzimanja"
+            "value" : "Spremi snimke u mapu Preuzimanja"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adatvédelem - Letöltési mappa használatának leírása"
+            "value" : "Felvételek mentése a Letöltések mappába"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privasi - Deskripsi Penggunaan Folder Unduhan"
+            "value" : "Simpan rekaman ke Unduhan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Descrizione dell'uso della cartella Download"
+            "value" : "Salva le registrazioni in Download"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "プライバシー - ダウンロードフォルダの使用説明"
+            "value" : "ダウンロードに録音を保存する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "개인정보 - 다운로드 폴더 사용 설명"
+            "value" : "다운로드에 녹음 저장"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privasi - Penerangan Penggunaan Folder Muat Turun"
+            "value" : "Simpan rakaman ke Muat Turun"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Personvern - Beskrivelse av bruk av nedlastingsmappen"
+            "value" : "Lagre opptak til Nedlastinger"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy - Beschrijving van gebruik van de downloadmap"
+            "value" : "Opnames opslaan in Downloads"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prywatność - Opis użycia folderu Pobrane"
+            "value" : "Zapisz nagrania w Pobrane"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacidade - Descrição do Uso da Pasta de Downloads"
+            "value" : "Salvar gravações em Downloads"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacidade - Descrição do Uso da Pasta de Downloads"
+            "value" : "Guardar gravações em Downloads"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confidențialitate - Descrierea utilizării dosarului Descărcări"
+            "value" : "Salvați înregistrările în Descărcări"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Конфиденциальность - Описание использования папки Загрузки"
+            "value" : "Сохранить записи в папку Загрузки"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Súkromie - Popis použitia priečinka na sťahovanie"
+            "value" : "Uložiť nahrávky do Prenosy"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Integritet - Beskrivning av användning av nedladdningsmappen"
+            "value" : "Spara inspelningar till Nedladdningar"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความเป็นส่วนตัว - คำอธิบายการใช้โฟลเดอร์ดาวน์โหลด"
+            "value" : "บันทึกการบันทึกไปยังดาวน์โหลด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gizlilik - İndirilenler Klasörü Kullanım Açıklaması"
+            "value" : "Kayıtları İndirilenler'e kaydet"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Конфіденційність - Опис використання папки Завантаження"
+            "value" : "Зберегти записи до Завантаження"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quyền riêng tư - Mô tả sử dụng thư mục Tải xuống"
+            "value" : "Lưu các bản ghi vào Tải xuống"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐私 - 下载文件夹使用说明"
+            "value" : "将录音保存到下载文件夹"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隱私 - 下載資料夾使用說明"
+            "value" : "將錄音保存到下載文件夾"
           }
         }
       }
     },
     "NSHumanReadableCopyright" : {
       "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حقوق النسخ والنشر (مقروءة من قبل الإنسان)"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drets d'autor (visible per a l'home)"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autorská práva (lidsky čitelné)"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ophavsret (læselig for mennesker)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Urheberrecht (menschlich lesbar)"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Πνευματικά δικαιώματα (αναγνώσιμα από άνθρωπο)"
-          }
-        },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (human-readable)"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (human-readable)"
-          }
-        },
-        "en-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (human-readable)"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (human-readable)"
-          }
-        },
-        "en-US" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (human-readable)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Derechos de autor (legible por humanos)"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Derechos de autor (legible por humanos)"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tekijänoikeudet (ihmisen luettavissa)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Droits d'auteur (lisible par l'homme)"
-          }
-        },
-        "fr-CA" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Droits d'auteur (lisible par l'humain)"
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "זכויות יוצרים (קריא על ידי אדם)"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "कॉपीराइट (मानव-पठनीय)"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autorska prava (čitljivo za ljude)"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szerzői jog (ember által olvasható)"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hak Cipta (terbaca oleh manusia)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diritto d'autore (leggibile da umani)"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "著作権 (人間が読める形式)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "저작권 (사람이 읽을 수 있는)"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hak Cipta (boleh dibaca manusia)"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opphavsrett (menneskelesbar)"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Auteursrecht (mensleesbaar)"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prawa autorskie (czytelne dla człowieka)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Direitos autorais (legível por humanos)"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Direitos de autor (legível por humanos)"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drepturi de autor (ușor de citit de oameni)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Авторские права (читаемый человеком)"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autorské práva (ľudsky čitateľné)"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upphovsrätt (mänskligt läsbart)"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ลิขสิทธิ์ (มนุษย์อ่านได้)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Telif hakkı (insan tarafından okunabilir)"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Авторське право (читане людиною)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bản quyền (con người có thể đọc)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版权（人类可读）"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版權（人類可讀）"
+            "state" : "new",
+            "value" : ""
           }
         }
       }

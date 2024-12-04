@@ -32,7 +32,7 @@ protocol Recordable: CustomStringConvertible {
 
 extension Recordable {
   var frameRate: CMTimeScale {
-    guard let writer = writer else { return .zero }
+    guard writer != nil else { return .zero }
     return CMTimeScale(30.0)
   }
 
@@ -168,7 +168,8 @@ extension Recordable {
     }
 
     if let tmpFrameBuffer = tmpFrameBuffer {
-      return (buffer, tmpFrameBuffer.presentationTimeStamp, source != .screen)  // we have not changed originally
+      // we have not changed originally
+      return (buffer, tmpFrameBuffer.presentationTimeStamp, source != .screen)
     } else {
       // Initial condition
       return (buffer, buffer.presentationTimeStamp, source != .screen)
@@ -180,8 +181,10 @@ extension Recordable {
   ///  The intention is for this to be utilized
   var dateExtension: String {
     let currentDate = Date()
+
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+
     let formattedDate = formatter.string(from: currentDate)
 
     return formattedDate
@@ -234,7 +237,7 @@ extension CMSampleBuffer {
 extension URL {
   /// Returns whether or not the url is in the `URL.temporaryDirectory`
   func isInTemporaryFolder() -> Bool {
-      return self.absoluteString.hasPrefix(URL.temporaryDirectory.absoluteString)
+    return self.absoluteString.hasPrefix(URL.temporaryDirectory.absoluteString)
   }
 }
 

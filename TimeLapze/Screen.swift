@@ -1,4 +1,5 @@
 import AVFoundation
+import Cocoa
 import ScreenCaptureKit
 import SwiftUI
 
@@ -14,7 +15,6 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   var enabled: Bool = false
   var writer: AVAssetWriter?
   var input: AVAssetWriterInput?
-  var pixelPointScale: Int = 2
 
   // ScreenCaptureKit-Specific Functionality
   var screen: SCDisplay
@@ -31,8 +31,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   var lastAppendedFrame: CMTime = .zero
   var tmpFrameBuffer: CMSampleBuffer?
 
+  var height: Int?
+  var width: Int?
+
   override var description: String {
-    "[\(screen.width) x \(screen.height)] - Display \(screen.displayID)"
+    if height == nil || width == nil {
+      let pixelRatio = getPixelRatio(for: screen.displayID) ?? 1.0
+
+      self.width = Int(CGFloat(screen.width) * pixelRatio)
+      self.height = Int(CGFloat(screen.height) * pixelRatio)
+    }
+
+    return "[\(width ?? 0) x \(height ?? 0)] - Display \(screen.displayID)"
   }
 
   init(screen: SCDisplay, showCursor: Bool) {
@@ -112,11 +122,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     Task(priority: .userInitiated) {
       do {
         try setupStream(screen: screen, showCursor: showCursor, excluding: excluding)
-        
+
         (self.writer, self.input) = try setupWriter(screen: screen, path: path)
 
         try await stream!.startCapture()
-          
+
         logger.debug("Setup stream")
       } catch {
         logger.error("Failed to setup stream")
@@ -128,18 +138,37 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   ///
   /// ``stream(_:didOutputSampleBuffer:of:)`` relies on this to save data
   func setupWriter(screen: SCDisplay, path: String) throws -> (AVAssetWriter, AVAssetWriterInput) {
+    // TODO: Update this so hevc_displayP3 is not the assumed color space
+    //
+    // The display color space can easily be fetched dynamically using SCDisplay.CGDirectDisplayID
+    //
+    // see:
+    // https://developer.apple.com/documentation/coregraphics/1454190-cgdisplaycopycolorspace
+
     // creates a custom-defined config for the P3 color space
-    let config: VideoSettings = .hevc_displayP3
+    let config: VideoSettings = .hevcDisplayP3
 
     // uses a settings recommender to get the video settings
     let settingsAssistant = AVOutputSettingsAssistant(preset: config.preset)!
+
+    let pixelRatio = getPixelRatio(for: screen.displayID) ?? 1.0
+    let width = Int(CGFloat(screen.width) * pixelRatio)
+    let height = Int(CGFloat(screen.height) * pixelRatio)
+
     settingsAssistant.sourceVideoFormat = try CMVideoFormatDescription(
-      videoCodecType: .hevc, width: screen.width * pixelPointScale, height: screen.height * pixelPointScale)
+      videoCodecType: .hevc, width: width, height: height)
 
     var settings = settingsAssistant.videoSettings!
-    settings[AVVideoWidthKey] = screen.width * pixelPointScale
-    settings[AVVideoHeightKey] = screen.height * pixelPointScale
+    settings[AVVideoWidthKey] = width
+    settings[AVVideoHeightKey] = height
     settings[AVVideoColorPropertiesKey] = config.colorProperties
+
+    // more entropy in the video -> the higher the bitrate
+    if var compressionProperties = settings[AVVideoCompressionPropertiesKey] as? [String: Any] {
+      compressionProperties.removeValue(forKey: AVVideoAverageBitRateKey)
+      compressionProperties[AVVideoQualityKey] = baseConfig.quality
+      settings[AVVideoCompressionPropertiesKey] = compressionProperties
+    }
 
     // Gets a valid file type, but replaces it if in preferences
     var fileType: AVFileType = baseConfig.validFormats.first!
@@ -171,7 +200,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       excludingApplications: excluding,
       exceptingWindows: []
     )
-    
+
     let pixelPointScale = Int(contentFilter.pointPixelScale)
 
     let config = SCStreamConfiguration()
@@ -197,12 +226,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
       if let qualityValue = UserDefaults.standard.object(forKey: "quality"),
         let quality = qualityValue as? QualitySettings
       {
-        config.captureResolution =
-          switch quality {
-          case .high: SCCaptureResolutionType.best
-          case .medium: SCCaptureResolutionType.automatic
-          case .low: SCCaptureResolutionType.nominal
-          }
+        config.captureResolution = .nominal
       }
 
       config.streamName = "\(screen.displayID) Screen Recording"
@@ -300,4 +324,26 @@ class StreamDelegate: NSObject, SCStreamDelegate {
   func stream(_ stream: SCStream, didStopWithError error: Error) {
     logger.error("The stream stopped with \(error.localizedDescription)")
   }
+}
+
+/// Gets the pixel ratio or `bakingScaleFactor` of the screen before starting recording
+///
+/// This is important because while Apple displays use a pixel ratio of 2.0, this may not be the case for
+/// external monitors
+func getPixelRatio(for displayID: CGDirectDisplayID) -> CGFloat? {
+  guard
+    let screens = NSScreen.screens.first(where: {
+      guard
+        let screenID = $0.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")]
+          as? CGDirectDisplayID
+      else {
+        return false
+      }
+      return screenID == displayID
+    })
+  else {
+    return nil
+  }
+
+  return screens.backingScaleFactor
 }
