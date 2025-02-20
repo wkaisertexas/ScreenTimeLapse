@@ -63,7 +63,7 @@ Download the latest version from the [Releases page](https://github.com/wkaisert
 
 1. Download `TimeLapze.zip`
 2. If Chrome or Safari warns about the file, ignore it
-3. Extract the archive to get `ScreenTimeLapse.app`
+3. Extract the archive to get `TimeLapze.app`
 4. Move it to your `Applications` folder
 
 ## Local Development
