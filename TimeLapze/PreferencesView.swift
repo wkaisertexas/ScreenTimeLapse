@@ -19,7 +19,7 @@ struct PreferencesView: View {
         Label("Video", systemImage: "video")
       }.navigationTitle("TimeLapze Settings")
     }
-    .frame(minWidth: 520, minHeight: 400)
+    .frame(minWidth: 440, minHeight: 400)
     .background(VisualEffectView().ignoresSafeArea())
   }
 

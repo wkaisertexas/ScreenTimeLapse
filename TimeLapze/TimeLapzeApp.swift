@@ -30,6 +30,7 @@ struct TimeLapzeApp: App {
           NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
+    .defaultSize(width: 440, height: 400)
 
     // main view
     MenuBarExtra {
