@@ -34,6 +34,9 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
   var height: Int?
   var width: Int?
+  
+  // Flag to prevent starting new recording while previous is finalizing
+  private var isFinalizingRecording = false
 
   override var description: String {
     if height == nil || width == nil {
@@ -55,12 +58,36 @@ class Screen: NSObject, SCStreamOutput, Recordable {
   func startRecording(excluding: [SCRunningApplication], showCursor: Bool) {
     guard self.enabled else { return }
     guard self.state != .recording else { return }
+    guard !isFinalizingRecording else {
+      logger.warning("Cannot start recording while previous recording is being finalized")
+      return
+    }
 
     self.showCursor = showCursor
+    
+    // Reset state for new recording
+    resetRecordingState()
 
     self.state = .recording
 
     setup(path: getFilename(), excluding: excluding)
+  }
+  
+  /// Resets all state variables for a new recording session
+  private func resetRecordingState() {
+    // Clean up old stream
+    stream = nil
+    writer = nil
+    input = nil
+    
+    // Reset time synchronization
+    offset = CMTime(seconds: 0.0, preferredTimescale: 60)
+    frameCount = 0
+    frameChanged = true
+    lastAppendedFrame = .zero
+    tmpFrameBuffer = nil
+    sessionStartDate = nil
+    lastSavedFrame = nil
   }
 
   func pauseRecording() {
@@ -78,11 +105,19 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     guard let writer = writer, let input = input else { return }
 
     self.state = .stopped
+    self.isFinalizingRecording = true
 
     logger.log("Screen -- saved recording")
 
     if let stream = stream {
       stream.stopCapture()
+    }
+    
+    // Check if writer is in a valid state to finish
+    guard writer.status == .writing else {
+      logger.error("Writer is not in writing state, status: \(writer.status.rawValue)")
+      self.isFinalizingRecording = false
+      return
     }
 
     while !input.isReadyForMoreMediaData {
@@ -92,6 +127,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
     input.markAsFinished()
     writer.finishWriting { [self] in
+      defer {
+        // Always reset the flag when finalization is complete
+        self.isFinalizingRecording = false
+      }
+      
       if writer.status == .completed {
         // Asset writing completed successfully
 
@@ -267,7 +307,8 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
   /// Saves each `CMSampleBuffer` from the screen
   func stream(_ stream: SCStream, didOutputSampleBuffer: CMSampleBuffer, of: SCStreamOutputType) {
-    guard self.state == .recording else { return }
+    // Ignore frames during finalization or when not recording
+    guard self.state == .recording, !isFinalizingRecording else { return }
 
     switch of {
     case .screen:
@@ -281,8 +322,11 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
   /// Receives a list of `CMSampleBuffers` and uses `appendBuffer` to save them
   func handleVideo(buffer: CMSampleBuffer) {
-    guard self.input != nil else {  // both
-      logger.error("No AVAssetWriter with the name `input` is present")
+    guard self.input != nil else {
+      // Only log if we're actually supposed to be recording
+      if state == .recording {
+        logger.error("No AVAssetWriter with the name `input` is present")
+      }
       return
     }
 
