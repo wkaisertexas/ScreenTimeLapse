@@ -80,9 +80,21 @@ struct PreferencesView: View {
     )
 
     HStack {
-      Text("\(String(format: "%.1f", preferencesViewModel.timeMultiple))x faster")
-      Slider(value: $preferencesViewModel.timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+      TextField(
+        "",
+        value: Binding(
+          get: { preferencesViewModel.timeMultiple },
+          set: { preferencesViewModel.timeMultiple = min(max($0, 1.0), 240.0) }
+        ),
+        format: .number.precision(.fractionLength(1))
+      )
+      .textFieldStyle(.roundedBorder)
+      .frame(width: 55)
+      .multilineTextAlignment(.trailing)
+      Text("x faster")
     }
+
+    Slider(value: $preferencesViewModel.timeMultiple, in: 1.0...240.0)
 
     if #available(macOS 14.0, *) {
       Picker("Output FPS", selection: $preferencesViewModel.fpsDropdown) {

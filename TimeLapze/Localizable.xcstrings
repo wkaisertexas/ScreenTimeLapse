@@ -250,6 +250,7 @@
       }
     },
     "%@x faster" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -13931,6 +13932,9 @@
           }
         }
       }
+    },
+    "x faster" : {
+
     },
     "Your time multiple is how much faster your output video is than real life" : {
       "localizations" : {
