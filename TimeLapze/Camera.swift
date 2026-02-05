@@ -22,6 +22,9 @@ class Camera: NSObject, Recordable {
   var lastAppendedFrame: CMTime = .zero
   var tmpFrameBuffer: CMSampleBuffer?
 
+  // Flag to prevent starting new recording while previous is finalizing
+  private var isFinalizingRecording = false
+
   override var description: String {
     if inputDevice.manufacturer.isEmpty {
       return "\(self.inputDevice.localizedName)"
@@ -93,27 +96,61 @@ class Camera: NSObject, Recordable {
   func startRecording() {
     guard self.enabled else { return }
     guard self.state != .recording else { return }
+    guard !isFinalizingRecording else {
+      logger.warning("Cannot start recording while previous recording is being finalized")
+      return
+    }
     logger.log("\(self.description) Recording")
 
+    // Reset state for new recording
+    resetRecordingState()
+    
     self.state = .recording
 
     setup(path: getFilename())
+  }
+  
+  /// Resets all state variables for a new recording session
+  private func resetRecordingState() {
+    // Clean up old objects
+    if let oldRecordVideo = recordVideo, oldRecordVideo.isRecording() {
+      oldRecordVideo.stopSession()
+    }
+    recordVideo = nil
+    writer = nil
+    input = nil
+    
+    // Reset time synchronization
+    offset = CMTime(seconds: 0.0, preferredTimescale: 60)
+    frameCount = 0
+    frameChanged = true
+    lastAppendedFrame = .zero
+    tmpFrameBuffer = nil
   }
 
   func saveRecording() {
     guard self.enabled else { return }
 
     self.state = .stopped
+    self.isFinalizingRecording = true
 
     logger.log("Camera - saved recording")
 
     if let recorder = recordVideo, recorder.isRecording() {
       recorder.stopSession()
-      logger.error("Stopped running")
+      logger.log("Stopped capture session")
     }
 
     guard let input = input, let writer = writer else {
       logger.log("Either the input or the writer is null")
+      self.isFinalizingRecording = false
+      return
+    }
+    
+    // Check if writer is in a valid state to finish
+    guard writer.status == .writing else {
+      logger.error("Writer is not in writing state, status: \(writer.status.rawValue)")
+      self.isFinalizingRecording = false
       return
     }
 
@@ -123,8 +160,13 @@ class Camera: NSObject, Recordable {
       sleep(1)  // sleeping for a second
     }
 
-    input.markAsFinished()  // this is good
+    input.markAsFinished()
     writer.finishWriting { [self] in
+      defer {
+        // Always reset the flag when finalization is complete
+        self.isFinalizingRecording = false
+      }
+      
       if writer.status == .completed {
         // Asset writing completed successfully
         if UserDefaults.standard.bool(forKey: "showAfterSave")
@@ -149,8 +191,16 @@ class Camera: NSObject, Recordable {
 
   // MARK: Streaming
   func handleVideo(buffer: CMSampleBuffer) {
+    // Ignore frames during finalization or when not recording
+    guard state == .recording, !isFinalizingRecording else {
+      return
+    }
+    
     guard let input = self.input, let writer = self.writer else {
-      logger.error("Not video writer present")
+      // Only log if we're actually supposed to be recording
+      if state == .recording {
+        logger.error("Not video writer present")
+      }
       return
     }
 
