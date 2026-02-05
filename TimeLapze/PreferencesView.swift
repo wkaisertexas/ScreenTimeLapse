@@ -230,6 +230,22 @@ struct PreferencesView: View {
           .lineLimit(1)
           .truncationMode(.middle)
       }
+      HStack(spacing: 8) {
+        Button(action: {
+          NSWorkspace.shared.open(preferencesViewModel.saveLocation)
+        }) {
+          Label("Open in Finder", systemImage: "folder.badge.gearshape")
+        }
+        .help("Open the output folder in Finder")
+        Button(action: {
+          let path = preferencesViewModel.saveLocation.path()
+          NSPasteboard.general.clearContents()
+          NSPasteboard.general.setString(path, forType: .string)
+        }) {
+          Label("Copy path", systemImage: "doc.on.doc")
+        }
+        .help("Copy the folder path to the clipboard")
+      }
     }
   }
 }

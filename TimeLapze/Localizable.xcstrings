@@ -2689,6 +2689,12 @@
     "Color" : {
 
     },
+    "Copy path" : {
+
+    },
+    "Copy the folder path to the clipboard" : {
+
+    },
     "Date and time appear in the top-right corner of recordings when enabled." : {
 
     },
@@ -7077,6 +7083,12 @@
           }
         }
       }
+    },
+    "Open in Finder" : {
+
+    },
+    "Open the output folder in Finder" : {
+
     },
     "Output FPS" : {
       "localizations" : {
