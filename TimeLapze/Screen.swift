@@ -30,6 +30,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
 
   var lastAppendedFrame: CMTime = .zero
   var tmpFrameBuffer: CMSampleBuffer?
+  var sessionStartDate: Date?
 
   var height: Int?
   var width: Int?
@@ -182,7 +183,18 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     let url = getFileDestination(path: path)
     let writer = try AVAssetWriter(url: url, fileType: fileType)
 
-    let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+    let input: AVAssetWriterInput
+    if TimestampOverlay.shouldUseOverlayFormat(for: .screen),
+      let formatHint = TimestampOverlay.formatDescription32BGRA(width: width, height: height)
+    {
+      input = AVAssetWriterInput(
+        mediaType: .video,
+        outputSettings: settings,
+        sourceFormatHint: formatHint
+      )
+    } else {
+      input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+    }
     input.expectsMediaDataInRealTime = true
 
     writer.add(input)
@@ -297,6 +309,7 @@ class Screen: NSObject, SCStreamOutput, Recordable {
     if writer.status == .unknown {
       writer.startWriting()
       offset = buffer.presentationTimeStamp
+      sessionStartDate = Date()
       writer.startSession(atSourceTime: offset)
       return
     }

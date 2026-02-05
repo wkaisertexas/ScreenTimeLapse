@@ -1,7 +1,11 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1947,6 +1951,9 @@
         }
       }
     },
+    "Camera timestamp" : {
+
+    },
     "Cameras" : {
       "localizations" : {
         "ar" : {
@@ -2678,6 +2685,12 @@
           }
         }
       }
+    },
+    "Color" : {
+
+    },
+    "Date and time appear in the top-right corner of recordings when enabled." : {
+
     },
     "Define Your Time Multiple" : {
       "localizations" : {
@@ -4374,6 +4387,9 @@
           }
         }
       }
+    },
+    "Font" : {
+
     },
     "Format" : {
       "localizations" : {
@@ -9500,6 +9516,9 @@
         }
       }
     },
+    "Screen timestamp" : {
+
+    },
     "Screens" : {
       "localizations" : {
         "ar" : {
@@ -10720,6 +10739,12 @@
         }
       }
     },
+    "Show on camera" : {
+
+    },
+    "Show on screen recording" : {
+
+    },
     "Show video after saving" : {
       "localizations" : {
         "ar" : {
@@ -10963,6 +10988,9 @@
           }
         }
       }
+    },
+    "Size: %lld pt" : {
+
     },
     "Skip" : {
       "localizations" : {

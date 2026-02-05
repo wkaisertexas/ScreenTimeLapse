@@ -21,6 +21,7 @@ class Camera: NSObject, Recordable {
 
   var lastAppendedFrame: CMTime = .zero
   var tmpFrameBuffer: CMSampleBuffer?
+  var sessionStartDate: Date?
 
   override var description: String {
     if inputDevice.manufacturer.isEmpty {
@@ -74,7 +75,21 @@ class Camera: NSObject, Recordable {
 
     let writer = try AVAssetWriter(outputURL: url, fileType: fileType)
 
-    let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+    let input: AVAssetWriterInput
+    if TimestampOverlay.shouldUseOverlayFormat(for: .camera),
+      let formatHint = TimestampOverlay.formatDescription32BGRA(
+        width: Int(dimensions.width),
+        height: Int(dimensions.height)
+      )
+    {
+      input = AVAssetWriterInput(
+        mediaType: .video,
+        outputSettings: settings,
+        sourceFormatHint: formatHint
+      )
+    } else {
+      input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+    }
     input.expectsMediaDataInRealTime = true
 
     guard writer.canAdd(input) else {
@@ -166,11 +181,18 @@ class Camera: NSObject, Recordable {
 
     if writer.status == .unknown {
       self.offset = buffer.presentationTimeStamp
+      sessionStartDate = Date()
 
       writer.startWriting()
       writer.startSession(atSourceTime: self.offset)
 
-      input.append(buffer)
+      if let start = sessionStartDate,
+        let overlaid = TimestampOverlay.apply(to: buffer, displayTime: start, source: .camera)
+      {
+        input.append(overlaid)
+      } else {
+        input.append(buffer)
+      }
       return
     }
 

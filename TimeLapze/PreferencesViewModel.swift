@@ -23,6 +23,20 @@ class PreferencesViewModel: ObservableObject {
   @Published var fpsDropdown = 4
   @Published var fpsInput = ""
 
+  // Timestamp overlay on camera
+  @AppStorage("cameraTimestampEnabled") var cameraTimestampEnabled = false
+  @AppStorage("cameraTimestampFormat") var cameraTimestampFormat = TimestampOverlayFormat.mediumDateTime.rawValue
+  @AppStorage("cameraTimestampFontName") var cameraTimestampFontName = "Helvetica"
+  @AppStorage("cameraTimestampFontSize") var cameraTimestampFontSize = 24.0
+  @AppStorage("cameraTimestampColorHex") var cameraTimestampColorHex = "#FFFFFF"
+
+  // Timestamp overlay on screen
+  @AppStorage("screenTimestampEnabled") var screenTimestampEnabled = false
+  @AppStorage("screenTimestampFormat") var screenTimestampFormat = TimestampOverlayFormat.mediumDateTime.rawValue
+  @AppStorage("screenTimestampFontName") var screenTimestampFontName = "Helvetica"
+  @AppStorage("screenTimestampFontSize") var screenTimestampFontSize = 32.0
+  @AppStorage("screenTimestampColorHex") var screenTimestampColorHex = "#FFFFFF"
+
   @Environment(\.openURL) var openURL
 
   // MARK: Intents
