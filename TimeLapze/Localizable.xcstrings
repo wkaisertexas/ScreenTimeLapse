@@ -9992,6 +9992,7 @@
       }
     },
     "Settings.." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10234,6 +10235,9 @@
           }
         }
       }
+    },
+    "Settings..." : {
+
     },
     "Show Cursor" : {
       "localizations" : {

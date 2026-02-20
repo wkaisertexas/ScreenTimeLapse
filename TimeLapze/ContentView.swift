@@ -214,19 +214,13 @@ struct Info: View {
   @Environment(\.openURL) var openURL
 
   var body: some View {
-    if #available(macOS 14.0, *) {
-      SettingsLink()
-        .keyboardShortcut(",")
-    } else {
-      // SettingsLink from the orchetect/SettingsAccess package
-      SettingsLink {
-        Text("Settings..")
-      } preAction: {
-        // nothing for now
-      } postAction: {
-        // nothing for now
-      }.keyboardShortcut(",")
-    }
+    SettingsLink {
+      Text("Settings...")
+    } preAction: {
+      NSApplication.shared.activate(ignoringOtherApps: true)
+    } postAction: {
+      // nothing for now
+    }.keyboardShortcut(",")
     Divider()
 
     Button("Quit") {
