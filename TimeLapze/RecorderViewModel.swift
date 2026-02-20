@@ -13,14 +13,33 @@ class RecorderViewModel: ObservableObject {
   @Published var screens: [Screen] = []
 
   @Published var state: RecordingState = .stopped
+  @Published var hasScreenPermission: Bool = false
   @AppStorage("showCursor") var showCursor: Bool = false
 
   /// Timer which allows for asynchronous refreshing of enabled displays
   private var timer: DispatchSourceTimer?
 
+  /// Checks screen recording permission using the lightweight preflight API
+  @discardableResult
+  func checkScreenPermission() -> Bool {
+    let permitted = CGPreflightScreenCaptureAccess()
+    DispatchQueue.main.async {
+      self.hasScreenPermission = permitted
+    }
+    return permitted
+  }
+
+  /// Requests screen recording permission, opening System Settings if needed
+  func requestScreenPermission() {
+    CGRequestScreenCaptureAccess()
+    hasScreenPermission = CGPreflightScreenCaptureAccess()
+  }
+
   /// Makes an asynchronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
   @MainActor
   func getDisplayInfo() async {
+    guard checkScreenPermission() else { return }
+
     do {
       let content = try await SCShareableContent.excludingDesktopWindows(
         false, onScreenWindowsOnly: false)
@@ -33,6 +52,7 @@ class RecorderViewModel: ObservableObject {
   }
 
   init() {
+    hasScreenPermission = CGPreflightScreenCaptureAccess()
     getCameras()
     startRefreshingDevices()
     setupCameraMonitoring()

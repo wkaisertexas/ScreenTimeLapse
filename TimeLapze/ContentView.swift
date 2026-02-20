@@ -137,13 +137,20 @@ struct InputDevices: View {
       })
   }
 
-  /// Renders all available `Screen` objects as an interactable list
+  /// Renders all available `Screen` objects as an interactable list, or a permission prompt if denied
+  @ViewBuilder
   func screensMenu() -> some View {
-    viewModel.screens.isEmpty
-      ? nil
-      : Section("Screens") {
+    if !viewModel.hasScreenPermission {
+      Section("Screens") {
+        Button("Grant Screen Recording Permission") {
+          viewModel.requestScreenPermission()
+        }
+      }
+    } else if !viewModel.screens.isEmpty {
+      Section("Screens") {
         ForEach(viewModel.screens, id: \.self, content: screen)
       }
+    }
   }
 
   /// Renders all available `Camera` objects as an interactable list

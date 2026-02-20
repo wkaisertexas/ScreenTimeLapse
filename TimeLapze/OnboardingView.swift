@@ -213,6 +213,7 @@ struct OnboardingView: View {
       !viewModel.hasNext
         ? Button(
           action: {
+            recorderViewModel.requestScreenPermission()
             viewModel.skipOnboarding()
             dismiss()
           },
