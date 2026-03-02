@@ -19,6 +19,7 @@ protocol Recordable: CustomStringConvertible {
   var tmpFrameBuffer: CMSampleBuffer? { get set }
   var frameChanged: Bool { get set }
   var frameRate: CMTimeScale { get }
+  var sessionStartDate: Date? { get set }
 
   // MARK: Intents
   mutating func startRecording()
@@ -162,7 +163,20 @@ extension Recordable {
       return (buffer, lastAppendedFrame, true)
     }
 
-    guard input.append(newBuffer) else {
+    let bufferToAppend: CMSampleBuffer
+    if let start = sessionStartDate, let tmp = tmpFrameBuffer {
+      let displayTime = start.addingTimeInterval(
+        CMTimeGetSeconds(tmp.presentationTimeStamp - offset))
+      if let overlaid = TimestampOverlay.apply(to: newBuffer, displayTime: displayTime, source: source) {
+        bufferToAppend = overlaid
+      } else {
+        bufferToAppend = newBuffer
+      }
+    } else {
+      bufferToAppend = newBuffer
+    }
+
+    guard input.append(bufferToAppend) else {
       logger.error("failed to append data")
       return (buffer, lastAppendedFrame, true)
     }

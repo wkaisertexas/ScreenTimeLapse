@@ -19,8 +19,7 @@ struct PreferencesView: View {
         Label("Video", systemImage: "video")
       }.navigationTitle("TimeLapze Settings")
     }
-    .frame(width: 450)
-    .fixedSize()
+    .frame(minWidth: 440, minHeight: 400)
     .background(VisualEffectView().ignoresSafeArea())
   }
 
@@ -38,16 +37,20 @@ struct PreferencesView: View {
   }
 
   func videoSettings() -> some View {
-    Form {
-      Text("TimeLapze Video Settings")
-        .fontWeight(.semibold)
-        .font(.headline)
+    ScrollView {
+      Form {
+        Text("TimeLapze Video Settings")
+          .fontWeight(.semibold)
+          .font(.headline)
 
-      playbackVideoSettings()
-      captureVideoSettings()
-      outputVideoSettings()
+        playbackVideoSettings()
+        captureVideoSettings()
+        timestampOverlaySettings()
+        outputVideoSettings()
+      }
+      .padding(30)
     }
-    .padding(30)
+    .frame(minHeight: 400)
   }
 
   // MARK: Submenus
@@ -77,9 +80,21 @@ struct PreferencesView: View {
     )
 
     HStack {
-      Text("\(String(format: "%.1f", preferencesViewModel.timeMultiple))x faster")
-      Slider(value: $preferencesViewModel.timeMultiple, in: .init(uncheckedBounds: (1.0, 240.0)))
+      TextField(
+        "",
+        value: Binding(
+          get: { preferencesViewModel.timeMultiple },
+          set: { preferencesViewModel.timeMultiple = min(max($0, 1.0), 240.0) }
+        ),
+        format: .number.precision(.fractionLength(1))
+      )
+      .textFieldStyle(.roundedBorder)
+      .frame(width: 55)
+      .multilineTextAlignment(.trailing)
+      Text("x faster")
     }
+
+    Slider(value: $preferencesViewModel.timeMultiple, in: 1.0...240.0)
 
     if #available(macOS 14.0, *) {
       Picker("Output FPS", selection: $preferencesViewModel.fpsDropdown) {
@@ -122,6 +137,90 @@ struct PreferencesView: View {
   }
 
   @ViewBuilder
+  func timestampOverlaySettings() -> some View {
+    // Camera timestamp settings
+    Section {
+      Toggle("Show on camera", isOn: $preferencesViewModel.cameraTimestampEnabled)
+
+      Picker("Format", selection: $preferencesViewModel.cameraTimestampFormat) {
+        ForEach(TimestampOverlayFormat.allCases, id: \.rawValue) { format in
+          Text(format.description).tag(format.rawValue)
+        }
+      }
+      .pickerStyle(.menu)
+      .disabled(!preferencesViewModel.cameraTimestampEnabled)
+
+      Picker("Font", selection: $preferencesViewModel.cameraTimestampFontName) {
+        ForEach(TimestampFont.allCases, id: \.rawValue) { font in
+          Text(font.displayName).tag(font.rawValue)
+        }
+      }
+      .pickerStyle(.menu)
+      .disabled(!preferencesViewModel.cameraTimestampEnabled)
+
+      HStack {
+        Text("Size: \(Int(preferencesViewModel.cameraTimestampFontSize)) pt")
+        Slider(value: $preferencesViewModel.cameraTimestampFontSize, in: 10...72, step: 1)
+          .disabled(!preferencesViewModel.cameraTimestampEnabled)
+      }
+
+      HStack {
+        Text("Color")
+        ColorPicker("", selection: Binding(
+          get: { Color(hex: preferencesViewModel.cameraTimestampColorHex) ?? .white },
+          set: { preferencesViewModel.cameraTimestampColorHex = $0.toHex() }
+        ))
+        .labelsHidden()
+        .disabled(!preferencesViewModel.cameraTimestampEnabled)
+      }
+    } header: {
+      Text("Camera timestamp")
+    }
+
+    // Screen timestamp settings
+    Section {
+      Toggle("Show on screen recording", isOn: $preferencesViewModel.screenTimestampEnabled)
+
+      Picker("Format", selection: $preferencesViewModel.screenTimestampFormat) {
+        ForEach(TimestampOverlayFormat.allCases, id: \.rawValue) { format in
+          Text(format.description).tag(format.rawValue)
+        }
+      }
+      .pickerStyle(.menu)
+      .disabled(!preferencesViewModel.screenTimestampEnabled)
+
+      Picker("Font", selection: $preferencesViewModel.screenTimestampFontName) {
+        ForEach(TimestampFont.allCases, id: \.rawValue) { font in
+          Text(font.displayName).tag(font.rawValue)
+        }
+      }
+      .pickerStyle(.menu)
+      .disabled(!preferencesViewModel.screenTimestampEnabled)
+
+      HStack {
+        Text("Size: \(Int(preferencesViewModel.screenTimestampFontSize)) pt")
+        Slider(value: $preferencesViewModel.screenTimestampFontSize, in: 10...72, step: 1)
+          .disabled(!preferencesViewModel.screenTimestampEnabled)
+      }
+
+      HStack {
+        Text("Color")
+        ColorPicker("", selection: Binding(
+          get: { Color(hex: preferencesViewModel.screenTimestampColorHex) ?? .white },
+          set: { preferencesViewModel.screenTimestampColorHex = $0.toHex() }
+        ))
+        .labelsHidden()
+        .disabled(!preferencesViewModel.screenTimestampEnabled)
+      }
+    } header: {
+      Text("Screen timestamp")
+    } footer: {
+      Text("Date and time appear in the top-right corner of recordings when enabled.")
+        .fixedSize(horizontal: false, vertical: true)
+    }
+  }
+
+  @ViewBuilder
   func outputVideoSettings() -> some View {
     let chooseFolder = Button(action: {
       preferencesViewModel.showPicker.toggle()
@@ -136,9 +235,28 @@ struct PreferencesView: View {
       chooseFolder.buttonStyle(.borderedProminent)
     } else {
       chooseFolder
-      HStack {
+      HStack(alignment: .top) {
         Text("Save videos to:")
-        Text("\(preferencesViewModel.saveLocation.path())").fontWeight(.medium)
+        Text(preferencesViewModel.saveLocation.path())
+          .fontWeight(.medium)
+          .lineLimit(1)
+          .truncationMode(.middle)
+      }
+      HStack(spacing: 8) {
+        Button(action: {
+          NSWorkspace.shared.open(preferencesViewModel.saveLocation)
+        }) {
+          Label("Open in Finder", systemImage: "folder.badge.gearshape")
+        }
+        .help("Open the output folder in Finder")
+        Button(action: {
+          let path = preferencesViewModel.saveLocation.path()
+          NSPasteboard.general.clearContents()
+          NSPasteboard.general.setString(path, forType: .string)
+        }) {
+          Label("Copy path", systemImage: "doc.on.doc")
+        }
+        .help("Copy the folder path to the clipboard")
       }
     }
   }

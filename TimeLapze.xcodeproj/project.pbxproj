@@ -32,6 +32,7 @@
 		3EE5FE11296232C800768BF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE10296232C800768BF7 /* Assets.xcassets */; };
 		3EE5FE14296232C800768BF7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */; };
 		3EEFFBB929A9B662002D0040 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEFFBB829A9B662002D0040 /* Utils.swift */; };
+		3ET1AMP52CF0000100000001 /* TimestampOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ET1AMP52CF0000100000002 /* TimestampOverlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		3EE5FE13296232C800768BF7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3EE5FE1A296232C800768BF7 /* TimeLapze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeLapze.entitlements; sourceTree = "<group>"; };
 		3EEFFBB829A9B662002D0040 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		3ET1AMP52CF0000100000002 /* TimestampOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampOverlay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				3E87A931299EBDFF00714AFC /* RecorderViewModel.swift */,
 				3E87A933299EBE0D00714AFC /* Recordable.swift */,
 				3EEFFBB829A9B662002D0040 /* Utils.swift */,
+				3ET1AMP52CF0000100000002 /* TimestampOverlay.swift */,
 				3E4D87C629AD741800D3EC7B /* Screen.swift */,
 				3E4D87C829AD744C00D3EC7B /* Camera.swift */,
 				3E61935A2A2EC12200333918 /* VideoConfiguration.swift */,
@@ -355,6 +358,7 @@
 				3E0DCD742BAB2A5800DB969A /* ReviewManager.swift in Sources */,
 				3E75E34C2AED6EC90016EB52 /* CameraRecorder.swift in Sources */,
 				3EEFFBB929A9B662002D0040 /* Utils.swift in Sources */,
+				3ET1AMP52CF0000100000001 /* TimestampOverlay.swift in Sources */,
 				3E87A934299EBE0D00714AFC /* Recordable.swift in Sources */,
 				3EAB1AFD2BA8A33300BEC597 /* OnboardingViewModel.swift in Sources */,
 				3E9894D12A2ED44600C25059 /* Logger.swift in Sources */,
