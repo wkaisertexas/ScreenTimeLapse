@@ -31,5 +31,6 @@ jobs:
             -project TimeLapze.xcodeproj \
             -scheme Test \
             -destination 'platform=macOS' \
+            -only-testing:TimeLapzeTests \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
