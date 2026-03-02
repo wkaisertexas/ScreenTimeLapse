@@ -5,7 +5,34 @@ import SwiftUI
 
 /// Represents a synchronized session of ``Recordable`` objects
 class RecorderViewModel: ObservableObject {
-  static let shared = RecorderViewModel()
+  static let shared = RecorderViewModel(config: .live)
+
+  struct RecorderViewModelConfig {
+    let screenCaptureAccess: ScreenCaptureAccessing
+    let startMonitoring: Bool
+    let startTimer: Bool
+    let initialCameraRefresh: Bool
+    let initialDisplayRefresh: Bool
+    let checkPermissionOnInit: Bool
+
+    static let live = RecorderViewModelConfig(
+      screenCaptureAccess: SystemScreenCaptureAccess(),
+      startMonitoring: true,
+      startTimer: true,
+      initialCameraRefresh: true,
+      initialDisplayRefresh: true,
+      checkPermissionOnInit: true
+    )
+
+    static let test = RecorderViewModelConfig(
+      screenCaptureAccess: NoOpScreenCaptureAccess(),
+      startMonitoring: true,
+      startTimer: false,
+      initialCameraRefresh: true,
+      initialDisplayRefresh: false,
+      checkPermissionOnInit: false
+    )
+  }
 
   @Published var apps: [SCRunningApplication: Bool] = [:]
 
@@ -16,13 +43,15 @@ class RecorderViewModel: ObservableObject {
   @Published var hasScreenPermission: Bool = false
   @AppStorage("showCursor") var showCursor: Bool = false
 
+  private let screenCaptureAccess: ScreenCaptureAccessing
+
   /// Timer which allows for asynchronous refreshing of enabled displays
   private var timer: DispatchSourceTimer?
 
   /// Checks screen recording permission using the lightweight preflight API
   @discardableResult
   func checkScreenPermission() -> Bool {
-    let permitted = CGPreflightScreenCaptureAccess()
+    let permitted = screenCaptureAccess.preflight()
     DispatchQueue.main.async {
       self.hasScreenPermission = permitted
     }
@@ -31,8 +60,7 @@ class RecorderViewModel: ObservableObject {
 
   /// Requests screen recording permission, opening System Settings if needed
   func requestScreenPermission() {
-    CGRequestScreenCaptureAccess()
-    hasScreenPermission = CGPreflightScreenCaptureAccess()
+    hasScreenPermission = screenCaptureAccess.request()
   }
 
   /// Makes an asynchronous call to `ScreenCaptureKit` to get valid `SCScreens` and `SCRunningApplication`s connected to the computer
@@ -41,8 +69,7 @@ class RecorderViewModel: ObservableObject {
     guard checkScreenPermission() else { return }
 
     do {
-      let content = try await SCShareableContent.excludingDesktopWindows(
-        false, onScreenWindowsOnly: false)
+      let content = try await screenCaptureAccess.fetchShareableContent()
 
       self.apps = convertApps(apps: content.applications)
       self.screens = convertDisplays(displays: content.displays)
@@ -51,13 +78,29 @@ class RecorderViewModel: ObservableObject {
     }
   }
 
-  init() {
-    hasScreenPermission = CGPreflightScreenCaptureAccess()
-    getCameras()
-    startRefreshingDevices()
-    setupCameraMonitoring()
-    Task(priority: .userInitiated) {
-      await getDisplayInfo()
+  init(config: RecorderViewModelConfig = .live) {
+    self.screenCaptureAccess = config.screenCaptureAccess
+
+    if config.checkPermissionOnInit {
+      hasScreenPermission = screenCaptureAccess.preflight()
+    }
+
+    if config.initialCameraRefresh {
+      getCameras()
+    }
+
+    if config.startTimer {
+      startRefreshingDevices()
+    }
+
+    if config.startMonitoring {
+      setupCameraMonitoring()
+    }
+
+    if config.initialDisplayRefresh {
+      Task(priority: .userInitiated) {
+        await getDisplayInfo()
+      }
     }
   }
 
