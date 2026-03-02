@@ -5351,6 +5351,9 @@
         }
       }
     },
+    "Grant Screen Recording Permission" : {
+
+    },
     "Help" : {
       "localizations" : {
         "ar" : {
@@ -9989,6 +9992,7 @@
       }
     },
     "Settings.." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10231,6 +10235,9 @@
           }
         }
       }
+    },
+    "Settings..." : {
+
     },
     "Show Cursor" : {
       "localizations" : {

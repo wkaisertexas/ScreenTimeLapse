@@ -8,15 +8,27 @@ import XCTest
 final class RecorderViewModelTests: XCTestCase {
   // If a device is connected, then cameras should empty
   func testDeviceConnectedNotification() throws {
+    let discovery = AVCaptureDevice.DiscoverySession(
+      deviceTypes: [.builtInWideAngleCamera, .external], mediaType: .video,
+      position: .unspecified)
+    let expectedCameraCount = discovery.devices.count
+
+    try XCTSkipIf(
+      expectedCameraCount == 0,
+      "This environment does not expose any video capture devices."
+    )
+
     let viewModel = RecorderViewModel()
     let expectation = XCTestExpectation(description: "Device connected should refresh camera list.")
 
     NotificationCenter.default.post(name: .AVCaptureDeviceWasConnected, object: nil)
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-      XCTAssertFalse(
-        viewModel.cameras.isEmpty,
-        "Cameras should not be empty after device connection notification.")
+      XCTAssertEqual(
+        viewModel.cameras.count,
+        expectedCameraCount,
+        "Camera list should match the devices reported by AVFoundation after refresh."
+      )
       expectation.fulfill()
     }
 

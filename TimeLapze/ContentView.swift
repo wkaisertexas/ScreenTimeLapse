@@ -137,13 +137,20 @@ struct InputDevices: View {
       })
   }
 
-  /// Renders all available `Screen` objects as an interactable list
+  /// Renders all available `Screen` objects as an interactable list, or a permission prompt if denied
+  @ViewBuilder
   func screensMenu() -> some View {
-    viewModel.screens.isEmpty
-      ? nil
-      : Section("Screens") {
+    if !viewModel.hasScreenPermission {
+      Section("Screens") {
+        Button("Grant Screen Recording Permission") {
+          viewModel.requestScreenPermission()
+        }
+      }
+    } else if !viewModel.screens.isEmpty {
+      Section("Screens") {
         ForEach(viewModel.screens, id: \.self, content: screen)
       }
+    }
   }
 
   /// Renders all available `Camera` objects as an interactable list
@@ -207,19 +214,13 @@ struct Info: View {
   @Environment(\.openURL) var openURL
 
   var body: some View {
-    if #available(macOS 14.0, *) {
-      SettingsLink()
-        .keyboardShortcut(",")
-    } else {
-      // SettingsLink from the orchetect/SettingsAccess package
-      SettingsLink {
-        Text("Settings..")
-      } preAction: {
-        // nothing for now
-      } postAction: {
-        // nothing for now
-      }.keyboardShortcut(",")
-    }
+    SettingsLink {
+      Text("Settings...")
+    } preAction: {
+      NSApplication.shared.activate(ignoringOtherApps: true)
+    } postAction: {
+      // nothing for now
+    }.keyboardShortcut(",")
     Divider()
 
     Button("Quit") {
