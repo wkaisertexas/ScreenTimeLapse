@@ -8,7 +8,7 @@ import XCTest
 final class RecorderViewModelTests: XCTestCase {
   // If a device is connected, then cameras should empty
   func testDeviceConnectedNotification() throws {
-    let viewModel = RecorderViewModel()
+    let viewModel = RecorderViewModel(config: .test)
     let expectation = XCTestExpectation(description: "Device connected should refresh camera list.")
 
     NotificationCenter.default.post(name: .AVCaptureDeviceWasConnected, object: nil)
@@ -27,7 +27,7 @@ final class RecorderViewModelTests: XCTestCase {
   ///
   /// Seems redundant, but this actually caught a bug earlier
   func testRecorderViewModelStateTransitions() throws {
-    let viewModel = RecorderViewModel()
+    let viewModel = RecorderViewModel(config: .test)
 
     viewModel.state = .stopped
     XCTAssertEqual(viewModel.state, .stopped)
