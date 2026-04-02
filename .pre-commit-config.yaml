@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    hooks:
+      - id: swift-format
+        name: swift format
+        entry: swift format --in-place --configuration .swift-format
+        language: system
+        types: [swift]
+      - id: swiftlint
+        name: swiftlint
+        entry: swiftlint lint --strict
+        language: system
+        types: [swift]
